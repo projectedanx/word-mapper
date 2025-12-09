@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Word Mapper v0.1 – context.locker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div>
+        <div class="brand">Word Mapper</div>
+        <div class="tagline">Explore semantic neighborhoods for your ideas</div>
+      </div>
+      <div class="nav-link">
+        <a href="https://context.locker" target="_blank" rel="noreferrer">
+          context.locker
+        </a>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="input-section">
+        <label for="words">Enter up to 3 words (comma-separated):</label>
+        <input id="words" type="text" placeholder="e.g. context, drift, atlas" />
+        <button id="mapBtn">Map Words</button>
+        <div id="status" class="status"></div>
+      </section>
+
+      <section id="results" class="results hidden">
+        <h2>Results</h2>
+        <div id="primaryWord" class="primary-word"></div>
+
+        <div class="grid">
+          <div class="card">
+            <h3>Synonyms</h3>
+            <ul id="synonyms"></ul>
+          </div>
+          <div class="card">
+            <h3>Antonyms</h3>
+            <ul id="antonyms"></ul>
+          </div>
+          <div class="card">
+            <h3>Broader Concepts</h3>
+            <ul id="broader"></ul>
+          </div>
+          <div class="card">
+            <h3>Narrower Concepts</h3>
+            <ul id="narrower"></ul>
+          </div>
+        </div>
+
+        <div id="miniBlend" class="blend hidden"></div>
+
+        <div class="note">
+          v0.1 – core semantic relations from Datamuse. Temporal, cultural,
+          emotional, metaphorical and cross-domain mappings will be added in
+          future versions.
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
