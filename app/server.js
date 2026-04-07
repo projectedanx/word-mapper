@@ -9,7 +9,13 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-// Simple helper: call Datamuse API
+/**
+ * Fetches word relationships from the Datamuse API based on provided parameters.
+ *
+ * @param {Record<string, string|number>} params - The URL search parameters for the Datamuse query.
+ * @returns {Promise<Array<{word: string, score: number, tags?: string[]}>>} A promise resolving to an array of word objects returned by Datamuse.
+ * @throws {Error} If the HTTP response from Datamuse is not OK.
+ */
 async function fetchDatamuse(params) {
   const query = new URLSearchParams(params).toString();
   const url = `https://api.datamuse.com/words?${query}`;
@@ -18,8 +24,17 @@ async function fetchDatamuse(params) {
   return res.json();
 }
 
-// API: /api/map
-// Body: { words: ["context","drift"] }
+/**
+ * Express route handler for mapping words to their semantic relationships.
+ * Accepts a JSON body containing an array of words and returns synonyms, antonyms,
+ * broader concepts, narrower concepts, and a conceptual blend description.
+ *
+ * @param {express.Request} req - The Express request object.
+ * @param {Object} req.body - The parsed JSON body of the request.
+ * @param {Array<string>} [req.body.words] - An array of words to process (up to 3).
+ * @param {express.Response} res - The Express response object.
+ * @returns {Promise<void>} Resolves when the response has been sent to the client.
+ */
 app.post("/api/map", async (req, res) => {
   try {
     const words = (req.body.words || [])
@@ -73,7 +88,9 @@ app.post("/api/map", async (req, res) => {
   }
 });
 
-// Start server
+/**
+ * Starts the Express server on the specified port.
+ */
 app.listen(PORT, () => {
   console.log(`Word Mapper v0.1 listening on port ${PORT}`);
 });

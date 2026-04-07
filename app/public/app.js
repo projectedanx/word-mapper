@@ -10,7 +10,15 @@ const broadList = document.getElementById("broader");
 const narrowList = document.getElementById("narrower");
 const miniBlendEl = document.getElementById("miniBlend");
 
-btn.addEventListener("click", async () => {
+/**
+ * Handles the mapping process when the 'Map' button is clicked.
+ * It retrieves the input words, sends them to the backend API via a POST request,
+ * parses the semantic relationships, and updates the DOM to display the results.
+ *
+ * @param {MouseEvent} event - The DOM click event.
+ * @returns {Promise<void>} Resolves when the DOM has been updated with the results or an error message.
+ */
+btn.addEventListener("click", async (event) => {
   const raw = input.value.trim();
   if (!raw) {
     statusEl.textContent = "Please enter at least one word.";
@@ -38,6 +46,15 @@ btn.addEventListener("click", async () => {
 
     primaryWordEl.textContent = `Primary focus: "${data.primary}" (inputs: ${data.words.join(", ")})`;
 
+    /**
+     * Populates an HTML list element with a series of text items.
+     * Clears the list before adding items. If the items array is empty or undefined,
+     * it inserts a single list item containing an em dash ("—").
+     *
+     * @param {HTMLElement} listEl - The DOM list element (e.g., <ul> or <ol>) to populate.
+     * @param {Array<string>} [items] - The array of strings to be added as <li> items.
+     * @returns {void}
+     */
     function fillList(listEl, items) {
       listEl.innerHTML = "";
       if (!items || !items.length) {
