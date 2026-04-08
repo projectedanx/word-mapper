@@ -62,7 +62,7 @@ function cabpMiddleware(req, res, next) {
     res.status(403).json({
       error_code: "TOOL_FAULT_SERVER_HOST_CONFIGURATION",
       fault_category: "SERVER_HOST_CONFIGURATION",
-      structured_detail: { violation: "INVALID_JWT", error: String(err) },
+      structured_detail: { violation: "INVALID_JWT", error: "Invalid Token" },
       retry_viable: true,
       suggested_decomposition: "Refresh OAuth token and retry.",
     });
@@ -140,7 +140,7 @@ server.registerTool(
           text: JSON.stringify({
             error_code: "TOOL_FAULT_GENERAL_PROGRAMMING",
             fault_category: "GENERAL_PROGRAMMING",
-            structured_detail: { violation: "DATAMUSE_API_ERROR", error: String(err) },
+            structured_detail: { violation: "DATAMUSE_API_ERROR", error: "Internal Tool Error" },
             retry_viable: true,
             suggested_decomposition: null,
           }),
