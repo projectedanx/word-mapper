@@ -7,9 +7,12 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.19.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "cors": "^2.8.5",
+    "express": "^4.22.1",
+    "jsonwebtoken": "^9.0.3",
     "node-fetch": "^3.3.2",
-    "cors": "^2.8.5"
+    "zod": "^4.3.6"
   },
   "type": "module"
 }

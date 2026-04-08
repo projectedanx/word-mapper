@@ -1,0 +1,14 @@
+```mermaid
+graph TD
+    Client[LLM Client / Agent] -->|Streamable HTTP request with Bearer JWT| ServerApp[Express Server :3000]
+    ServerApp -->|Middleware: CABP Validation| Identity[Zero-Trust Extracted Context]
+    Identity -->|Valid| Transport[Streamable HTTP Transport - /mcp]
+    Identity -->|Invalid| Fault[Error: TOOL_FAULT_SERVER_HOST_CONFIGURATION]
+    Transport --> Server[MCP Server Instance]
+    Server -->|Tool Query| ToolMapSemanticRelations[Tool: map_semantic_relations]
+    ToolMapSemanticRelations -->|Data Request| DatamuseAPI[Datamuse API]
+    DatamuseAPI -->|Relations JSON| ToolMapSemanticRelations
+    ToolMapSemanticRelations -->|MCP Response JSON| Transport
+    Transport -->|SSE/HTTP Output| Client
+```
+Topology mapping complete. Host -> Client -> Server -> Transport -> Tools sequence mapped. No circular dependencies (β₁ = 0) identified.
