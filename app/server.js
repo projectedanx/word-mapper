@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import fetch from "node-fetch";
 import jwt from "jsonwebtoken";
+import { fileURLToPath } from "node:url";
+import { realpathSync } from "node:fs";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { z } from "zod";
@@ -16,10 +18,10 @@ app.use(express.static("public"));
 /**
  * Fetches word relationships from the Datamuse API based on provided parameters.
  */
-async function fetchDatamuse(params) {
+export async function fetchDatamuse(params, fetchImpl = fetch) {
   const query = new URLSearchParams(params).toString();
   const url = `https://api.datamuse.com/words?${query}`;
-  const res = await fetch(url);
+  const res = await fetchImpl(url);
   if (!res.ok) throw new Error(`Datamuse error: ${res.statusText}`);
   return res.json();
 }
@@ -157,6 +159,10 @@ app.post("/api/map", async (req, res) => {
 
 server.connect(transport);
 
-app.listen(PORT, () => {
-  console.log(`Word Mapper v0.1 MCP Server listening on port ${PORT}`);
-});
+const isMain = process.argv[1] && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url));
+
+if (isMain) {
+  app.listen(PORT, () => {
+    console.log(`Word Mapper v0.1 MCP Server listening on port ${PORT}`);
+  });
+}
