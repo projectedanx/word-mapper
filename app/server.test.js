@@ -25,7 +25,7 @@ test("fetchDatamuse throws an error on non-OK response", async () => {
   };
 
   await assert.rejects(
-    fetchDatamuse({ rel_syn: "word" }, mockFetch),
+    fetchDatamuse({ rel_syn: "error_word" }, mockFetch),
     {
       name: "Error",
       message: "Datamuse error: Not Found"

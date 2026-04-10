@@ -15,15 +15,25 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
+const cache = new Map();
+
 /**
  * Fetches word relationships from the Datamuse API based on provided parameters.
  */
 export async function fetchDatamuse(params, fetchImpl = fetch) {
   const query = new URLSearchParams(params).toString();
   const url = `https://api.datamuse.com/words?${query}`;
+
+  if (cache.has(url)) {
+    return cache.get(url);
+  }
+
   const res = await fetchImpl(url);
   if (!res.ok) throw new Error(`Datamuse error: ${res.statusText}`);
-  return res.json();
+
+  const data = await res.json();
+  cache.set(url, data);
+  return data;
 }
 
 const transport = new StreamableHTTPServerTransport({ path: "/mcp" });
