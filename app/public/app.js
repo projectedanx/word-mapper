@@ -33,16 +33,40 @@ btn.addEventListener("click", async (event) => {
   miniBlendEl.classList.add("hidden");
 
   try {
-    const res = await fetch("/api/map", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ words })
+    const serverUrl = new URL("/mcp", window.location.href);
+    const transport = new mcp_sdk.StreamableHTTPClientTransport(serverUrl, {
+      requestInit: {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token') || 'dummy-token'}`
+        }
+      }
     });
 
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.error || "Request failed");
+    const client = new mcp_sdk.Client(
+      { name: "word-mapper-client", version: "1.0.0" },
+      { capabilities: {} }
+    );
+
+    await client.connect(transport);
+
+    const result = await client.callTool({
+      name: "map_semantic_relations",
+      arguments: { words }
+    });
+
+    if (result.isError) {
+      const errorContent = result.content[0].text;
+      let errorObj;
+      try {
+        errorObj = JSON.parse(errorContent);
+      } catch (e) {
+        throw new Error(errorContent || "Request failed");
+      }
+      throw new Error(errorObj.structured_detail?.error || errorObj.error_code || "Request failed");
     }
+
+    const data = JSON.parse(result.content[0].text);
+
 
     primaryWordEl.textContent = `Primary focus: "${data.primary}" (inputs: ${data.words.join(", ")})`;
 
