@@ -1,0 +1,37 @@
+# Word Mapper
+
+Word Mapper is a semantic intelligence platform composed of a Node.js/Express backend that interfaces with the Datamuse API, a vanilla JavaScript/HTML/CSS frontend, and an integrated Streamable HTTP MCP server.
+
+## Architectural Philosophy (KORSAKOV)
+
+This repository strictly adheres to the KORSAKOV architectural manifest for MCP server development:
+- **JSON Schema Draft 2020-12 strict mode** is enforced for all tool schemas.
+- **SERF-compliant** structured error payloads are implemented for consistent error handling.
+- **CABP (Context Aware Broker Pattern) middleware** is required for HTTP transports, ensuring that robust authentication and tenant-aware scoping are integral to the application lifecycle.
+
+## Requirements
+
+- Node.js v22.22.1 (using ECMAScript Modules)
+- Node package manager or bun (v1.2.14)
+
+## Setup Instructions
+
+1. Clone the repository and navigate to the `app/` directory.
+2. Install dependencies.
+
+## Usage
+
+Start the server using node package manager start command. The server will begin listening on port `3000` (or `process.env.PORT`).
+
+- The backend provides a `/mcp` endpoint conforming to the Streamable HTTP Transport protocol, which handles the `map_semantic_relations` tool.
+- The frontend is served statically from `app/public/`. Navigate to `http://localhost:3000` in your browser to interact with the frontend.
+
+## Testing
+
+Unit testing is conducted via the native `node --test` runner. Dependency mocking for ESM is achieved through dependency injection and by defining global mocks (e.g., `global.document`) prior to importing frontend modules into the Node environment.
+
+To run the test suite navigate to the app directory and execute `node --test`.
+
+## Front-end Tooling
+
+For frontend third-party ESM dependencies in the vanilla JavaScript environment (like the MCP SDK), the architectural pattern dictates using `esbuild` to bundle them into an IIFE format for direct inclusion via script tags.
