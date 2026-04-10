@@ -19,6 +19,11 @@ const cache = new Map();
 
 /**
  * Fetches word relationships from the Datamuse API based on provided parameters.
+ * Utilizes an in-memory cache to reduce redundant network requests.
+ *
+ * @param {Object} params - The URLSearchParams-compatible object containing the Datamuse query parameters (e.g., { rel_syn: 'word', max: 20 }).
+ * @param {Function} [fetchImpl=fetch] - An optional fetch implementation, defaulting to the native fetch or node-fetch. Useful for testing (dependency injection).
+ * @returns {Promise<Array<Object>>} A promise that resolves to an array of objects representing the semantic relations returned by Datamuse.
  */
 export async function fetchDatamuse(params, fetchImpl = fetch) {
   const query = new URLSearchParams(params).toString();
@@ -42,7 +47,16 @@ const server = new McpServer({
   version: "2026.4.1",
 });
 
-// CABP Broker Middleware
+/**
+ * CABP Broker Middleware for intercepting and validating incoming MCP requests.
+ * Enforces the presence and validity of an OAuth 2.1 Bearer JWT token in the Authorization header.
+ * Attaches decoded token claims to the request object for downstream consumption.
+ *
+ * @param {import('express').Request} req - The Express HTTP request object.
+ * @param {import('express').Response} res - The Express HTTP response object.
+ * @param {import('express').NextFunction} next - The Express next middleware function callback.
+ * @returns {void}
+ */
 function cabpMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith("Bearer ")) {

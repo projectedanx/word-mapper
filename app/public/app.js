@@ -44,6 +44,11 @@ if (isBrowser) {
 
   /**
    * Handles the mapping process when the 'Map' button is clicked.
+   * Connects to the MCP server via StreamableHTTPServerTransport and retrieves semantic relationships.
+   * Updates the DOM with synonyms, antonyms, broader, and narrower terms.
+   *
+   * @param {Event} event - The DOM click event.
+   * @returns {Promise<void>} A promise that resolves when the mapping and DOM update are complete.
    */
   btn?.addEventListener("click", async (event) => {
     const raw = input.value.trim();
