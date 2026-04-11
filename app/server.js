@@ -57,7 +57,7 @@ const server = new McpServer({
  * @param {import('express').NextFunction} next - The Express next middleware function callback.
  * @returns {void}
  */
-function cabpMiddleware(req, res, next) {
+export function cabpMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith("Bearer ")) {
     res.status(401).json({
