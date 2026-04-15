@@ -1,27 +1,77 @@
 import test from "node:test";
 import assert from "node:assert";
-import { JSDOM } from "jsdom";
 
-const dom = new JSDOM(`
-  <!DOCTYPE html>
-  <html>
-    <body>
-      <input id="words" value="" />
-      <button id="mapBtn">Map</button>
-      <div id="status"></div>
-      <div id="results" class="hidden"></div>
-      <div id="primaryWord"></div>
-      <ul id="synonyms"></ul>
-      <ul id="antonyms"></ul>
-      <ul id="broader"></ul>
-      <ul id="narrower"></ul>
-      <div id="miniBlend" class="hidden"></div>
-    </body>
-  </html>
-`, { url: "http://localhost/" });
+/**
+ * Manual DOM mock to replace jsdom in restricted environments.
+ */
+class MockElement {
+  constructor(tagName = "DIV") {
+    this.tagName = tagName.toUpperCase();
+    this.children = [];
+    this.classList = new Set();
+    const self = this;
+    this.classList.add = function(cls) { Set.prototype.add.call(self.classList, cls); };
+    this.classList.remove = function(cls) { Set.prototype.delete.call(self.classList, cls); };
+    this.classList.contains = function(cls) { return Set.prototype.has.call(self.classList, cls); };
+    this.textContent = "";
+    this.innerHTML = "";
+    this.value = "";
+    this._listeners = {};
+  }
 
-global.window = dom.window;
-global.document = dom.window.document;
+  appendChild(child) {
+    if (child.nodeType === 11) {
+      this.children.push(...child.children);
+    } else {
+      this.children.push(child);
+    }
+    return child;
+  }
+
+  addEventListener(type, listener) {
+    this._listeners[type] = this._listeners[type] || [];
+    this._listeners[type].push(listener);
+  }
+
+  click() {
+    if (this._listeners["click"]) {
+      this._listeners["click"].forEach(l => l({}));
+    }
+  }
+}
+
+class MockDocument {
+  constructor() {
+    this.body = new MockElement("BODY");
+    this._elements = {};
+  }
+
+  createElement(tag) {
+    return new MockElement(tag);
+  }
+
+  createDocumentFragment() {
+    return {
+      nodeType: 11,
+      children: [],
+      appendChild(child) {
+        this.children.push(child);
+        return child;
+      }
+    };
+  }
+
+  getElementById(id) {
+    if (!this._elements[id]) {
+      this._elements[id] = new MockElement();
+    }
+    return this._elements[id];
+  }
+}
+
+const mockDoc = new MockDocument();
+global.window = { location: { href: "http://localhost/" } };
+global.document = mockDoc;
 global.localStorage = { getItem: () => "token" };
 
 let callToolResult = {
@@ -45,7 +95,7 @@ global.mcp_sdk = {
 const { fillList } = await import("./app.js");
 
 test("fillList populates list element", () => {
-  const listEl = document.createElement("ul");
+  const listEl = mockDoc.createElement("ul");
   fillList(listEl, ["apple", "banana"]);
   assert.strictEqual(listEl.children.length, 2);
   assert.strictEqual(listEl.children[0].textContent, "apple");
@@ -53,18 +103,18 @@ test("fillList populates list element", () => {
 });
 
 test("fillList adds em dash when items are empty", () => {
-  const listEl = document.createElement("ul");
+  const listEl = mockDoc.createElement("ul");
   fillList(listEl, []);
   assert.strictEqual(listEl.children.length, 1);
   assert.strictEqual(listEl.children[0].textContent, "—");
 });
 
 test("button click maps words and updates UI", async () => {
-  const input = document.getElementById("words");
-  const btn = document.getElementById("mapBtn");
-  const statusEl = document.getElementById("status");
-  const resultsSection = document.getElementById("results");
-  const synList = document.getElementById("synonyms");
+  const input = mockDoc.getElementById("words");
+  const btn = mockDoc.getElementById("mapBtn");
+  const statusEl = mockDoc.getElementById("status");
+  const resultsSection = mockDoc.getElementById("results");
+  const synList = mockDoc.getElementById("synonyms");
 
   // set input
   input.value = "hello";
@@ -101,10 +151,10 @@ test("button click maps words and updates UI", async () => {
 });
 
 test("button click handles empty input", async () => {
-  const input = document.getElementById("words");
-  const btn = document.getElementById("mapBtn");
-  const statusEl = document.getElementById("status");
-  const resultsSection = document.getElementById("results");
+  const input = mockDoc.getElementById("words");
+  const btn = mockDoc.getElementById("mapBtn");
+  const statusEl = mockDoc.getElementById("status");
+  const resultsSection = mockDoc.getElementById("results");
 
   input.value = "   "; // empty/whitespace
   btn.click();
@@ -116,10 +166,10 @@ test("button click handles empty input", async () => {
 });
 
 test("button click handles tool call error", async () => {
-  const input = document.getElementById("words");
-  const btn = document.getElementById("mapBtn");
-  const statusEl = document.getElementById("status");
-  const resultsSection = document.getElementById("results");
+  const input = mockDoc.getElementById("words");
+  const btn = mockDoc.getElementById("mapBtn");
+  const statusEl = mockDoc.getElementById("status");
+  const resultsSection = mockDoc.getElementById("results");
 
   input.value = "error_test";
 
