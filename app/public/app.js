@@ -15,11 +15,13 @@ export function fillList(listEl, items) {
     listEl.appendChild(li);
     return;
   }
+  const fragment = document.createDocumentFragment();
   items.forEach(w => {
     const li = document.createElement("li");
     li.textContent = w;
-    listEl.appendChild(li);
+    fragment.appendChild(li);
   });
+  listEl.appendChild(fragment);
 }
 
 // In Node.js testing environment via import, we want to allow exporting
