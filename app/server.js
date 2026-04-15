@@ -84,7 +84,7 @@ export function cabpMiddleware(req, res, next) {
       scopes: claims.scopes || [],
     };
     next();
-  } catch (err) {
+  } catch {
     res.status(403).json({
       error_code: "TOOL_FAULT_SERVER_HOST_CONFIGURATION",
       fault_category: "SERVER_HOST_CONFIGURATION",
@@ -159,7 +159,7 @@ server.registerTool(
           })
         }]
       };
-    } catch (err) {
+    } catch {
       return {
         content: [{
           type: "text",
