@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert";
-import { fetchDatamuse } from "./server.js";
+import { fetchDatamuse, BoundedMap } from "./server.js";
 
 test("fetchDatamuse successfully retrieves and parses data", async () => {
   const mockData = [{ word: "test", score: 100 }];
@@ -101,4 +101,28 @@ test("cabpMiddleware successfully processes valid JWT", () => {
     tenant_id: "tenant456",
     scopes: ["read", "write"]
   });
+});
+
+test("BoundedMap enforces capacity and evicts oldest entries (FIFO)", () => {
+  const capacity = 3;
+  const map = new BoundedMap(capacity);
+
+  map.set("a", 1);
+  map.set("b", 2);
+  map.set("c", 3);
+
+  assert.strictEqual(map.size, 3);
+  assert.ok(map.has("a"));
+
+  // Add one more, "a" should be evicted
+  map.set("d", 4);
+  assert.strictEqual(map.size, 3);
+  assert.ok(!map.has("a"));
+  assert.ok(map.has("d"));
+
+  // Updating an existing key should not evict
+  map.set("b", 20);
+  assert.strictEqual(map.size, 3);
+  assert.ok(map.has("b"));
+  assert.strictEqual(map.get("b"), 20);
 });

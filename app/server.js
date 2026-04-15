@@ -15,7 +15,40 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-const cache = new Map();
+/**
+ * A Map-based cache with a fixed maximum capacity.
+ * When the capacity is reached, the oldest entry is removed (FIFO).
+ *
+ * @template K, V
+ * @extends {Map<K, V>}
+ */
+export class BoundedMap extends Map {
+  /**
+   * @param {number} capacity - The maximum number of entries allowed in the map.
+   */
+  constructor(capacity) {
+    super();
+    this.capacity = capacity;
+  }
+
+  /**
+   * Adds or updates an entry in the map, enforcing capacity limits.
+   *
+   * @param {K} key - The entry key.
+   * @param {V} value - The entry value.
+   * @returns {this}
+   */
+  set(key, value) {
+    if (this.size >= this.capacity && !this.has(key)) {
+      const firstKey = this.keys().next().value;
+      this.delete(firstKey);
+    }
+    return super.set(key, value);
+  }
+}
+
+const MAX_CACHE_SIZE = 1000;
+const cache = new BoundedMap(MAX_CACHE_SIZE);
 
 /**
  * Fetches word relationships from the Datamuse API based on provided parameters.
