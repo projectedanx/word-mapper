@@ -8,7 +8,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { z } from "zod";
 
-const app = express();
+export const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
@@ -117,7 +117,7 @@ export function cabpMiddleware(req, res, next) {
       scopes: claims.scopes || [],
     };
     next();
-  } catch (err) {
+  } catch {
     res.status(403).json({
       error_code: "TOOL_FAULT_SERVER_HOST_CONFIGURATION",
       fault_category: "SERVER_HOST_CONFIGURATION",
@@ -192,7 +192,7 @@ server.registerTool(
           })
         }]
       };
-    } catch (err) {
+    } catch {
       return {
         content: [{
           type: "text",
@@ -210,9 +210,19 @@ server.registerTool(
   }
 );
 
-app.post("/api/map", async (req, res) => {
+/**
+ * Handler for the deprecated /api/map endpoint.
+ * Returns a 410 Gone status with a deprecation message.
+ *
+ * @param {import('express').Request} req - The Express HTTP request object.
+ * @param {import('express').Response} res - The Express HTTP response object.
+ * @returns {void}
+ */
+export const deprecatedMapHandler = async (req, res) => {
   res.status(410).json({ error: "Deprecated. Use /mcp endpoint with MCP protocol." });
-});
+};
+
+app.post("/api/map", deprecatedMapHandler);
 
 server.connect(transport);
 
