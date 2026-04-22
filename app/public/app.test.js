@@ -189,3 +189,27 @@ test("button click handles tool call error", async () => {
   assert.strictEqual(statusEl.textContent, "Error mapping words. Try again in a moment.");
   assert.strictEqual(resultsSection.classList.contains("hidden"), true);
 });
+
+test("button click handles missing token", async () => {
+  const input = mockDoc.getElementById("words");
+  const btn = mockDoc.getElementById("mapBtn");
+  const statusEl = mockDoc.getElementById("status");
+  const resultsSection = mockDoc.getElementById("results");
+
+  // Save original localStorage.getItem and mock it to return null
+  const originalGetItem = global.localStorage.getItem;
+  try {
+    global.localStorage.getItem = () => null;
+
+    input.value = "test";
+    btn.click();
+
+    await new Promise(r => setTimeout(r, 10));
+
+    assert.strictEqual(statusEl.textContent, "Authentication required. Please log in.");
+    assert.strictEqual(resultsSection.classList.contains("hidden"), true);
+  } finally {
+    // Restore original localStorage.getItem
+    global.localStorage.getItem = originalGetItem;
+  }
+});
