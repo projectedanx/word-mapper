@@ -1,28 +1,6 @@
 import test from "node:test";
 import assert from "node:assert";
-import { fetchDatamuse, deprecatedMapHandler, BoundedMap } from "./server.js";
-
-test("deprecatedMapHandler returns 410 and error message", async () => {
-  let statusCode;
-  let jsonPayload;
-
-  const req = {};
-  const res = {
-    status: (code) => {
-      statusCode = code;
-      return res;
-    },
-    json: (payload) => {
-      jsonPayload = payload;
-      return res;
-    }
-  };
-
-  await deprecatedMapHandler(req, res);
-
-  assert.strictEqual(statusCode, 410);
-  assert.deepStrictEqual(jsonPayload, { error: "Deprecated. Use /mcp endpoint with MCP protocol." });
-});
+import { fetchDatamuse, BoundedMap } from "./server.js";
 
 test("fetchDatamuse successfully retrieves and parses data", async () => {
   const mockData = [{ word: "test", score: 100 }];
@@ -55,7 +33,7 @@ test("fetchDatamuse throws an error on non-OK response", async () => {
   );
 });
 
-import { cabpMiddleware, BoundedMap } from "./server.js";
+import { cabpMiddleware } from "./server.js";
 import jwt from "jsonwebtoken";
 import crypto from "node:crypto";
 
