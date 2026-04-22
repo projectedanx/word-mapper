@@ -53,6 +53,13 @@ if (isBrowser) {
    * @returns {Promise<void>} A promise that resolves when the mapping and DOM update are complete.
    */
   btn?.addEventListener("click", async (event) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      statusEl.textContent = "Authentication required. Please log in.";
+      resultsSection.classList.add("hidden");
+      return;
+    }
+
     const raw = input.value.trim();
     if (!raw) {
       statusEl.textContent = "Please enter at least one word.";
@@ -71,7 +78,7 @@ if (isBrowser) {
       const transport = new mcp_sdk.StreamableHTTPClientTransport(serverUrl, {
         requestInit: {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem('token') || 'dummy-token'}`
+            Authorization: `Bearer ${token}`
           }
         }
       });
