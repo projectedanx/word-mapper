@@ -154,13 +154,21 @@ server.registerTool(
   async ({ words }) => {
     try {
       const primary = words[0];
+      const relMap = {
+        synonyms: "rel_syn",
+        antonyms: "rel_ant",
+        broader: "rel_spc",
+        narrower: "rel_gen"
+      };
 
-      const [synonyms, antonyms, broader, narrower] = await Promise.all([
-        fetchDatamuse({ rel_syn: primary, max: 20 }),
-        fetchDatamuse({ rel_ant: primary, max: 20 }),
-        fetchDatamuse({ rel_spc: primary, max: 20 }),
-        fetchDatamuse({ rel_gen: primary, max: 20 })
-      ]);
+      const relations = Object.fromEntries(
+        await Promise.all(
+          Object.entries(relMap).map(async ([key, param]) => {
+            const results = await fetchDatamuse({ [param]: primary, max: 20 });
+            return [key, results.map(x => x.word)];
+          })
+        )
+      );
 
       let miniBlend = null;
       if (words.length > 1) {
@@ -178,12 +186,7 @@ server.registerTool(
           text: JSON.stringify({
             words,
             primary,
-            relations: {
-              synonyms: synonyms.map(x => x.word),
-              antonyms: antonyms.map(x => x.word),
-              broader: broader.map(x => x.word),
-              narrower: narrower.map(x => x.word)
-            },
+            relations,
             miniBlend,
             meta: {
               source: "Datamuse v0.1",
