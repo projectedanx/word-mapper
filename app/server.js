@@ -213,20 +213,6 @@ server.registerTool(
   }
 );
 
-/**
- * Handler for the deprecated /api/map endpoint.
- * Returns a 410 Gone status with a deprecation message.
- *
- * @param {import('express').Request} req - The Express HTTP request object.
- * @param {import('express').Response} res - The Express HTTP response object.
- * @returns {void}
- */
-export const deprecatedMapHandler = async (req, res) => {
-  res.status(410).json({ error: "Deprecated. Use /mcp endpoint with MCP protocol." });
-};
-
-app.post("/api/map", deprecatedMapHandler);
-
 server.connect(transport);
 
 const isMain = process.argv[1] && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url));

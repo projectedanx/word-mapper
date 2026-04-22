@@ -1,0 +1,7 @@
+🎯 **What:** Removed the deprecated `deprecatedMapHandler` function and the corresponding `/api/map` route registration from `app/server.js`, and its unit tests from `app/server.test.js`.
+
+💡 **Why:** This removes dead, deprecated code, which improves codebase maintainability and readability by reducing clutter.
+
+✅ **Verification:** Verified by confirming the codebase passes syntax checks with `node --check app/server.js`, running the unit test suite with `node --test app/server.test.js` to ensure the remaining code operates properly without the handler, and receiving positive code review confirmation.
+
+✨ **Result:** Cleaned up unused, deprecated legacy code with no loss to the remaining active functionalities.
