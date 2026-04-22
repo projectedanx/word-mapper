@@ -14,9 +14,20 @@ class MockElement {
     this.classList.remove = function(cls) { Set.prototype.delete.call(self.classList, cls); };
     this.classList.contains = function(cls) { return Set.prototype.has.call(self.classList, cls); };
     this.textContent = "";
-    this.innerHTML = "";
+    this._innerHTML = "";
     this.value = "";
     this._listeners = {};
+  }
+
+  get innerHTML() {
+    return this._innerHTML;
+  }
+
+  set innerHTML(val) {
+    this._innerHTML = val;
+    if (val === "") {
+      this.children = [];
+    }
   }
 
   appendChild(child) {
@@ -107,6 +118,36 @@ test("fillList adds em dash when items are empty", () => {
   fillList(listEl, []);
   assert.strictEqual(listEl.children.length, 1);
   assert.strictEqual(listEl.children[0].textContent, "—");
+});
+
+test("fillList handles null or undefined items", () => {
+  const listEl = mockDoc.createElement("ul");
+  fillList(listEl, null);
+  assert.strictEqual(listEl.children.length, 1);
+  assert.strictEqual(listEl.children[0].textContent, "—");
+
+  const listEl2 = mockDoc.createElement("ul");
+  fillList(listEl2, undefined);
+  assert.strictEqual(listEl2.children.length, 1);
+  assert.strictEqual(listEl2.children[0].textContent, "—");
+});
+
+test("fillList clears existing content", () => {
+  const listEl = mockDoc.createElement("ul");
+  listEl.appendChild(mockDoc.createElement("li"));
+  listEl.appendChild(mockDoc.createElement("li"));
+  assert.strictEqual(listEl.children.length, 2);
+
+  fillList(listEl, ["new item"]);
+  assert.strictEqual(listEl.children.length, 1);
+  assert.strictEqual(listEl.children[0].textContent, "new item");
+});
+
+test("fillList uses textContent for security", () => {
+  const listEl = mockDoc.createElement("ul");
+  const malicious = "<img src=x onerror=alert(1)>";
+  fillList(listEl, [malicious]);
+  assert.strictEqual(listEl.children[0].textContent, malicious);
 });
 
 test("button click maps words and updates UI", async () => {
