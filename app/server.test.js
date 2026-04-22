@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert";
-import { fetchDatamuse, deprecatedMapHandler } from "./server.js";
+import { fetchDatamuse, deprecatedMapHandler, BoundedMap } from "./server.js";
 
 test("deprecatedMapHandler returns 410 and error message", async () => {
   let statusCode;
@@ -147,4 +147,29 @@ test("BoundedMap enforces capacity and evicts oldest entries (FIFO)", () => {
   assert.strictEqual(map.size, 3);
   assert.ok(map.has("b"));
   assert.strictEqual(map.get("b"), 20);
+});
+
+test("fetchDatamuse returns cached data on subsequent calls", async () => {
+  const mockData = [{ word: "cached_test", score: 100 }];
+  let fetchCallCount = 0;
+
+  const mockFetch = async (url) => {
+    fetchCallCount++;
+    return {
+      ok: true,
+      json: async () => mockData
+    };
+  };
+
+  const params = { rel_syn: "cache_test" };
+
+  // First call should increment fetchCallCount
+  const result1 = await fetchDatamuse(params, mockFetch);
+  assert.deepStrictEqual(result1, mockData);
+  assert.strictEqual(fetchCallCount, 1);
+
+  // Second call with same params should hit cache and NOT increment fetchCallCount
+  const result2 = await fetchDatamuse(params, mockFetch);
+  assert.deepStrictEqual(result2, mockData);
+  assert.strictEqual(fetchCallCount, 1);
 });
