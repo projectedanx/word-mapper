@@ -55,7 +55,7 @@ test("fetchDatamuse throws an error on non-OK response", async () => {
   );
 });
 
-import { cabpMiddleware } from "./server.js";
+import { cabpMiddleware, BoundedMap } from "./server.js";
 import jwt from "jsonwebtoken";
 import crypto from "node:crypto";
 

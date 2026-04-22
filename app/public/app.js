@@ -44,6 +44,9 @@ if (isBrowser) {
   const narrowList = document.getElementById("narrower");
   const miniBlendEl = document.getElementById("miniBlend");
 
+  let mcpClient = null;
+  let currentToken = null;
+
   /**
    * Handles the mapping process when the 'Map' button is clicked.
    * Connects to the MCP server via StreamableHTTPServerTransport and retrieves semantic relationships.
@@ -74,23 +77,26 @@ if (isBrowser) {
     miniBlendEl.classList.add("hidden");
 
     try {
-      const serverUrl = new URL("/mcp", window.location.href);
-      const transport = new mcp_sdk.StreamableHTTPClientTransport(serverUrl, {
-        requestInit: {
-          headers: {
-            Authorization: `Bearer ${token}`
+      if (!mcpClient || token !== currentToken) {
+        const serverUrl = new URL("/mcp", window.location.href);
+        const transport = new mcp_sdk.StreamableHTTPClientTransport(serverUrl, {
+          requestInit: {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           }
-        }
-      });
+        });
 
-      const client = new mcp_sdk.Client(
-        { name: "word-mapper-client", version: "1.0.0" },
-        { capabilities: {} }
-      );
+        mcpClient = new mcp_sdk.Client(
+          { name: "word-mapper-client", version: "1.0.0" },
+          { capabilities: {} }
+        );
 
-      await client.connect(transport);
+        await mcpClient.connect(transport);
+        currentToken = token;
+      }
 
-      const result = await client.callTool({
+      const result = await mcpClient.callTool({
         name: "map_semantic_relations",
         arguments: { words }
       });
@@ -124,6 +130,8 @@ if (isBrowser) {
       statusEl.textContent = "";
     } catch (err) {
       console.error(err);
+      mcpClient = null;
+      currentToken = null;
       statusEl.textContent = "Error mapping words. Try again in a moment.";
       resultsSection.classList.add("hidden");
     }
