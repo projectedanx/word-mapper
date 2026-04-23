@@ -11,7 +11,11 @@ import { z } from "zod";
 export const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
+const corsOptions = {
+  origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : "http://localhost:3000",
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.static("public"));
 
