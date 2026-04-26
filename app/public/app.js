@@ -72,7 +72,18 @@ if (isBrowser) {
 
     const words = raw.split(",").map(w => w.trim()).filter(Boolean).slice(0, 3);
 
-    statusEl.textContent = "Mapping…";
+    // WHIMSY INJECT — Manifold α — Affective Copy Payload
+    let loadDuration = 0;
+    statusEl.textContent = "Crunching the numbers.";
+    const loadingInterval = setInterval(() => {
+      loadDuration += 1000;
+      if (loadDuration >= 4000) {
+        statusEl.textContent = "This is taking longer than a Tuesday standup.";
+      } else if (loadDuration >= 1500) {
+        statusEl.textContent = "Your data is having a moment.";
+      }
+    }, 1000);
+
     resultsSection.classList.add("hidden");
     miniBlendEl.classList.add("hidden");
 
@@ -126,14 +137,90 @@ if (isBrowser) {
         miniBlendEl.classList.remove("hidden");
       }
 
+      clearInterval(loadingInterval);
       resultsSection.classList.remove("hidden");
       statusEl.textContent = "";
     } catch (err) {
       console.error(err);
+      clearInterval(loadingInterval);
       mcpClient = null;
       currentToken = null;
-      statusEl.textContent = "Error mapping words. Try again in a moment.";
+      // WHIMSY INJECT — Manifold α — RESTRICTED ZONE error copy
+      statusEl.textContent = "The data went sideways.";
       resultsSection.classList.add("hidden");
     }
   });
+}
+
+// WHIMSY INJECT — Manifold β — Easter Egg: Konami Code Brand Moment
+if (isBrowser) {
+  (function WhimsyKonamiEngine() {
+    const KONAMI = [38,38,40,40,37,39,37,39,66,65];
+    let inputBuffer = [];
+    let easterEggActive = false;
+
+    const BRAND_MOMENT = {
+      overlay_id: "whimsy-konami-overlay",
+      message_primary: "You found the secret.",
+      message_secondary: "We put this here for exactly the kind of person who would look for it.",
+      cta_text: "Acknowledge and Feel Seen",
+      duration_ms: 4200,
+      max_activations_per_session: 3
+    };
+
+    let sessionActivations = 0;
+
+    if (typeof document.addEventListener === 'function') {
+      document.addEventListener('keydown', (e) => {
+        inputBuffer.push(e.keyCode);
+        if (inputBuffer.length > KONAMI.length) {
+          inputBuffer.shift();
+        }
+        if (
+          inputBuffer.length === KONAMI.length &&
+          inputBuffer.every((v, i) => v === KONAMI[i]) &&
+          !easterEggActive &&
+          sessionActivations < BRAND_MOMENT.max_activations_per_session
+        ) {
+          triggerBrandMoment();
+        }
+      });
+    }
+
+    function triggerBrandMoment() {
+      easterEggActive = true;
+      sessionActivations++;
+
+      const overlay = document.createElement('div');
+      overlay.id = BRAND_MOMENT.overlay_id;
+      overlay.innerHTML = `
+        <div class="whimsy-egg-card">
+          <p class="whimsy-egg-primary">${BRAND_MOMENT.message_primary}</p>
+          <p class="whimsy-egg-secondary">${BRAND_MOMENT.message_secondary}</p>
+          <button class="whimsy-egg-cta" onclick="this.closest('#${BRAND_MOMENT.overlay_id}').remove()">
+            ${BRAND_MOMENT.cta_text}
+          </button>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+
+      // Auto-dismiss with fade
+      setTimeout(() => {
+        if (document.getElementById(BRAND_MOMENT.overlay_id)) {
+          overlay.style.opacity = '0';
+          overlay.style.transition = 'opacity 600ms ease';
+          setTimeout(() => {
+             if (document.getElementById(BRAND_MOMENT.overlay_id)) {
+                 overlay.remove()
+             }
+          }, 600);
+        }
+        easterEggActive = false;
+      }, BRAND_MOMENT.duration_ms);
+
+      window.dispatchEvent(new CustomEvent('whimsy:easter_egg_triggered', {
+        detail: { egg_id: 'konami', timestamp: Date.now() }
+      }));
+    }
+  })();
 }
