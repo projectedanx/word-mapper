@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "generated": "2026-03-27T12:16:00Z",
+  "sha256": "COMPUTED_AT_RUNTIME",
+  "patterns": [
+    {
+      "pattern_id": "PAT-001",
+      "name": "Nitinol Memory Architecture",
+      "type": "State & Error Recovery",
+      "measurement_proxy": "Count of NFL scars preventing DCCD violations per 1000 requests",
+      "baseline": "CFDI < 0.15; Schema violations = 0",
+      "boundary": "Syntactic only — does not cover semantic logic errors"
+    },
+    {
+      "pattern_id": "PAT-002",
+      "name": "CFRSG (Conflict-Free Replicated Semantic Graph)",
+      "type": "Concurrency & State Synchronization",
+      "measurement_proxy": "Version delta between agent graph state and client disk state",
+      "baseline": "Drift Deficit = 0%",
+      "boundary": "Requires monotonic version enforcement from client"
+    },
+    {
+      "pattern_id": "PAT-003",
+      "name": "Bidirectional Reversal-Immune Indexing",
+      "type": "Graph Topology",
+      "measurement_proxy": "references/definition accuracy rate across both query directions",
+      "baseline": "< 2% asymmetry between forward and reverse resolution accuracy",
+      "boundary": "Requires Neo4j; in-memory hashmaps cannot support bidirectional traversal at scale"
+    },
+    {
+      "pattern_id": "PAT-004",
+      "name": "Scope Mereological Bounding",
+      "type": "Semantic Correctness",
+      "measurement_proxy": "False reference rate in textDocument/references for shadowed variable names",
+      "baseline": "0 scope conflation errors",
+      "boundary": "Enforced via SCOPES_WITHIN edge chain; not applicable to eval()-based dynamic scoping"
+    },
+    {
+      "pattern_id": "PAT-005",
+      "name": "Betti-1 Loop Detection",
+      "type": "Dependency Topology",
+      "measurement_proxy": "Time to detect circular import cycle in module graph (ms)",
+      "baseline": "< 200ms for graphs up to 100k nodes via DFS with visited-set",
+      "boundary": "Applies to static imports only; dynamic require() calls require runtime tracing"
+    }
+  ]
+}
