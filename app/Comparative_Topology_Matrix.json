@@ -1,0 +1,47 @@
+{
+  "evaluation_manifest": {
+    "drp_id": "DRP-SCOS-TOOL-EVALUATOR-2026-v4.1",
+    "agent": "ALETHEON",
+    "evaluation_timestamp": "2026-04-26T23:55:00+00:00",
+    "ssa_match": null,
+    "cfdi_global": 0.05
+  },
+  "tools_evaluated": [
+    {
+      "tool_id": "TOOL-WORD-MAPPER",
+      "name": "Word Mapper",
+      "vendor": "Internal/Open Source",
+      "ecosystem": "Node.js | ESM",
+      "epistemic_isolation_domain": "ER-001_NODEJS_ESM",
+      "metrics": {
+        "betti_1_loop_count": 1,
+        "structural_integrity": "HIGH",
+        "drd_critical_per_1k_commits": 0.010,
+        "drd_status": "ACCEPTABLE",
+        "tco_5yr_npv_usd": 15000,
+        "enshittification_risk": "LOW",
+        "enshittification_trigger": "None - relies on open Datamuse API and standard MCP protocols",
+        "elis": 0.15,
+        "elis_status": "ACCEPTABLE",
+        "srds": 2.0,
+        "saga_recovery_deficit": false,
+        "bus_factor": 1,
+        "cvss_max_open": 0.0,
+        "thoughtworks_radar_signal": "ADOPT (Local Assessment)",
+        "bricolage_fragility": "LOW",
+        "verified_claims": 5,
+        "unverified_stochastic_signals": 0
+      },
+      "verdict": "ADOPT",
+      "confidence": 0.95,
+      "conditional_clause": "Verdict downgrades to TRIAL if Datamuse API undergoes an enshittification event (e.g., monetization API restrictions).",
+      "exit_strategy": {
+        "18_month_rollback_cost_dev_days": 2,
+        "36_month_rollback_cost_dev_days": 5,
+        "60_month_rollback_cost_dev_days": 10,
+        "primary_lock_in_vector": "Minimal - standard JSON-RPC 2.0 payload format over Streamable HTTP."
+      },
+      "ssa_scar_ids_referenced": []
+    }
+  ]
+}

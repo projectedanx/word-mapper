@@ -37,3 +37,15 @@ To run the test suite navigate to the app directory and execute `node --test`.
 ## Front-end Tooling
 
 For frontend third-party ESM dependencies in the vanilla JavaScript environment (like the MCP SDK), the architectural pattern dictates using `esbuild` to bundle them into an IIFE format for direct inclusion via script tags.
+
+## ALETHEON Structural Necropsy Findings
+
+**Evaluation Date:** 2026-04-26
+**Verdict:** ADOPT
+**Epistemic Lock-In Score (ELIS):** 0.15 (Acceptable)
+
+ALETHEON has performed a zero-trust structural necropsy on the Word Mapper v0.1.0 codebase. The architecture demonstrates High structural integrity with a negligible Betti-1 loop regarding frontend SERF compliance vs whimsey. The architecture relies primarily on open standards (JSON-RPC 2.0 / MCP).
+
+See the generated artifacts for the deterministic evaluation data:
+- `Comparative_Topology_Matrix.json`
+- `Vulnerability_and_Debt_Audit.md`
