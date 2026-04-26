@@ -1,0 +1,15 @@
+{
+  "Falsification_Condition": "This entire architecture is falsified if a production codebase demonstrates that Tree-Sitter's incremental AST is structurally insufficient to represent the full semantic scope of a dynamically-typed language (e.g., Python's eval(), JavaScript's Proxy()) at the rate of textDocument/didChange events without introducing irresolvable parse ambiguities.",
+  "Identified_Bias_Risks": [
+    "RISK-01: The architecture assumes clients respect LSP 3.17 version stamping. A non-compliant client that omits version fields breaks the monotonic queue invariant.",
+    "RISK-02: Neo4j write locks per URI may create latency hotspots for monorepos with heavily shared utility modules (high-centrality nodes).",
+    "RISK-03: CFDI threshold of 0.15 is appropriate for statically-typed languages; dynamically-typed languages (Python, Ruby) will produce higher base ambiguity rates requiring threshold recalibration.",
+    "RISK-04: The Nitinol NFL assumes failure patterns are stable across LSP version upgrades. An LSP 3.18 spec change could invalidate accumulated scars."
+  ],
+  "Negative_Controls": [
+    "CTRL-01: Run VANCE against LspFuzz (arxiv.org/abs/2510.00532) to verify DCCD catches all malformed payload variants under adversarial fuzzing.",
+    "CTRL-02: Deliberately feed out-of-order textDocument/didChange events at 10ms intervals and verify Drift Deficit remains 0%.",
+    "CTRL-03: Inject a circular import cycle and verify Betti-1 detection fires within 200ms.",
+    "CTRL-04: Query textDocument/definition for a dynamically-dispatched method and verify VANCE returns null+candidates rather than a confident wrong location."
+  ]
+}

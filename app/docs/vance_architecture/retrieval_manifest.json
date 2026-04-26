@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0.0",
+  "generated": "2026-03-27T12:16:00Z",
+  "sha256": "COMPUTED_AT_RUNTIME",
+  "pattern_queries": [
+    {"id": "Q-01", "query": "LSP 3.17 VersionedTextDocumentIdentifier required fields", "type": "SPECIFICATION_VERIFICATION"},
+    {"id": "Q-02", "query": "Tree-Sitter ts_tree_edit incremental reparse byte offset", "type": "IMPLEMENTATION_DETAIL"},
+    {"id": "Q-03", "query": "Neo4j Cypher reverse edge traversal CALLS relationship bidirectional", "type": "GRAPH_TRAVERSAL"},
+    {"id": "Q-04", "query": "JSON-RPC 2.0 error code -32700 to -32603 reserved range", "type": "PROTOCOL_CONSTRAINT"},
+    {"id": "Q-05", "query": "LSP textDocument/completion triggerKind debounce server-side caching", "type": "PERFORMANCE_PATTERN"},
+    {"id": "Q-06", "query": "Pinecone metadata filter vector similarity candidate validation", "type": "VECTOR_SEMANTIC"},
+    {"id": "Q-07", "query": "Reversal Curse causal asymmetry bidirectional knowledge graph", "type": "THEORETICAL_ANCHOR"},
+    {"id": "Q-08", "query": "LSP workspace/semanticTokens/refresh server-initiated state reset", "type": "STATE_RECOVERY"},
+    {"id": "Q-09", "query": "Tree-Sitter ERROR node type malformed syntax AST quarantine", "type": "ERROR_BOUNDARY"},
+    {"id": "Q-10", "query": "Betti number cycle detection DAG topological sort circular import", "type": "GRAPH_TOPOLOGY"},
+    {"id": "Q-11", "query": "LSP textDocument/references includeDeclaration scope boundary", "type": "PROTOCOL_SEMANTICS"},
+    {"id": "Q-12", "query": "Conflict-free replicated data type CRDT semantic constraint code graph", "type": "CONCURRENCY_MODEL"},
+    {"id": "Q-13", "query": "LSP 3.18 draft specification changes from 3.17", "type": "FORWARD_COMPATIBILITY"},
+    {"id": "Q-14", "query": "cognitive complexity threshold AST node class method scoring", "type": "COMPLEXITY_METRIC"},
+    {"id": "Q-15", "query": "jsonschema draft-07 constrained decoding LLM generation", "type": "DCCD_IMPLEMENTATION"},
+    {"id": "Q-16", "query": "LSP textDocument/hover zero hallucination docstring extraction AST", "type": "HOVER_FIDELITY"},
+    {"id": "Q-17", "query": "Python dynamic scoping LEGB rule AST scope resolution failure mode", "type": "LANGUAGE_SPECIFIC"},
+    {"id": "Q-18", "query": "LspFuzz fuzzing language server protocol edge case state desync", "type": "ADVERSARIAL_TESTING"},
+    {"id": "Q-19", "query": "semantic token encoding LSP relative token format delta compression", "type": "ENCODING_OPTIMIZATION"},
+    {"id": "Q-20", "query": "Saga pattern compensating transaction distributed state rollback", "type": "RECOVERY_ARCHITECTURE"}
+  ]
+}

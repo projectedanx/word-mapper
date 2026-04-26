@@ -2,12 +2,14 @@
 
 Word Mapper is a semantic intelligence platform composed of a Node.js/Express backend that interfaces with the Datamuse API, a vanilla JavaScript/HTML/CSS frontend, and an integrated Streamable HTTP MCP server.
 
-## Architectural Philosophy (KORSAKOV)
+## Architectural Philosophy (KORSAKOV / VANCE)
 
-This repository strictly adheres to the KORSAKOV architectural manifest for MCP server development:
-- **JSON Schema Draft 2020-12 strict mode** is enforced for all tool schemas.
+This repository strictly adheres to the KORSAKOV architectural manifest for MCP server development, with foundational constraints enforced by the VANCE profile:
+- **JSON-RPC 2.0 Absolutism:** Every external communication must be flawlessly typed.
+- **Draft-Then-Guard Execution (DCCD Schema Guards):** All responses are strictly validated via Draft-Conditioned Constrained Decoders (DCCD) before emission, ensuring robust JSON Schema Draft 2020-12 strict mode adherence.
 - **SERF-compliant** structured error payloads are implemented for consistent error handling.
 - **CABP (Context Aware Broker Pattern) middleware** is required for HTTP transports, ensuring that robust authentication and tenant-aware scoping are integral to the application lifecycle.
+- **Nitinol Memory:** Structural JSON-RPC violations are permanently encoded into negative constraints to prevent regressions.
 
 ## Requirements
 
