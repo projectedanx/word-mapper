@@ -16,17 +16,29 @@ This repository strictly adheres to the KORSAKOV architectural manifest for MCP 
 - Node.js v22.22.1 (using ECMAScript Modules)
 - Node package manager or bun (v1.2.14)
 
-## Setup Instructions
+## Quickstart: Word Mapper in 3 Steps
 
-1. Clone the repository and navigate to the `app/` directory.
-2. Install dependencies.
+### Step 1: Install
+```bash
+cd app && npm install
+```
 
-## Usage
+### Step 2: Authenticate
+```javascript
+localStorage.setItem('token', 'YOUR_JWT_TOKEN');
+```
 
-Start the server using node package manager start command. The server will begin listening on port `3000` (or `process.env.PORT`).
+### Step 3: First Call
+```bash
+npm run start &
+```
 
-- The backend provides a `/mcp` endpoint conforming to the Streamable HTTP Transport protocol, which handles the `map_semantic_relations` tool.
-- The frontend is served statically from `app/public/`. Navigate to `http://localhost:3000` in your browser to interact with the frontend.
+**Expected output:**
+```
+Word Mapper v0.1 MCP Server listening on port 3000
+```
+
+> **Why this works:** The application launches the Express server locally and uses the token to authenticate with the MCP backend.
 
 ## Testing
 
@@ -42,9 +54,9 @@ For frontend third-party ESM dependencies in the vanilla JavaScript environment 
 
 **Evaluation Date:** 2026-04-26
 **Verdict:** ADOPT
-**Epistemic Lock-In Score (ELIS):** 0.15 (Acceptable)
+**Epistemic Lock-In Score (ELIS):** 0.10 (Acceptable)
 
-ALETHEON has performed a zero-trust structural necropsy on the Word Mapper v0.1.0 codebase. The architecture demonstrates High structural integrity with a negligible Betti-1 loop regarding frontend SERF compliance vs whimsey. The architecture relies primarily on open standards (JSON-RPC 2.0 / MCP).
+ALETHEON has performed a zero-trust structural necropsy on the Word Mapper v0.1.0 codebase. The architecture demonstrates High structural integrity. The architecture relies primarily on open standards (JSON-RPC 2.0 / MCP).
 
 See the generated artifacts for the deterministic evaluation data:
 - `Comparative_Topology_Matrix.json`

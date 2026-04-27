@@ -146,7 +146,7 @@ if (isBrowser) {
       mcpClient = null;
       currentToken = null;
       // WHIMSY INJECT — Manifold α — RESTRICTED ZONE error copy
-      statusEl.textContent = "The data went sideways.";
+      statusEl.textContent = err.message || "An error occurred.";
       resultsSection.classList.add("hidden");
     }
   });
