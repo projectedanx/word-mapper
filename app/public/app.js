@@ -44,8 +44,19 @@ if (isBrowser) {
   const narrowList = document.getElementById("narrower");
   const miniBlendEl = document.getElementById("miniBlend");
 
-  let mcpClient = null;
-  let currentToken = null;
+  const domainsInput = document.getElementById("domains");
+  const mineBtn = document.getElementById("mineBtn");
+  const mineStatusEl = document.getElementById("mineStatus");
+  const topologyResults = document.getElementById("topologyResults");
+
+  const semanticDriftEl = document.getElementById("semanticDrift");
+  const connotationVectorsEl = document.getElementById("connotationVectors");
+  const semioticBlindSpotsEl = document.getElementById("semioticBlindSpots");
+  const ambiguityZonesEl = document.getElementById("ambiguityZones");
+  const knowledgeCapsuleEl = document.getElementById("knowledgeCapsule");
+
+  globalThis.mcpClient = null;
+  globalThis.currentToken = null;
 
   /**
    * Handles the mapping process when the 'Map' button is clicked.
@@ -88,7 +99,7 @@ if (isBrowser) {
     miniBlendEl.classList.add("hidden");
 
     try {
-      if (!mcpClient || token !== currentToken) {
+      if (!globalThis.mcpClient || token !== globalThis.currentToken) {
         const serverUrl = new URL("/mcp", window.location.href);
         const transport = new mcp_sdk.StreamableHTTPClientTransport(serverUrl, {
           requestInit: {
@@ -98,16 +109,16 @@ if (isBrowser) {
           }
         });
 
-        mcpClient = new mcp_sdk.Client(
+        globalThis.mcpClient = new mcp_sdk.Client(
           { name: "word-mapper-client", version: "1.0.0" },
           { capabilities: {} }
         );
 
-        await mcpClient.connect(transport);
-        currentToken = token;
+        await globalThis.mcpClient.connect(transport);
+        globalThis.currentToken = token;
       }
 
-      const result = await mcpClient.callTool({
+      const result = await globalThis.mcpClient.callTool({
         name: "map_semantic_relations",
         arguments: { words }
       });
@@ -143,14 +154,109 @@ if (isBrowser) {
     } catch (err) {
       console.error(err);
       clearInterval(loadingInterval);
-      mcpClient = null;
-      currentToken = null;
+      globalThis.mcpClient = null;
+      globalThis.currentToken = null;
       // WHIMSY INJECT — Manifold α — RESTRICTED ZONE error copy
       statusEl.textContent = err.message || "An error occurred.";
       resultsSection.classList.add("hidden");
     }
   });
 }
+
+  const mineBtn = document.getElementById('mineBtn');
+  const domainsInput = document.getElementById('domains');
+  const mineStatusEl = document.getElementById('mineStatus');
+  const topologyResults = document.getElementById('topologyResults');
+  const semanticDriftEl = document.getElementById('semanticDrift');
+  const connotationVectorsEl = document.getElementById('connotationVectors');
+  const semioticBlindSpotsEl = document.getElementById('semioticBlindSpots');
+  const ambiguityZonesEl = document.getElementById('ambiguityZones');
+  const knowledgeCapsuleEl = document.getElementById('knowledgeCapsule');
+
+  mineBtn?.addEventListener("click", async (event) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      mineStatusEl.textContent = "Authentication required. Please log in.";
+      topologyResults.classList.add("hidden");
+      return;
+    }
+
+    const raw = domainsInput.value.trim();
+    if (!raw) {
+      mineStatusEl.textContent = "Please enter two domains.";
+      topologyResults.classList.add("hidden");
+      return;
+    }
+
+    const domains = raw.split(",").map(w => w.trim()).filter(Boolean);
+    if (domains.length !== 2) {
+      mineStatusEl.textContent = "Please enter exactly two domains separated by a comma.";
+      topologyResults.classList.add("hidden");
+      return;
+    }
+
+    mineStatusEl.textContent = "Computing topological intersections...";
+    topologyResults.classList.add("hidden");
+    knowledgeCapsuleEl.classList.add("hidden");
+
+    try {
+      if (!globalThis.mcpClient || token !== globalThis.currentToken) {
+        const serverUrl = new URL("/mcp", window.location.href);
+        const transport = new mcp_sdk.StreamableHTTPClientTransport(serverUrl, {
+          requestInit: {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        });
+
+        globalThis.mcpClient = new mcp_sdk.Client(
+          { name: "word-mapper-client", version: "1.0.0" },
+          { capabilities: {} }
+        );
+
+        await globalThis.mcpClient.connect(transport);
+        globalThis.currentToken = token;
+      }
+
+      const result = await globalThis.mcpClient.callTool({
+        name: "mine_lexical_topology",
+        arguments: { domains }
+      });
+
+      if (result.isError) {
+        const errorContent = result.content[0].text;
+        let errorObj;
+        try {
+          errorObj = JSON.parse(errorContent);
+        } catch (e) {
+          throw new Error(errorContent || "Request failed");
+        }
+        throw new Error(errorObj.structured_detail?.error || errorObj.error_code || "Request failed");
+      }
+
+      const data = JSON.parse(result.content[0].text);
+
+      semanticDriftEl.textContent = data.analysis_zones.semantic_drift;
+      connotationVectorsEl.textContent = data.analysis_zones.connotation_vectors;
+      semioticBlindSpotsEl.textContent = data.analysis_zones.semiotic_blind_spots;
+      ambiguityZonesEl.textContent = data.analysis_zones.ambiguity_zones;
+
+      if (data.pluriversal_knowledge_capsule) {
+        knowledgeCapsuleEl.innerHTML = `<strong>Knowledge Capsule:</strong><br>${data.pluriversal_knowledge_capsule.emergent_synthesis}<br>${data.pluriversal_knowledge_capsule.isomorphisms_of_friction}`;
+        knowledgeCapsuleEl.classList.remove("hidden");
+      }
+
+      topologyResults.classList.remove("hidden");
+      mineStatusEl.textContent = "";
+    } catch (err) {
+      console.error(err);
+      globalThis.mcpClient = null;
+      globalThis.currentToken = null;
+      mineStatusEl.textContent = err.message || "An error occurred during mining.";
+      topologyResults.classList.add("hidden");
+    }
+  });
 
 // WHIMSY INJECT — Manifold β — Easter Egg: Konami Code Brand Moment
 if (isBrowser) {

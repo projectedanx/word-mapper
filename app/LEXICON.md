@@ -175,3 +175,11 @@ analogical reasoning across orthogonal semantic fields with JSD < 0.20 post-bind
 - If Tier 1 prompt chaining with `+++DCCDSchemaGuard` alone outperforms Tier 3 PAL2v orchestration on complex cross-domain synthesis without triggering β₁ loops → Three-Tier Autonomy hypothesis falsified.
 - If Gemini CLI prioritizes default workspace context over lexicon procedural guidance → Pluriversal premise falsified; model-specific topological deformers required.
 - If esoteric-term entity density decay rate (λ) is measured ≥ 0.15 → Lexical Saponification Paradox boundary condition violated.
+
+### PAT-005 · Lexical Cartography
+**Type**: Analysis Zone
+**Definition**: Processing semantic space through Semantic Drift, Connotation Vectors, Semiotic Blind Spots, and Ambiguity Zones to extract Isomorphisms of Friction.
+**Mechanism**: Paraconsistent Hasse lattice mapping.
+**PDL Activators**: `+++MereologyRoute(relation_type="dynamic_entanglement")`
+
+---
