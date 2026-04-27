@@ -227,7 +227,7 @@ test("button click handles tool call error", async () => {
 
   await new Promise(r => setTimeout(r, 50));
 
-  assert.strictEqual(statusEl.textContent, "The data went sideways.");
+  assert.strictEqual(statusEl.textContent, "Something went wrong");
   assert.strictEqual(resultsSection.classList.contains("hidden"), true);
 });
 

@@ -4,7 +4,7 @@
     "agent": "ALETHEON",
     "evaluation_timestamp": "2026-04-26T23:55:00+00:00",
     "ssa_match": null,
-    "cfdi_global": 0.05
+    "cfdi_global": 0.00
   },
   "tools_evaluated": [
     {
@@ -14,14 +14,14 @@
       "ecosystem": "Node.js | ESM",
       "epistemic_isolation_domain": "ER-001_NODEJS_ESM",
       "metrics": {
-        "betti_1_loop_count": 1,
+        "betti_1_loop_count": 0,
         "structural_integrity": "HIGH",
-        "drd_critical_per_1k_commits": 0.010,
+        "drd_critical_per_1k_commits": 0.000,
         "drd_status": "ACCEPTABLE",
         "tco_5yr_npv_usd": 15000,
         "enshittification_risk": "LOW",
         "enshittification_trigger": "None - relies on open Datamuse API and standard MCP protocols",
-        "elis": 0.15,
+        "elis": 0.10,
         "elis_status": "ACCEPTABLE",
         "srds": 2.0,
         "saga_recovery_deficit": false,

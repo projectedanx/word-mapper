@@ -1,6 +1,6 @@
 # Word Mapper
 
-Revolutionary Semantic Intelligence Platform for Context Engineering & Advanced Prompt Development.
+Semantic Intelligence Platform for Context Engineering & Advanced Prompt Development.
 
 ## Purpose
 
@@ -14,22 +14,29 @@ Word Mapper is a semantic explorer API designed to help context engineering and 
   - `app/public/app.js`: The client-side application logic.
   - `app/public/style.css`: The styling.
 
-## Setup Instructions
+## Quickstart: Word Mapper in 3 Steps
 
-1. **Prerequisites:** Ensure you have Node.js and `npm` installed.
-2. **Installation:** Navigate to the `app/` directory and install the dependencies:
-   `cd app`
-   `npm install`
-3. **Run the Server:** Start the Express application:
-   `npm start`
-   The server will start on port 3000 by default (or the value of the `PORT` environment variable).
+### Step 1: Install
+```bash
+cd app && npm install
+```
 
-## Usage
+### Step 2: Authenticate
+```javascript
+localStorage.setItem('token', 'YOUR_JWT_TOKEN');
+```
 
-1. Open your web browser and navigate to `http://localhost:3000`.
-2. In the interface, enter up to 3 words (separated by commas) into the input field.
-3. Click "Map" to process the request.
-4. The application will contact the backend API (`/api/map`), retrieve the relations from the Datamuse API, and render lists of synonyms, antonyms, broader, and narrower terms. It will also provide a "mini-blend" conceptual description if multiple words are provided.
+### Step 3: First Call
+```bash
+npm run start &
+```
+
+**Expected output:**
+```
+Word Mapper v0.1 MCP Server listening on port 3000
+```
+
+> **Why this works:** The application launches the Express server locally and uses the token to authenticate with the MCP backend.
 
 ## API Endpoint Documentation
 
