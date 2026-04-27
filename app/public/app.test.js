@@ -254,3 +254,39 @@ test("button click handles missing token", async () => {
     global.localStorage.getItem = originalGetItem;
   }
 });
+
+test("mineBtn click updates topological UI", async () => {
+  const btn = mockDoc.getElementById("mineBtn");
+  const input = mockDoc.getElementById("domains");
+  const topologyResults = mockDoc.getElementById("topologyResults");
+  const semanticDriftEl = mockDoc.getElementById("semanticDrift");
+  const mineStatusEl = mockDoc.getElementById("mineStatus");
+
+  input.value = "fluid dynamics, tokenomics";
+
+  callToolResult = {
+    isError: false,
+    content: [{
+      text: JSON.stringify({
+        analysis_zones: {
+          semantic_drift: "Measured semantic shift",
+          connotation_vectors: "Vector space",
+          semiotic_blind_spots: "Blind spots",
+          ambiguity_zones: "Ambiguity"
+        },
+        pluriversal_knowledge_capsule: {
+          emergent_synthesis: "Bridge formed",
+          isomorphisms_of_friction: "Friction resolved"
+        }
+      })
+    }]
+  };
+
+  btn.click();
+
+  await new Promise(r => setTimeout(r, 50));
+
+  assert.strictEqual(mineStatusEl.textContent, "");
+  assert.strictEqual(topologyResults.classList.contains("hidden"), false);
+  assert.strictEqual(semanticDriftEl.textContent, "Measured semantic shift");
+});

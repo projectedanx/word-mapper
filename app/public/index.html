@@ -59,6 +59,37 @@
           future versions.
         </div>
       </section>
+      <section class="input-section" style="margin-top: 2rem;">
+        <label for="domains">Enter exactly 2 domains for Topological Mining (comma-separated):</label>
+        <input id="domains" type="text" placeholder="e.g. quantum mechanics, financial trading" />
+        <button id="mineBtn">Mine Topology</button>
+        <div id="mineStatus" class="status"></div>
+      </section>
+
+      <section id="topologyResults" class="results hidden">
+        <h2>Lexical Cartography</h2>
+
+        <div class="grid">
+          <div class="card">
+            <h3>Semantic Drift</h3>
+            <div id="semanticDrift" style="font-size: 0.85rem;"></div>
+          </div>
+          <div class="card">
+            <h3>Connotation Vectors</h3>
+            <div id="connotationVectors" style="font-size: 0.85rem;"></div>
+          </div>
+          <div class="card">
+            <h3>Semiotic Blind Spots</h3>
+            <div id="semioticBlindSpots" style="font-size: 0.85rem;"></div>
+          </div>
+          <div class="card">
+            <h3>Ambiguity Zones</h3>
+            <div id="ambiguityZones" style="font-size: 0.85rem;"></div>
+          </div>
+        </div>
+
+        <div id="knowledgeCapsule" class="blend hidden" style="margin-top: 1rem; border-color: #4f46e5;"></div>
+      </section>
     </main>
   </div>
 
