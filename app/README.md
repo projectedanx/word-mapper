@@ -58,6 +58,7 @@ For frontend third-party ESM dependencies in the vanilla JavaScript environment 
 
 ALETHEON has performed a zero-trust structural necropsy on the Word Mapper v0.1.0 codebase. The architecture demonstrates High structural integrity. The architecture relies primarily on open standards (JSON-RPC 2.0 / MCP).
 
-See the generated artifacts for the deterministic evaluation data:
+See the generated artifacts for the deterministic evaluation data and core pattern definitions:
 - `Comparative_Topology_Matrix.json`
 - `Vulnerability_and_Debt_Audit.md`
+- `LEXICON.md`
