@@ -92,9 +92,9 @@ const server = new McpServer({
  * @param {import('express').Request} req - The Express HTTP request object.
  * @param {import('express').Response} res - The Express HTTP response object.
  * @param {import('express').NextFunction} next - The Express next middleware function callback.
- * @returns {void}
+ * @returns {Promise<void>}
  */
-export function cabpMiddleware(req, res, next) {
+export async function cabpMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
   if (!authHeader?.startsWith("Bearer ")) {
     res.status(401).json({
@@ -109,7 +109,12 @@ export function cabpMiddleware(req, res, next) {
 
   try {
     const token = authHeader.slice(7);
-    const claims = jwt.verify(token, process.env.JWT_PUBLIC_KEY, { algorithms: ["RS256"] });
+    const claims = await new Promise((resolve, reject) => {
+      jwt.verify(token, process.env.JWT_PUBLIC_KEY, { algorithms: ["RS256"] }, (err, decoded) => {
+        if (err) return reject(err);
+        resolve(decoded);
+      });
+    });
 
     if (!claims) {
       throw new Error("Invalid token payload");
