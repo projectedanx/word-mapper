@@ -243,7 +243,14 @@ if (isBrowser) {
       ambiguityZonesEl.textContent = data.analysis_zones.ambiguity_zones;
 
       if (data.pluriversal_knowledge_capsule) {
-        knowledgeCapsuleEl.innerHTML = `<strong>Knowledge Capsule:</strong><br>${data.pluriversal_knowledge_capsule.emergent_synthesis}<br>${data.pluriversal_knowledge_capsule.isomorphisms_of_friction}`;
+        knowledgeCapsuleEl.textContent = "";
+        const strong = document.createElement("strong");
+        strong.textContent = "Knowledge Capsule:";
+        knowledgeCapsuleEl.appendChild(strong);
+        knowledgeCapsuleEl.appendChild(document.createElement("br"));
+        knowledgeCapsuleEl.appendChild(document.createTextNode(data.pluriversal_knowledge_capsule.emergent_synthesis));
+        knowledgeCapsuleEl.appendChild(document.createElement("br"));
+        knowledgeCapsuleEl.appendChild(document.createTextNode(data.pluriversal_knowledge_capsule.isomorphisms_of_friction));
         knowledgeCapsuleEl.classList.remove("hidden");
       }
 
@@ -299,15 +306,30 @@ if (isBrowser) {
 
       const overlay = document.createElement('div');
       overlay.id = BRAND_MOMENT.overlay_id;
-      overlay.innerHTML = `
-        <div class="whimsy-egg-card">
-          <p class="whimsy-egg-primary">${BRAND_MOMENT.message_primary}</p>
-          <p class="whimsy-egg-secondary">${BRAND_MOMENT.message_secondary}</p>
-          <button class="whimsy-egg-cta" onclick="this.closest('#${BRAND_MOMENT.overlay_id}').remove()">
-            ${BRAND_MOMENT.cta_text}
-          </button>
-        </div>
-      `;
+
+      const card = document.createElement('div');
+      card.className = "whimsy-egg-card";
+
+      const pPrimary = document.createElement('p');
+      pPrimary.className = "whimsy-egg-primary";
+      pPrimary.textContent = BRAND_MOMENT.message_primary;
+
+      const pSecondary = document.createElement('p');
+      pSecondary.className = "whimsy-egg-secondary";
+      pSecondary.textContent = BRAND_MOMENT.message_secondary;
+
+      const btn = document.createElement('button');
+      btn.className = "whimsy-egg-cta";
+      btn.textContent = BRAND_MOMENT.cta_text;
+      btn.addEventListener('click', () => {
+        overlay.remove();
+      });
+
+      card.appendChild(pPrimary);
+      card.appendChild(pSecondary);
+      card.appendChild(btn);
+      overlay.appendChild(card);
+
       document.body.appendChild(overlay);
 
       // Auto-dismiss with fade

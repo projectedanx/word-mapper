@@ -61,6 +61,13 @@ class MockDocument {
     return new MockElement(tag);
   }
 
+  createTextNode(text) {
+    return {
+      nodeType: 3,
+      textContent: text
+    };
+  }
+
   createDocumentFragment() {
     return {
       nodeType: 11,
