@@ -346,3 +346,54 @@ test("symbiosisBtn click handles missing input", async () => {
   assert.strictEqual(symbiosisStatusEl.textContent, "Please enter both a Human Lens and an AI Specification.");
   assert.strictEqual(symbiosisResults.classList.contains("hidden"), true);
 });
+
+test("paraconsistentBtn click updates synthesis UI with Golden Scar and tension metrics", async () => {
+  const btn = mockDoc.getElementById("paraconsistentBtn");
+  const humanInput = mockDoc.getElementById("paraHumanInput");
+  const aiInput = mockDoc.getElementById("paraAiInput");
+  const paraResults = mockDoc.getElementById("paraResults");
+  const goldenScarEl = mockDoc.getElementById("goldenScar");
+  const superpositionEl = mockDoc.getElementById("superpositionPayload");
+  const paraStatusEl = mockDoc.getElementById("paraStatus");
+
+  humanInput.value = "Tacit uncertainty";
+  aiInput.value = "Rigid schema";
+
+  callToolResult = {
+    isError: false,
+    content: [{
+      text: JSON.stringify({
+        golden_scar: 1.618,
+        superposition_payload: "Tension maintained. [⊘] Contradiction mapped. [∇] Uncertainty preserved."
+      })
+    }]
+  };
+
+  btn.click();
+
+  await new Promise(r => setTimeout(r, 50));
+
+  assert.strictEqual(paraStatusEl.textContent, "");
+  assert.strictEqual(paraResults.classList.contains("hidden"), false);
+  assert.strictEqual(goldenScarEl.textContent, "1.618");
+  assert.ok(superpositionEl.textContent.includes("[⊘]"));
+  assert.ok(superpositionEl.textContent.includes("[∇]"));
+});
+
+test("paraconsistentBtn click handles missing input", async () => {
+  const btn = mockDoc.getElementById("paraconsistentBtn");
+  const humanInput = mockDoc.getElementById("paraHumanInput");
+  const aiInput = mockDoc.getElementById("paraAiInput");
+  const paraStatusEl = mockDoc.getElementById("paraStatus");
+  const paraResults = mockDoc.getElementById("paraResults");
+
+  humanInput.value = "";
+  aiInput.value = "";
+
+  btn.click();
+
+  await new Promise(r => setTimeout(r, 10));
+
+  assert.strictEqual(paraStatusEl.textContent, "Please enter both human tacit input and AI structural input.");
+  assert.strictEqual(paraResults.classList.contains("hidden"), true);
+});

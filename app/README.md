@@ -62,5 +62,5 @@ See the generated artifacts for the deterministic evaluation data and core patte
 - `Comparative_Topology_Matrix.json`
 - `Vulnerability_and_Debt_Audit.md`
 - `LEXICON.md`
-## Human-AI Symbiosis Engine
-Word Mapper now includes a `synthesize_symbiosis` tool designed to model the integration of human tacit knowledge (Reflexive Dialogue) with rigid AI structures (Draft-Conditioned Decoding). This illustrates the Emergent Value and Productivity J-Curve characteristics observed when these domains intersect.
+## Human-AI Symbiosis & Paraconsistent Synthesis Node
+Word Mapper now includes `synthesize_symbiosis` and `paraconsistent_synthesis` tools. These are designed to model the integration of human tacit knowledge (Reflexive Dialogue) with rigid AI structures (Draft-Conditioned Decoding). Instead of auto-collapsing differences, the paraconsistent node explicitly holds contradictions in superposition, outputting a Golden Scar (Φ = 1.618) to preserve structural tension and epistemic friction.

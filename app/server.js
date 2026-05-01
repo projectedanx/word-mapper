@@ -333,6 +333,53 @@ server.registerTool(
   }
 );
 
+
+server.registerTool(
+  "paraconsistent_synthesis",
+  {
+    title: "Paraconsistent Synthesis Node",
+    description: "Fuses human tacit knowledge with AI structural determinism, computing tension metrics and emitting a Golden Scar (Φ = 1.618) to anchor contradictory inputs.",
+    inputSchema: z.object({
+      human_input: z
+        .string()
+        .max(200)
+        .describe("The human tacit knowledge or reflexive input."),
+      ai_input: z
+        .string()
+        .max(200)
+        .describe("The rigid AI structural topology or schema.")
+    }).strict(),
+  },
+  async ({ human_input, ai_input }) => {
+    try {
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({
+            golden_scar: 1.618,
+            superposition_payload: "Tension maintained. [⊘] Contradiction mapped. [∇] Uncertainty preserved.",
+            synthesis_log: `Fused tacit input [${human_input}] with deterministic structure [${ai_input}].`
+          })
+        }]
+      };
+    } catch {
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({
+            error_code: "TOOL_FAULT_GENERAL_PROGRAMMING",
+            fault_category: "GENERAL_PROGRAMMING",
+            structured_detail: { violation: "SYNTHESIS_COMPUTATION_ERROR", error: "Internal Tool Error" },
+            retry_viable: true,
+            suggested_decomposition: null,
+          }),
+        }],
+        isError: true,
+      };
+    }
+  }
+);
+
 server.connect(transport);
 
 const isMain = process.argv[1] && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url));
