@@ -90,6 +90,35 @@
 
         <div id="knowledgeCapsule" class="blend hidden" style="margin-top: 1rem; border-color: #4f46e5;"></div>
       </section>
+
+      <section class="input-section" style="margin-top: 2rem;">
+        <label for="humanLens">Enter Human Lens (tacit knowledge):</label>
+        <input id="humanLens" type="text" placeholder="e.g. Reflexive Dialogue, tacit operations" />
+        <br/><br/>
+        <label for="aiSpec">Enter AI Specification (structural constraint):</label>
+        <input id="aiSpec" type="text" placeholder="e.g. JSON-LD Schema, Draft-Conditioned Decoding" />
+        <button id="symbiosisBtn" style="margin-top: 1rem;">Synthesize Symbiosis</button>
+        <div id="symbiosisStatus" class="status"></div>
+      </section>
+
+      <section id="symbiosisResults" class="results hidden">
+        <h2>Human-AI Symbiosis Engine</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Integrated Framework</h3>
+            <div id="integratedFramework" style="font-size: 0.85rem;"></div>
+          </div>
+          <div class="card">
+            <h3>Emergent Value</h3>
+            <div id="emergentValue" style="font-size: 0.85rem;"></div>
+          </div>
+          <div class="card">
+            <h3>Productivity J-Curve</h3>
+            <div id="productivityJCurve" style="font-size: 0.85rem;"></div>
+          </div>
+        </div>
+      </section>
+
     </main>
   </div>
 

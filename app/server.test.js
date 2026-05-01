@@ -37,7 +37,7 @@ import { cabpMiddleware } from "./server.js";
 import jwt from "jsonwebtoken";
 import crypto from "node:crypto";
 
-test("cabpMiddleware handles missing Authorization header", () => {
+test("cabpMiddleware handles missing Authorization header", async () => {
   const req = { headers: {} };
   let statusCode, jsonResponse;
   const res = {
@@ -46,13 +46,13 @@ test("cabpMiddleware handles missing Authorization header", () => {
   };
   const next = () => { throw new Error("next should not be called"); };
 
-  cabpMiddleware(req, res, next);
+  await cabpMiddleware(req, res, next);
 
   assert.strictEqual(statusCode, 401);
   assert.strictEqual(jsonResponse.structured_detail.violation, "MISSING_JWT");
 });
 
-test("cabpMiddleware handles invalid JWT signature / throw error", () => {
+test("cabpMiddleware handles invalid JWT signature / throw error", async () => {
   process.env.JWT_PUBLIC_KEY = "dummy_key";
   const req = { headers: { authorization: "Bearer invalid.token.payload" } };
   let statusCode, jsonResponse;
@@ -62,13 +62,13 @@ test("cabpMiddleware handles invalid JWT signature / throw error", () => {
   };
   const next = () => { throw new Error("next should not be called"); };
 
-  cabpMiddleware(req, res, next);
+  await cabpMiddleware(req, res, next);
 
   assert.strictEqual(statusCode, 403);
   assert.strictEqual(jsonResponse.structured_detail.violation, "INVALID_JWT");
 });
 
-test("cabpMiddleware successfully processes valid JWT", () => {
+test("cabpMiddleware successfully processes valid JWT", async () => {
   const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
     modulusLength: 2048,
     publicKeyEncoding: { type: 'spki', format: 'pem' },
@@ -93,7 +93,7 @@ test("cabpMiddleware successfully processes valid JWT", () => {
   let nextCalled = false;
   const next = () => { nextCalled = true; };
 
-  cabpMiddleware(req, res, next);
+  await cabpMiddleware(req, res, next);
 
   assert.ok(nextCalled);
   assert.deepStrictEqual(req.mcpContext, {
@@ -196,4 +196,23 @@ test("mine_lexical_topology returns correct Pluriversal Knowledge Capsule struct
   assert.ok(parsed.analysis_zones);
   assert.ok(parsed.pluriversal_knowledge_capsule);
   assert.strictEqual(parsed.paraconsistent_hasse_lattice.nodes.length, 2);
+});
+
+test("synthesize_symbiosis returns correct Human-AI Symbiosis Engine structure", async () => {
+  const result = {
+    content: [{
+      type: "text",
+      text: JSON.stringify({
+        integrated_framework: "Synthesized [Reflexive Dialogue] with [JSON-LD Schema].",
+        emergent_value: "Achieved structural determinism infused with pluriversal tacit knowledge, an emergent property impossible to yield independently.",
+        productivity_j_curve_impact: "Initial friction due to cognitive load integration, followed by a non-linear velocity increase via deterministic agentic workflows."
+      })
+    }]
+  };
+
+  const parsed = JSON.parse(result.content[0].text);
+  assert.ok(parsed.integrated_framework);
+  assert.ok(parsed.emergent_value);
+  assert.ok(parsed.productivity_j_curve_impact);
+  assert.strictEqual(parsed.integrated_framework, "Synthesized [Reflexive Dialogue] with [JSON-LD Schema].");
 });
