@@ -297,3 +297,52 @@ test("mineBtn click updates topological UI", async () => {
   assert.strictEqual(topologyResults.classList.contains("hidden"), false);
   assert.strictEqual(semanticDriftEl.textContent, "Measured semantic shift");
 });
+
+test("symbiosisBtn click updates symbiosis UI", async () => {
+  const btn = mockDoc.getElementById("symbiosisBtn");
+  const humanLensInput = mockDoc.getElementById("humanLens");
+  const aiSpecInput = mockDoc.getElementById("aiSpec");
+  const symbiosisResults = mockDoc.getElementById("symbiosisResults");
+  const integratedFrameworkEl = mockDoc.getElementById("integratedFramework");
+  const symbiosisStatusEl = mockDoc.getElementById("symbiosisStatus");
+
+  humanLensInput.value = "Reflexive Dialogue";
+  aiSpecInput.value = "JSON-LD Schema";
+
+  callToolResult = {
+    isError: false,
+    content: [{
+      text: JSON.stringify({
+        integrated_framework: "Synthesized [Reflexive Dialogue] with [JSON-LD Schema].",
+        emergent_value: "Achieved structural determinism",
+        productivity_j_curve_impact: "Initial friction"
+      })
+    }]
+  };
+
+  btn.click();
+
+  await new Promise(r => setTimeout(r, 50));
+
+  assert.strictEqual(symbiosisStatusEl.textContent, "");
+  assert.strictEqual(symbiosisResults.classList.contains("hidden"), false);
+  assert.strictEqual(integratedFrameworkEl.textContent, "Synthesized [Reflexive Dialogue] with [JSON-LD Schema].");
+});
+
+test("symbiosisBtn click handles missing input", async () => {
+  const btn = mockDoc.getElementById("symbiosisBtn");
+  const humanLensInput = mockDoc.getElementById("humanLens");
+  const aiSpecInput = mockDoc.getElementById("aiSpec");
+  const symbiosisStatusEl = mockDoc.getElementById("symbiosisStatus");
+  const symbiosisResults = mockDoc.getElementById("symbiosisResults");
+
+  humanLensInput.value = "";
+  aiSpecInput.value = "";
+
+  btn.click();
+
+  await new Promise(r => setTimeout(r, 10));
+
+  assert.strictEqual(symbiosisStatusEl.textContent, "Please enter both a Human Lens and an AI Specification.");
+  assert.strictEqual(symbiosisResults.classList.contains("hidden"), true);
+});

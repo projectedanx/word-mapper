@@ -31,6 +31,89 @@ export function fillList(listEl, items) {
 // this is loaded as a script. If it's loaded as type="module", import.meta.url works.
 const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
 
+
+  const symbiosisBtn = document.getElementById('symbiosisBtn');
+  const humanLensInput = document.getElementById('humanLens');
+  const aiSpecInput = document.getElementById('aiSpec');
+  const symbiosisStatusEl = document.getElementById('symbiosisStatus');
+  const symbiosisResults = document.getElementById('symbiosisResults');
+  const integratedFrameworkEl = document.getElementById('integratedFramework');
+  const emergentValueEl = document.getElementById('emergentValue');
+  const productivityJCurveEl = document.getElementById('productivityJCurve');
+
+  symbiosisBtn?.addEventListener("click", async (event) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      symbiosisStatusEl.textContent = "Authentication required. Please log in.";
+      symbiosisResults.classList.add("hidden");
+      return;
+    }
+
+    const humanLens = humanLensInput.value.trim();
+    const aiSpec = aiSpecInput.value.trim();
+    if (!humanLens || !aiSpec) {
+      symbiosisStatusEl.textContent = "Please enter both a Human Lens and an AI Specification.";
+      symbiosisResults.classList.add("hidden");
+      return;
+    }
+
+    symbiosisStatusEl.textContent = "Synthesizing symbiosis...";
+    symbiosisResults.classList.add("hidden");
+
+    try {
+      if (!globalThis.mcpClient || token !== globalThis.currentToken) {
+        const serverUrl = new URL("/mcp", window.location.href);
+        const transport = new mcp_sdk.StreamableHTTPClientTransport(serverUrl, {
+          requestInit: {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        });
+
+        globalThis.mcpClient = new mcp_sdk.Client(
+          { name: "word-mapper-client", version: "1.0.0" },
+          { capabilities: {} }
+        );
+
+        await globalThis.mcpClient.connect(transport);
+        globalThis.currentToken = token;
+      }
+
+      const result = await globalThis.mcpClient.callTool({
+        name: "synthesize_symbiosis",
+        arguments: { human_lens: humanLens, ai_spec: aiSpec }
+      });
+
+      if (result.isError) {
+        const errorContent = result.content[0].text;
+        let errorObj;
+        try {
+          errorObj = JSON.parse(errorContent);
+        } catch (e) {
+          throw new Error(errorContent || "Request failed");
+        }
+        throw new Error(errorObj.structured_detail?.error || errorObj.error_code || "Request failed");
+      }
+
+      const data = JSON.parse(result.content[0].text);
+
+      integratedFrameworkEl.textContent = data.integrated_framework;
+      emergentValueEl.textContent = data.emergent_value;
+      productivityJCurveEl.textContent = data.productivity_j_curve_impact;
+
+      symbiosisResults.classList.remove("hidden");
+      symbiosisStatusEl.textContent = "";
+    } catch (err) {
+      console.error(err);
+      globalThis.mcpClient = null;
+      globalThis.currentToken = null;
+      symbiosisStatusEl.textContent = err.message || "An error occurred during synthesis.";
+      symbiosisResults.classList.add("hidden");
+    }
+  });
+
+// WHIMSY INJECT
 if (isBrowser) {
   const input = document.getElementById("words");
   const btn = document.getElementById("mapBtn");
