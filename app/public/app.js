@@ -348,6 +348,93 @@ if (isBrowser) {
     }
   });
 
+
+  const paraconsistentBtn = document.getElementById('paraconsistentBtn');
+  const paraHumanInput = document.getElementById('paraHumanInput');
+  const paraAiInput = document.getElementById('paraAiInput');
+  const paraStatusEl = document.getElementById('paraStatus');
+  const paraResults = document.getElementById('paraResults');
+  const goldenScarEl = document.getElementById('goldenScar');
+  const superpositionPayloadEl = document.getElementById('superpositionPayload');
+  const synthesisLogEl = document.getElementById('synthesisLog');
+
+  paraconsistentBtn?.addEventListener("click", async (event) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      paraStatusEl.textContent = "Authentication required. Please log in.";
+      paraResults.classList.add("hidden");
+      return;
+    }
+
+    const humanInput = paraHumanInput.value.trim();
+    const aiInput = paraAiInput.value.trim();
+    if (!humanInput || !aiInput) {
+      paraStatusEl.textContent = "Please enter both human tacit input and AI structural input.";
+      paraResults.classList.add("hidden");
+      return;
+    }
+
+    paraStatusEl.textContent = "Computing paraconsistent tension...";
+    paraResults.classList.add("hidden");
+    synthesisLogEl.classList.add("hidden");
+
+    try {
+      if (!globalThis.mcpClient || token !== globalThis.currentToken) {
+        const serverUrl = new URL("/mcp", window.location.href);
+        const transport = new mcp_sdk.StreamableHTTPClientTransport(serverUrl, {
+          requestInit: {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        });
+
+        globalThis.mcpClient = new mcp_sdk.Client(
+          { name: "word-mapper-client", version: "1.0.0" },
+          { capabilities: {} }
+        );
+
+        await globalThis.mcpClient.connect(transport);
+        globalThis.currentToken = token;
+      }
+
+      const result = await globalThis.mcpClient.callTool({
+        name: "paraconsistent_synthesis",
+        arguments: { human_input: humanInput, ai_input: aiInput }
+      });
+
+      if (result.isError) {
+        const errorContent = result.content[0].text;
+        let errorObj;
+        try {
+          errorObj = JSON.parse(errorContent);
+        } catch (e) {
+          throw new Error(errorContent || "Request failed");
+        }
+        throw new Error(errorObj.structured_detail?.error || errorObj.error_code || "Request failed");
+      }
+
+      const data = JSON.parse(result.content[0].text);
+
+      goldenScarEl.textContent = String(data.golden_scar);
+      superpositionPayloadEl.textContent = data.superposition_payload;
+
+      if (data.synthesis_log) {
+        synthesisLogEl.textContent = data.synthesis_log;
+        synthesisLogEl.classList.remove("hidden");
+      }
+
+      paraResults.classList.remove("hidden");
+      paraStatusEl.textContent = "";
+    } catch (err) {
+      console.error(err);
+      globalThis.mcpClient = null;
+      globalThis.currentToken = null;
+      paraStatusEl.textContent = err.message || "An error occurred during synthesis computation.";
+      paraResults.classList.add("hidden");
+    }
+  });
+
 // WHIMSY INJECT — Manifold β — Easter Egg: Konami Code Brand Moment
 if (isBrowser) {
   (function WhimsyKonamiEngine() {

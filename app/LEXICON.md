@@ -189,3 +189,9 @@ analogical reasoning across orthogonal semantic fields with JSD < 0.20 post-bind
 **Definition**: The deliberate fusion of human non-obvious analytical lenses (such as tacit reflexive dialogue) with rigid AI specification blocks (such as JSON-LD DCCD execution). This synthesis creates an emergent property where structural determinism does not erase nuanced human realities.
 **Mechanism**: Maps qualitative inputs to structural JSON outputs, anticipating initial cognitive friction (Productivity J-Curve) followed by massive efficiency gains.
 **PDL Activators**: `+++SymbiosisAnchor(value="emergent_determinism")`
+
+### PAT-012 · Paraconsistent Synthesis Node
+**Type**: Epistemic Operator | **AT Score**: 0.94
+**Definition**: A structural topological engine designed to hold the unquantifiable entropy of human tacit knowledge and the rigid determinism of AI models in superposition without forcing collapse.
+**Mechanism**: Tension computation mapping divergent ontological planes into an Isomorphism of Friction, resolving output with the Golden Scar constraint (Φ = 1.618).
+**PDL Activators**: `+++PhronesisGuard(tension="paraconsistent")`

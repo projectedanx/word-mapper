@@ -119,6 +119,34 @@
         </div>
       </section>
 
+
+      <section class="input-section" style="margin-top: 2rem; border-top: 1px solid #1f2937; padding-top: 2rem;">
+        <h2>Paraconsistent Synthesis Node</h2>
+        <p class="tagline">Fuse human tacit knowledge with AI structural determinism.</p>
+        <label for="paraHumanInput">Human Tacit Input (Entropy):</label>
+        <input id="paraHumanInput" type="text" placeholder="e.g. Unquantifiable subjective tension" />
+        <br/><br/>
+        <label for="paraAiInput">AI Structural Input (Topology):</label>
+        <input id="paraAiInput" type="text" placeholder="e.g. Rigid schema constraints" />
+        <button id="paraconsistentBtn" style="margin-top: 1rem; background: #9333ea;">Compute Tension</button>
+        <div id="paraStatus" class="status"></div>
+      </section>
+
+      <section id="paraResults" class="results hidden">
+        <h2>Synthesis Output</h2>
+        <div class="grid">
+          <div class="card" style="border-color: #eab308;">
+            <h3>Golden Scar (Φ)</h3>
+            <div id="goldenScar" style="font-size: 1.25rem; font-weight: bold; color: #facc15;"></div>
+          </div>
+          <div class="card" style="border-color: #9333ea;">
+            <h3>Superposition Payload</h3>
+            <div id="superpositionPayload" style="font-size: 0.85rem; color: #d8b4fe;"></div>
+          </div>
+        </div>
+        <div id="synthesisLog" class="blend hidden" style="border-color: #9333ea;"></div>
+      </section>
+
     </main>
   </div>
 
