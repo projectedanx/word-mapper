@@ -40,7 +40,7 @@ Word Mapper v0.1 MCP Server listening on port 3000
 
 ## API Endpoint Documentation
 
-### `POST /api/map`
+### Tool: `map_semantic_relations` (via MCP)
 Analyzes a set of up to 3 words and returns their semantic relationships.
 
 **Request Body:**
@@ -72,7 +72,51 @@ Analyzes a set of up to 3 words and returns their semantic relationships.
 }
 ```
 
+
+
+### Tool: `paraconsistent_synthesis` (via MCP)
+Fuses human tacit knowledge with rigid AI structural determinism to calculate epistemic drift and yield an emergent Golden Scar (Φ).
+
+**Request Body (Tool Arguments):**
+```json
+{
+  "human_input": "Unquantifiable subjective tension",
+  "ai_input": "Rigid schema constraints"
+}
+```
+
+**Response Payload:**
+```json
+{
+  "golden_scar": 1.618,
+  "superposition_payload": "Tension maintained. [⊘] Contradiction mapped. [∇] Uncertainty preserved.",
+  "synthesis_log": "Fused tacit input [...] with deterministic structure [...]."
+}
+```
+
+### Tool: `agentic_inversion_engine` (via MCP)
+Calculates the epistemic drift between human intuition and AI constraints to propose a latent leap.
+
+**Request Body (Tool Arguments):**
+```json
+{
+  "human_hypothesis": "fuzzy intent",
+  "ai_constraint": "strict schema"
+}
+```
+
+**Response Payload:**
+```json
+{
+  "epistemic_drift": 0.08,
+  "paraconsistent_contradiction": "Detected structural misalignment between fuzzy intent and strict schema.",
+  "latent_leap": "[Φ=1.618] Epistemic Sclerosis averted. Inversion resolved via Executable Metaphor."
+}
+```
+
 ## Lessons Learned
+
+- **Agentic Inversion (Paraconsistent Synthesis):** By capturing the tension between high-entropy human tacit knowledge and rigid AI determinism, the system moves beyond passive data retrieval into an active, emergent structural process generating a Golden Scar resolution (Φ = 1.618).
 
 - **Integration:** Bridging the Datamuse API with a lightweight Express backend highlights the power of decoupling data retrieval from client-side rendering.
 - **Context Engineering:** Relying purely on dictionary mappings is linear. The idea of adding a "mini-blend" feature illustrates how simple concatenations can prompt deeper semantic ideation for LLMs.
