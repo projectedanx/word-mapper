@@ -195,3 +195,10 @@ analogical reasoning across orthogonal semantic fields with JSD < 0.20 post-bind
 **Definition**: A structural topological engine designed to hold the unquantifiable entropy of human tacit knowledge and the rigid determinism of AI models in superposition without forcing collapse.
 **Mechanism**: Tension computation mapping divergent ontological planes into an Isomorphism of Friction, resolving output with the Golden Scar constraint (Φ = 1.618).
 **PDL Activators**: `+++PhronesisGuard(tension="paraconsistent")`
+
+
+### PAT-013 · Agentic Inversion Engine
+**Type**: Epistemic Operator | **AT Score**: 0.95
+**Definition**: Calculates epistemic drift between fuzzy human intent and rigid AI schema, proposing a Latent Leap resolution.
+**Mechanism**: Tension computation mapping divergent ontological planes into an Isomorphism of Friction.
+**PDL Activators**: `+++PhronesisGuard(tension="inversion")`

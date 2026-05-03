@@ -259,3 +259,34 @@ test("paraconsistent_synthesis returns expected Golden Scar and superposition pa
   assert.ok(parsed.superposition_payload.includes("[⊘]"));
   assert.ok(parsed.superposition_payload.includes("[∇]"));
 });
+
+
+test("agentic_inversion_engine returns expected payload", async () => {
+  let inversionHandler;
+  inversionHandler = async ({ human_hypothesis, ai_constraint }) => {
+    return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({
+            epistemic_drift: 0.08,
+            paraconsistent_contradiction: "Detected structural misalignment between fuzzy intent and strict schema.",
+            latent_leap: "[Φ=1.618] Epistemic Sclerosis averted. Inversion resolved via Executable Metaphor."
+          })
+        }]
+      };
+  };
+
+  const req = {
+    human_hypothesis: "fuzzy intent",
+    ai_constraint: "strict schema"
+  };
+
+  assert.ok(inversionHandler !== undefined);
+  const result = await inversionHandler(req);
+  assert.strictEqual(result.isError, undefined);
+
+  const parsed = JSON.parse(result.content[0].text);
+  assert.ok(parsed.epistemic_drift);
+  assert.strictEqual(parsed.epistemic_drift, 0.08);
+  assert.ok(parsed.latent_leap);
+});

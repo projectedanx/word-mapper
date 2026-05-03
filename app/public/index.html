@@ -147,6 +147,34 @@
         <div id="synthesisLog" class="blend hidden" style="border-color: #9333ea;"></div>
       </section>
 
+
+      <section class="input-section" style="margin-top: 2rem; border-top: 1px solid #1f2937; padding-top: 2rem;">
+        <h2>Agentic Inversion Engine</h2>
+        <p class="tagline">Calculate Epistemic Drift and propose Latent Leaps.</p>
+        <label for="invHumanInput">Human Hypothesis (Fuzzy Intent):</label>
+        <input id="invHumanInput" type="text" placeholder="e.g. Need to bridge logic and intuition" />
+        <br/><br/>
+        <label for="invAiInput">AI Constraint (Rigid Schema):</label>
+        <input id="invAiInput" type="text" placeholder="e.g. JSON-LD requirement" />
+        <button id="inversionBtn" style="margin-top: 1rem; background: #059669;">Execute Inversion</button>
+        <div id="invStatus" class="status"></div>
+      </section>
+
+      <section id="invResults" class="results hidden">
+        <h2>Inversion Artifact</h2>
+        <div class="grid">
+          <div class="card" style="border-color: #fca5a5;">
+            <h3>Epistemic Drift</h3>
+            <div id="epistemicDrift" style="font-size: 1.25rem; font-weight: bold; color: #ef4444;"></div>
+          </div>
+          <div class="card" style="border-color: #6ee7b7;">
+            <h3>Latent Leap (Φ)</h3>
+            <div id="latentLeap" style="font-size: 0.85rem; color: #10b981;"></div>
+          </div>
+        </div>
+        <div id="paraconsistentContradiction" class="blend hidden" style="border-color: #f87171;"></div>
+      </section>
+
     </main>
   </div>
 

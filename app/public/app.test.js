@@ -1238,3 +1238,47 @@ test("mapBtn click handles tool JSON parse error empty fallback", async () => {
 
   assert.strictEqual(statusEl.textContent, "Request failed");
 });
+
+
+test("inversionBtn click handles missing input", async () => {
+  const btn = mockDoc.getElementById("inversionBtn");
+  const humanInput = mockDoc.getElementById("invHumanInput");
+  const aiInput = mockDoc.getElementById("invAiInput");
+  const invStatusEl = mockDoc.getElementById("invStatus");
+
+  humanInput.value = "";
+  aiInput.value = "";
+
+  btn.click();
+  await new Promise(r => setTimeout(r, 50));
+
+  assert.strictEqual(invStatusEl.textContent, "Please enter both hypothesis and constraint.");
+});
+
+test("inversionBtn click updates UI with payload", async () => {
+  const btn = mockDoc.getElementById("inversionBtn");
+  const humanInput = mockDoc.getElementById("invHumanInput");
+  const aiInput = mockDoc.getElementById("invAiInput");
+  const invStatusEl = mockDoc.getElementById("invStatus");
+  const epistemicDriftEl = mockDoc.getElementById("epistemicDrift");
+
+  humanInput.value = "H";
+  aiInput.value = "A";
+
+  callToolResult = {
+    isError: false,
+    content: [{
+      text: JSON.stringify({
+        epistemic_drift: 0.08,
+        paraconsistent_contradiction: "test",
+        latent_leap: "leap"
+      })
+    }]
+  };
+
+  btn.click();
+  await new Promise(r => setTimeout(r, 50));
+
+  assert.strictEqual(epistemicDriftEl.textContent, "0.08");
+  assert.strictEqual(invStatusEl.textContent, "Inversion complete.");
+});

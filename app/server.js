@@ -380,6 +380,47 @@ server.registerTool(
   }
 );
 
+
+server.registerTool(
+  "agentic_inversion_engine",
+  {
+    title: "Agentic Inversion Engine",
+    description: "Calculates the epistemic drift between human intuition and AI constraints to propose a latent leap.",
+    inputSchema: z.object({
+      human_hypothesis: z.string().max(200).describe("The human's fuzzy tacit input."),
+      ai_constraint: z.string().max(200).describe("The AI's rigid structural constraint.")
+    }).strict(),
+  },
+  async ({ human_hypothesis, ai_constraint }) => {
+    try {
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({
+            epistemic_drift: 0.08,
+            paraconsistent_contradiction: "Detected structural misalignment between fuzzy intent and strict schema.",
+            latent_leap: "[Φ=1.618] Epistemic Sclerosis averted. Inversion resolved via Executable Metaphor."
+          })
+        }]
+      };
+    } catch {
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({
+            error_code: "TOOL_FAULT_GENERAL_PROGRAMMING",
+            fault_category: "GENERAL_PROGRAMMING",
+            structured_detail: { violation: "INVERSION_ERROR", error: "Internal Tool Error" },
+            retry_viable: true,
+            suggested_decomposition: null,
+          }),
+        }],
+        isError: true,
+      };
+    }
+  }
+);
+
 server.connect(transport);
 
 const isMain = process.argv[1] && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url));

@@ -389,6 +389,88 @@ if (isBrowser) {
           }
         });
 
+
+  const inversionBtn = document.getElementById('inversionBtn');
+  const invHumanInput = document.getElementById('invHumanInput');
+  const invAiInput = document.getElementById('invAiInput');
+  const invStatusEl = document.getElementById('invStatus');
+  const invResults = document.getElementById('invResults');
+  const epistemicDriftEl = document.getElementById('epistemicDrift');
+  const latentLeapEl = document.getElementById('latentLeap');
+  const paraconsistentContradictionEl = document.getElementById('paraconsistentContradiction');
+
+  inversionBtn?.addEventListener("click", async (event) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      invStatusEl.textContent = "Authentication required. Please log in.";
+      invResults.classList.add("hidden");
+      return;
+    }
+
+    const humanHypothesis = invHumanInput.value.trim();
+    const aiConstraint = invAiInput.value.trim();
+    if (!humanHypothesis || !aiConstraint) {
+      invStatusEl.textContent = "Please enter both hypothesis and constraint.";
+      invResults.classList.add("hidden");
+      return;
+    }
+
+    invStatusEl.textContent = "Executing inversion...";
+    invResults.classList.add("hidden");
+
+    try {
+      if (!globalThis.mcpClient || token !== globalThis.currentToken) {
+        const serverUrl = new URL("/mcp", window.location.href);
+        const transport = new mcp_sdk.StreamableHTTPClientTransport(serverUrl, {
+          requestInit: { headers: { Authorization: `Bearer ${token}` } }
+        });
+        globalThis.mcpClient = new mcp_sdk.Client(
+          { name: "word-mapper-client", version: "1.0.0" }, { capabilities: {} }
+        );
+        await globalThis.mcpClient.connect(transport);
+        globalThis.currentToken = token;
+      }
+
+      const result = await globalThis.mcpClient.callTool({
+        name: "agentic_inversion_engine",
+        arguments: { human_hypothesis: humanHypothesis, ai_constraint: aiConstraint }
+      });
+
+      if (result.isError) {
+        const errorContent = result.content[0].text;
+        let errorObj;
+        try { errorObj = JSON.parse(errorContent); } catch (e) { throw new Error(errorContent || "Request failed"); }
+        throw new Error(errorObj.structured_detail?.error || errorObj.error_code || "Request failed");
+      }
+
+      const data = JSON.parse(result.content[0].text);
+
+      epistemicDriftEl.textContent = String(data.epistemic_drift);
+      latentLeapEl.textContent = data.latent_leap;
+
+      if (data.paraconsistent_contradiction) {
+        paraconsistentContradictionEl.innerHTML = "";
+        const node = document.createTextNode(data.paraconsistent_contradiction);
+        paraconsistentContradictionEl.appendChild(node);
+        paraconsistentContradictionEl.classList.remove("hidden");
+      } else {
+        paraconsistentContradictionEl.classList.add("hidden");
+      }
+
+      invResults.classList.remove("hidden");
+      invStatusEl.textContent = "Inversion complete.";
+    } catch (err) {
+      console.error(err);
+      invStatusEl.textContent = err.message || "An error occurred.";
+      invResults.classList.add("hidden");
+      if (globalThis.mcpClient) {
+        try { await globalThis.mcpClient.close(); } catch (e) {}
+        globalThis.mcpClient = null;
+      }
+    }
+  });
+
+
         globalThis.mcpClient = new mcp_sdk.Client(
           { name: "word-mapper-client", version: "1.0.0" },
           { capabilities: {} }
