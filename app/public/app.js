@@ -8,7 +8,7 @@
  * @returns {void}
  */
 export function fillList(listEl, items) {
-  listEl.innerHTML = "";
+  listEl.textContent = "";
   if (!items || !items.length) {
     const li = document.createElement("li");
     li.textContent = "—";
@@ -449,7 +449,7 @@ if (isBrowser) {
       latentLeapEl.textContent = data.latent_leap;
 
       if (data.paraconsistent_contradiction) {
-        paraconsistentContradictionEl.innerHTML = "";
+        paraconsistentContradictionEl.textContent = "";
         const node = document.createTextNode(data.paraconsistent_contradiction);
         paraconsistentContradictionEl.appendChild(node);
         paraconsistentContradictionEl.classList.remove("hidden");

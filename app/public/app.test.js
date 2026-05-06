@@ -18,7 +18,7 @@ class MockElement {
        }
     };
     this.classList.contains = function(cls) { return Set.prototype.has.call(self.classList, cls); };
-    this.textContent = "";
+    this._textContent = "";
     this._innerHTML = "";
     this.value = "";
     this._listeners = {};
@@ -33,6 +33,32 @@ class MockElement {
     this._innerHTML = val;
     if (val === "") {
       this.children = [];
+      this._textContent = "";
+    }
+  }
+
+  get className() {
+    return Array.from(this.classList).join(" ");
+  }
+
+  set className(val) {
+    this.classList.clear();
+    val.split(/\s+/).filter(Boolean).forEach(cls => this.classList.add(cls));
+  }
+
+  get textContent() {
+    return this._textContent;
+  }
+
+  set textContent(val) {
+    this._textContent = val;
+    this.children = [];
+    this._innerHTML = "";
+    if (val !== "") {
+      this.children.push({
+        nodeType: 3,
+        textContent: val
+      });
     }
   }
 
