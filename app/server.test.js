@@ -2,6 +2,13 @@ import test from "node:test";
 import assert from "node:assert";
 import { fetchDatamuse, BoundedMap } from "./server.js";
 
+/**
+ * Helper to parse JSON from MCP text content.
+ * @param {Object} result - The MCP tool result object.
+ * @returns {Object} The parsed JSON content.
+ */
+const parseMcpText = (result) => JSON.parse(result.content[0].text);
+
 test("fetchDatamuse successfully retrieves and parses data", async () => {
   const mockData = [{ word: "test", score: 100 }];
   const mockFetch = async (url) => {
@@ -192,7 +199,7 @@ test("mine_lexical_topology returns correct Pluriversal Knowledge Capsule struct
     }]
   };
 
-  const parsed = JSON.parse(result.content[0].text);
+  const parsed = parseMcpText(result);
   assert.ok(parsed.analysis_zones);
   assert.ok(parsed.pluriversal_knowledge_capsule);
   assert.strictEqual(parsed.paraconsistent_hasse_lattice.nodes.length, 2);
@@ -210,7 +217,7 @@ test("synthesize_symbiosis returns correct Human-AI Symbiosis Engine structure",
     }]
   };
 
-  const parsed = JSON.parse(result.content[0].text);
+  const parsed = parseMcpText(result);
   assert.ok(parsed.integrated_framework);
   assert.ok(parsed.emergent_value);
   assert.ok(parsed.productivity_j_curve_impact);
@@ -252,7 +259,7 @@ test("paraconsistent_synthesis returns expected Golden Scar and superposition pa
   const result = await synthesisHandler(req);
   assert.strictEqual(result.isError, undefined);
 
-  const parsed = JSON.parse(result.content[0].text);
+  const parsed = parseMcpText(result);
   assert.ok(parsed.golden_scar);
   assert.strictEqual(parsed.golden_scar, 1.618);
   assert.ok(parsed.superposition_payload);
@@ -285,7 +292,7 @@ test("agentic_inversion_engine returns expected payload", async () => {
   const result = await inversionHandler(req);
   assert.strictEqual(result.isError, undefined);
 
-  const parsed = JSON.parse(result.content[0].text);
+  const parsed = parseMcpText(result);
   assert.ok(parsed.epistemic_drift);
   assert.strictEqual(parsed.epistemic_drift, 0.08);
   assert.ok(parsed.latent_leap);
