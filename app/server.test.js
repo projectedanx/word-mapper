@@ -83,11 +83,15 @@ test("cabpMiddleware successfully processes valid JWT", async () => {
   });
 
   process.env.JWT_PUBLIC_KEY = publicKey;
+  process.env.JWT_AUDIENCE = "test-audience";
+  process.env.JWT_ISSUER = "test-issuer";
 
   const payload = {
     user_id: "user123",
     tenant_id: "tenant456",
-    scopes: ["read", "write"]
+    scopes: ["read", "write"],
+    aud: "test-audience",
+    iss: "test-issuer"
   };
   const token = jwt.sign(payload, privateKey, { algorithm: "RS256" });
 
@@ -108,6 +112,64 @@ test("cabpMiddleware successfully processes valid JWT", async () => {
     tenant_id: "tenant456",
     scopes: ["read", "write"]
   });
+});
+
+test("cabpMiddleware rejects JWT with incorrect audience", async () => {
+  const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
+    modulusLength: 2048,
+    publicKeyEncoding: { type: 'spki', format: 'pem' },
+    privateKeyEncoding: { type: 'pkcs8', format: 'pem' }
+  });
+
+  process.env.JWT_PUBLIC_KEY = publicKey;
+  process.env.JWT_AUDIENCE = "expected-audience";
+
+  const payload = {
+    user_id: "user123",
+    aud: "wrong-audience"
+  };
+  const token = jwt.sign(payload, privateKey, { algorithm: "RS256" });
+
+  const req = { headers: { authorization: `Bearer ${token}` } };
+  let statusCode;
+  const res = {
+    status: (code) => { statusCode = code; return res; },
+    json: () => {}
+  };
+  const next = () => { throw new Error("next should not be called"); };
+
+  await cabpMiddleware(req, res, next);
+
+  assert.strictEqual(statusCode, 403);
+});
+
+test("cabpMiddleware rejects JWT with incorrect issuer", async () => {
+  const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
+    modulusLength: 2048,
+    publicKeyEncoding: { type: 'spki', format: 'pem' },
+    privateKeyEncoding: { type: 'pkcs8', format: 'pem' }
+  });
+
+  process.env.JWT_PUBLIC_KEY = publicKey;
+  process.env.JWT_ISSUER = "expected-issuer";
+
+  const payload = {
+    user_id: "user123",
+    iss: "wrong-issuer"
+  };
+  const token = jwt.sign(payload, privateKey, { algorithm: "RS256" });
+
+  const req = { headers: { authorization: `Bearer ${token}` } };
+  let statusCode;
+  const res = {
+    status: (code) => { statusCode = code; return res; },
+    json: () => {}
+  };
+  const next = () => { throw new Error("next should not be called"); };
+
+  await cabpMiddleware(req, res, next);
+
+  assert.strictEqual(statusCode, 403);
 });
 
 test("BoundedMap enforces capacity and evicts oldest entries (FIFO)", () => {
