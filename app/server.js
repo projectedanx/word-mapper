@@ -109,8 +109,14 @@ export async function cabpMiddleware(req, res, next) {
 
   try {
     const token = authHeader.slice(7);
+    const verifyOptions = {
+      algorithms: ["RS256"],
+      audience: process.env.JWT_AUDIENCE,
+      issuer: process.env.JWT_ISSUER
+    };
+
     const claims = await new Promise((resolve, reject) => {
-      jwt.verify(token, process.env.JWT_PUBLIC_KEY, { algorithms: ["RS256"] }, (err, decoded) => {
+      jwt.verify(token, process.env.JWT_PUBLIC_KEY, verifyOptions, (err, decoded) => {
         if (err) return reject(err);
         resolve(decoded);
       });
