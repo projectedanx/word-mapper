@@ -542,12 +542,21 @@ if (isBrowser) {
           inputBuffer.shift();
         }
         if (
-          inputBuffer.length === KONAMI.length &&
-          inputBuffer.every((v, i) => v === KONAMI[i]) &&
           !easterEggActive &&
+          e.keyCode === KONAMI[KONAMI.length - 1] &&
+          inputBuffer.length === KONAMI.length &&
           sessionActivations < BRAND_MOMENT.max_activations_per_session
         ) {
-          triggerBrandMoment();
+          let match = true;
+          for (let i = 0; i < KONAMI.length; i++) {
+            if (inputBuffer[i] !== KONAMI[i]) {
+              match = false;
+              break;
+            }
+          }
+          if (match) {
+            triggerBrandMoment();
+          }
         }
       });
     }
