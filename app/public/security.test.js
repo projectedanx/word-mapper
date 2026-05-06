@@ -13,7 +13,7 @@ class MockElement {
     this.classList.add = function(cls) { Set.prototype.add.call(self.classList, cls); };
     this.classList.remove = function(cls) { Set.prototype.delete.call(self.classList, cls); };
     this.classList.contains = function(cls) { return Set.prototype.has.call(self.classList, cls); };
-    this.textContent = "";
+    this._textContent = "";
     this._innerHTML = "";
     this.value = "";
     this._listeners = {};
@@ -29,6 +29,32 @@ class MockElement {
     this._innerHTML = val;
     if (val === "") {
       this.children = [];
+      this._textContent = "";
+    }
+  }
+
+  get className() {
+    return Array.from(this.classList).join(" ");
+  }
+
+  set className(val) {
+    this.classList.clear();
+    val.split(/\s+/).filter(Boolean).forEach(cls => this.classList.add(cls));
+  }
+
+  get textContent() {
+    return this._textContent;
+  }
+
+  set textContent(val) {
+    this._textContent = val;
+    this.children = [];
+    this._innerHTML = "";
+    if (val !== "") {
+      this.appendChild({
+        nodeType: 3,
+        textContent: val
+      });
     }
   }
 
@@ -150,10 +176,6 @@ global.mcp_sdk = {
 await import("./app.js");
 
 test("Easter Egg Overlay prevents XSS", async () => {
-  // The BRAND_MOMENT is hardcoded in app.js, so we can't easily change it
-  // without modifying the file. However, we can check if the current implementation
-  // uses innerHTML with the hardcoded values.
-
   // Trigger Konami code: 38,38,40,40,37,39,37,39,66,65
   const konami = [38,38,40,40,37,39,37,39,66,65];
   konami.forEach(keyCode => {
@@ -163,12 +185,19 @@ test("Easter Egg Overlay prevents XSS", async () => {
   const overlay = mockDoc.body.children.find(c => c.id === "whimsy-konami-overlay");
   assert.ok(overlay, "Overlay should be created");
 
-  // In the vulnerable version, overlay.innerHTML is set.
-  // We want to ensure that after the fix, it doesn't just contain the raw HTML string
-  // but was built safely.
-  // Actually, the test should fail if we can inject something.
-  // Since BRAND_MOMENT is hardcoded, we'll verify the fix by checking that
-  // after our refactor, the elements are created via createElement.
+  // Verify safe construction: No innerHTML should be used.
+  assert.strictEqual(overlay.innerHTML, "", "Overlay should not use innerHTML");
+
+  const card = overlay.children[0];
+  assert.ok(card.classList.contains("whimsy-egg-card"), "Card should have the correct class");
+
+  const pPrimary = card.children[0];
+  assert.strictEqual(pPrimary.textContent, "You found the secret.");
+  assert.strictEqual(pPrimary.innerHTML, "", "Primary text should be set via textContent");
+
+  const pSecondary = card.children[1];
+  assert.strictEqual(pSecondary.textContent, "We put this here for exactly the kind of person who would look for it.");
+  assert.strictEqual(pSecondary.innerHTML, "", "Secondary text should be set via textContent");
 });
 
 test("Knowledge Capsule prevents XSS", async () => {
@@ -198,9 +227,13 @@ test("Knowledge Capsule prevents XSS", async () => {
   await new Promise(r => setTimeout(r, 50));
 
   // After the fix, we should be using createTextNode/textContent
-  // Our refactor used createTextNode for emergent_synthesis.
+  // Our refactor used createTextNode for emergent_synthesis and isomorphisms_of_friction.
 
-  const textNode = knowledgeCapsuleEl.children.find(c => c.nodeType === 3 && c.textContent === maliciousPayload);
-  assert.ok(textNode, "Malicious payload should be added as a text node, not HTML");
-  assert.strictEqual(knowledgeCapsuleEl.innerHTML, "", "innerHTML should not be used");
+  const synthesisNode = knowledgeCapsuleEl.children.find(c => c.nodeType === 3 && c.textContent === maliciousPayload);
+  assert.ok(synthesisNode, "emergent_synthesis should be added as a text node, not HTML");
+
+  const frictionNode = knowledgeCapsuleEl.children.find(c => c.nodeType === 3 && c.textContent === "friction");
+  assert.ok(frictionNode, "isomorphisms_of_friction should be added as a text node");
+
+  assert.strictEqual(knowledgeCapsuleEl.innerHTML, "", "innerHTML should not be used in Knowledge Capsule");
 });
