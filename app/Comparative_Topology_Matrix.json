@@ -78,6 +78,48 @@
         "primary_lock_in_vector": "Minimal - standard JSON-RPC 2.0 payload format over Streamable HTTP."
       },
       "ssa_scar_ids_referenced": []
+    },
+    {
+      "tool_id": "TOOL-VIPER-OPTICAL-EXTRUDER",
+      "name": "VIPER Optical Extrusion Engine",
+      "vendor": "Internal/Open Source",
+      "ecosystem": "Node.js | ESM",
+      "epistemic_isolation_domain": "ER-001_NODEJS_ESM",
+      "metrics": {
+        "betti_1_loop_count": 0,
+        "structural_integrity": "HIGH",
+        "drd_critical_per_1k_commits": 0.0,
+        "drd_status": "ACCEPTABLE",
+        "tco_5yr_npv_usd": 15000,
+        "enshittification_risk": "LOW",
+        "enshittification_trigger": "None - strict local logic mapping",
+        "elis": 0.08,
+        "elis_status": "ACCEPTABLE",
+        "srds": 2.0,
+        "saga_recovery_deficit": false,
+        "bus_factor": 1,
+        "cvss_max_open": 0.0,
+        "thoughtworks_radar_signal": "ADOPT (Local Assessment)",
+        "bricolage_fragility": "LOW",
+        "verified_claims": 6,
+        "unverified_stochastic_signals": 0
+      },
+      "verdict": "ADOPT",
+      "confidence": 0.98,
+      "conditional_clause": "None",
+      "exit_strategy": {
+        "18_month_rollback_cost_dev_days": 1,
+        "36_month_rollback_cost_dev_days": 2,
+        "60_month_rollback_cost_dev_days": 4,
+        "primary_lock_in_vector": "None"
+      },
+      "ssa_scar_ids_referenced": [
+        "\u03b21",
+        "\u03b22",
+        "\u03b23",
+        "\u03b24",
+        "\u03b25"
+      ]
     }
   ]
 }

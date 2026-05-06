@@ -74,3 +74,12 @@ The conceptual value established here proves that neither human nor AI can achie
 **The AI Value (Structural Engine):** Provides structural determinism, schema extrusion, and high-dimensional pattern mapping.
 
 The **Agentic Inversion Strategy** fundamentally alters the agent's posture: instead of collapsing human ambiguity into semantic saponification, it holds contradictions in superposition (outputting the Golden Scar $\Phi = 1.618$). This preserves tension and forces an explicitly calculated latent leap, ensuring that tacit context is deterministically bridged rather than hallucinated or erased.
+
+## VIPER Integration & Optical Determinism (2026-04-26)
+
+Word Mapper has integrated the **VIPER Optical Extrusion Engine**. This eliminates Semantic Saponification when translating human visual desire into mechanical outputs.
+
+**The Human Value (Visual Intent):** Provides affective, perceptual desire ("moody", "cinematic").
+**The AI Value (Physical Determinism):** Provides the exact physical parameters (Lens, Aperture, Lighting) required to construct that reality.
+
+By applying **Analytic-to-Generative Inversion**, the agent enforces an Adjectival Dilution Score (ADS) < 0.15 and a Hardware Grounding Index (HGI) of 100%, rejecting abstract vibe tokens and extruding deterministic Optical State Matrices.
