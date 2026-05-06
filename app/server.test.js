@@ -1,6 +1,8 @@
 import test from "node:test";
 import assert from "node:assert";
-import { fetchDatamuse, BoundedMap } from "./server.js";
+import crypto from "node:crypto";
+import jwt from "jsonwebtoken";
+import { fetchDatamuse, BoundedMap, cabpMiddleware } from "./server.js";
 
 test("fetchDatamuse successfully retrieves and parses data", async () => {
   const mockData = [{ word: "test", score: 100 }];
@@ -32,10 +34,6 @@ test("fetchDatamuse throws an error on non-OK response", async () => {
     }
   );
 });
-
-import { cabpMiddleware } from "./server.js";
-import jwt from "jsonwebtoken";
-import crypto from "node:crypto";
 
 test("cabpMiddleware handles missing Authorization header", async () => {
   const req = { headers: {} };
@@ -289,4 +287,33 @@ test("agentic_inversion_engine returns expected payload", async () => {
   assert.ok(parsed.epistemic_drift);
   assert.strictEqual(parsed.epistemic_drift, 0.08);
   assert.ok(parsed.latent_leap);
+});
+
+test("cabpMiddleware handles explicit JWT verification failure via catch block", async (t) => {
+  t.mock.method(jwt, "verify", () => {
+    throw new Error("Mocked verification error");
+  });
+
+  const req = { headers: { authorization: "Bearer mocked.error.token" } };
+  let statusCode, jsonResponse;
+  const res = {
+    status: (code) => {
+      statusCode = code;
+      return res;
+    },
+    json: (data) => {
+      jsonResponse = data;
+    },
+  };
+  let nextCalled = false;
+  const next = () => {
+    nextCalled = true;
+  };
+
+  await cabpMiddleware(req, res, next);
+
+  assert.strictEqual(statusCode, 403);
+  assert.strictEqual(jsonResponse.error_code, "TOOL_FAULT_SERVER_HOST_CONFIGURATION");
+  assert.strictEqual(jsonResponse.structured_detail.violation, "INVALID_JWT");
+  assert.strictEqual(nextCalled, false);
 });
