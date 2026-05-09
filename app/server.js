@@ -8,6 +8,10 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { z } from "zod";
 
+/**
+ * The Express application instance.
+ * @type {import('express').Express}
+ */
 export const app = express();
 const PORT = process.env.PORT || 3000;
 

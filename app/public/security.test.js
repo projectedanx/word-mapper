@@ -175,6 +175,9 @@ global.mcp_sdk = {
 // Import app.js to trigger the IIFE and listeners
 await import("./app.js");
 
+/**
+ * Test: Easter Egg Overlay prevents XSS
+ */
 test("Easter Egg Overlay prevents XSS", async () => {
   // Trigger Konami code: 38,38,40,40,37,39,37,39,66,65
   const konami = [38,38,40,40,37,39,37,39,66,65];
@@ -200,6 +203,9 @@ test("Easter Egg Overlay prevents XSS", async () => {
   assert.strictEqual(pSecondary.innerHTML, "", "Secondary text should be set via textContent");
 });
 
+/**
+ * Test: Knowledge Capsule prevents XSS
+ */
 test("Knowledge Capsule prevents XSS", async () => {
   const mineBtn = mockDoc.getElementById("mineBtn");
   const domainsInput = mockDoc.getElementById("domains");

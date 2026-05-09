@@ -11,6 +11,9 @@ import { fetchDatamuse, BoundedMap, cabpMiddleware } from "./server.js";
  */
 const parseMcpText = (result) => JSON.parse(result.content[0].text);
 
+/**
+ * Test: fetchDatamuse successfully retrieves and parses data
+ */
 test("fetchDatamuse successfully retrieves and parses data", async () => {
   const mockData = [{ word: "test", score: 100 }];
   const mockFetch = async (url) => {
@@ -25,6 +28,9 @@ test("fetchDatamuse successfully retrieves and parses data", async () => {
   assert.deepStrictEqual(result, mockData);
 });
 
+/**
+ * Test: fetchDatamuse throws an error on non-OK response
+ */
 test("fetchDatamuse throws an error on non-OK response", async () => {
   const mockFetch = async (url) => {
     return {
@@ -42,6 +48,9 @@ test("fetchDatamuse throws an error on non-OK response", async () => {
   );
 });
 
+/**
+ * Test: cabpMiddleware handles missing Authorization header
+ */
 test("cabpMiddleware handles missing Authorization header", async () => {
   const req = { headers: {} };
   let statusCode, jsonResponse;
@@ -57,6 +66,9 @@ test("cabpMiddleware handles missing Authorization header", async () => {
   assert.strictEqual(jsonResponse.structured_detail.violation, "MISSING_JWT");
 });
 
+/**
+ * Test: cabpMiddleware handles invalid JWT signature / throw error
+ */
 test("cabpMiddleware handles invalid JWT signature / throw error", async () => {
   process.env.JWT_PUBLIC_KEY = "dummy_key";
   const req = { headers: { authorization: "Bearer invalid.token.payload" } };
@@ -73,6 +85,9 @@ test("cabpMiddleware handles invalid JWT signature / throw error", async () => {
   assert.strictEqual(jsonResponse.structured_detail.violation, "INVALID_JWT");
 });
 
+/**
+ * Test: cabpMiddleware successfully processes valid JWT
+ */
 test("cabpMiddleware successfully processes valid JWT", async () => {
   const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
     modulusLength: 2048,
@@ -112,6 +127,9 @@ test("cabpMiddleware successfully processes valid JWT", async () => {
   });
 });
 
+/**
+ * Test: cabpMiddleware rejects JWT with incorrect audience
+ */
 test("cabpMiddleware rejects JWT with incorrect audience", async () => {
   const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
     modulusLength: 2048,
@@ -141,6 +159,9 @@ test("cabpMiddleware rejects JWT with incorrect audience", async () => {
   assert.strictEqual(statusCode, 403);
 });
 
+/**
+ * Test: cabpMiddleware rejects JWT with incorrect issuer
+ */
 test("cabpMiddleware rejects JWT with incorrect issuer", async () => {
   const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
     modulusLength: 2048,
@@ -170,6 +191,9 @@ test("cabpMiddleware rejects JWT with incorrect issuer", async () => {
   assert.strictEqual(statusCode, 403);
 });
 
+/**
+ * Test: BoundedMap enforces capacity and evicts oldest entries (FIFO)
+ */
 test("BoundedMap enforces capacity and evicts oldest entries (FIFO)", () => {
   const capacity = 3;
   const map = new BoundedMap(capacity);
@@ -194,6 +218,9 @@ test("BoundedMap enforces capacity and evicts oldest entries (FIFO)", () => {
   assert.strictEqual(map.get("b"), 20);
 });
 
+/**
+ * Test: fetchDatamuse returns cached data on subsequent calls
+ */
 test("fetchDatamuse returns cached data on subsequent calls", async () => {
   const mockData = [{ word: "cached_test", score: 100 }];
   let fetchCallCount = 0;
@@ -219,6 +246,9 @@ test("fetchDatamuse returns cached data on subsequent calls", async () => {
   assert.strictEqual(fetchCallCount, 1);
 });
 
+/**
+ * Test: mine_lexical_topology returns correct Pluriversal Knowledge Capsule structure
+ */
 test("mine_lexical_topology returns correct Pluriversal Knowledge Capsule structure", async () => {
   let domains;
   const mockServer = {
@@ -265,6 +295,9 @@ test("mine_lexical_topology returns correct Pluriversal Knowledge Capsule struct
   assert.strictEqual(parsed.paraconsistent_hasse_lattice.nodes.length, 2);
 });
 
+/**
+ * Test: synthesize_symbiosis returns correct Human-AI Symbiosis Engine structure
+ */
 test("synthesize_symbiosis returns correct Human-AI Symbiosis Engine structure", async () => {
   const result = {
     content: [{
@@ -284,6 +317,9 @@ test("synthesize_symbiosis returns correct Human-AI Symbiosis Engine structure",
   assert.strictEqual(parsed.integrated_framework, "Synthesized [Reflexive Dialogue] with [JSON-LD Schema].");
 });
 
+/**
+ * Test: paraconsistent_synthesis returns expected Golden Scar and superposition payload
+ */
 test("paraconsistent_synthesis returns expected Golden Scar and superposition payload", async () => {
   // Extract handler via mock server registration pattern (similar to mine_lexical_topology test)
   let synthesisHandler;
@@ -328,6 +364,9 @@ test("paraconsistent_synthesis returns expected Golden Scar and superposition pa
 });
 
 
+/**
+ * Test: agentic_inversion_engine returns expected payload
+ */
 test("agentic_inversion_engine returns expected payload", async () => {
   let inversionHandler;
   inversionHandler = async ({ human_hypothesis, ai_constraint }) => {
@@ -358,6 +397,9 @@ test("agentic_inversion_engine returns expected payload", async () => {
   assert.ok(parsed.latent_leap);
 });
 
+/**
+ * Test: cabpMiddleware handles explicit JWT verification failure via catch block
+ */
 test("cabpMiddleware handles explicit JWT verification failure via catch block", async (t) => {
   t.mock.method(jwt, "verify", () => {
     throw new Error("Mocked verification error");

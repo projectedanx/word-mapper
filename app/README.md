@@ -16,29 +16,31 @@ This repository strictly adheres to the KORSAKOV architectural manifest for MCP 
 - Node.js v22.22.1 (using ECMAScript Modules)
 - Node package manager or bun (v1.2.14)
 
-## Quickstart: Word Mapper in 3 Steps
+## Zero-Friction Quickstart
 
-### Step 1: Install
+### 1. Install
+Install the system dependencies.
 ```bash
 cd app && npm install
 ```
 
-### Step 2: Authenticate
+### 2. Authenticate
+Provide the required token to the environment.
 ```javascript
 localStorage.setItem('token', 'YOUR_JWT_TOKEN');
 ```
 
-### Step 3: First Call
+### 3. First Call
+Initialize the server process.
 ```bash
 npm run start &
 ```
 
-**Expected output:**
+### 4. Expected Output
+The server establishes the listener.
 ```
 Word Mapper v0.1 MCP Server listening on port 3000
 ```
-
-> **Why this works:** The application launches the Express server locally and uses the token to authenticate with the MCP backend.
 
 ## Testing
 
