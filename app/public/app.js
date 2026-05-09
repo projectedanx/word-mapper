@@ -519,6 +519,10 @@ if (isBrowser) {
 
 // WHIMSY INJECT — Manifold β — Easter Egg: Konami Code Brand Moment
 if (isBrowser) {
+  /**
+   * WhimsyKonamiEngine is an IIFE that handles Konami Code Easter egg.
+   * @returns {void}
+   */
   (function WhimsyKonamiEngine() {
     const KONAMI = [38,38,40,40,37,39,37,39,66,65];
     let inputBuffer = [];
@@ -561,6 +565,10 @@ if (isBrowser) {
       });
     }
 
+    /**
+     * Triggers the brand moment overlay and handles its lifecycle.
+     * @returns {void}
+     */
     function triggerBrandMoment() {
       easterEggActive = true;
       sessionActivations++;

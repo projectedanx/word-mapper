@@ -5,6 +5,9 @@ import assert from "node:assert";
  * Manual DOM mock to replace jsdom in restricted environments.
  */
 class MockElement {
+  /**
+   * @param {string} [tagName="DIV"] - The tag name of the mock element.
+   */
   constructor(tagName = "DIV") {
     this.tagName = tagName.toUpperCase();
     this.children = [];
@@ -62,6 +65,10 @@ class MockElement {
     }
   }
 
+  /**
+   * Appends a child mock element.
+   * @param {MockElement} child - The child to append.
+   */
   appendChild(child) {
     child.parentNode = this;
     if (child.nodeType === 11) {
@@ -111,7 +118,11 @@ class MockDocument {
     return {
       nodeType: 11,
       children: [],
-      appendChild(child) {
+      /**
+   * Appends a child mock element.
+   * @param {MockElement} child - The child to append.
+   */
+  appendChild(child) {
         this.children.push(child);
         return child;
       }
@@ -165,6 +176,9 @@ global.mcp_sdk = {
 
 const { fillList } = await import("./app.js");
 
+/**
+ * Test: fillList populates list element
+ */
 test("fillList populates list element", () => {
   const listEl = mockDoc.createElement("ul");
   fillList(listEl, ["apple", "banana"]);
@@ -173,6 +187,9 @@ test("fillList populates list element", () => {
   assert.strictEqual(listEl.children[1].textContent, "banana");
 });
 
+/**
+ * Test: fillList adds em dash when items are empty
+ */
 test("fillList adds em dash when items are empty", () => {
   const listEl = mockDoc.createElement("ul");
   fillList(listEl, []);
@@ -180,6 +197,9 @@ test("fillList adds em dash when items are empty", () => {
   assert.strictEqual(listEl.children[0].textContent, "—");
 });
 
+/**
+ * Test: fillList handles null or undefined items
+ */
 test("fillList handles null or undefined items", () => {
   const listEl = mockDoc.createElement("ul");
   fillList(listEl, null);
@@ -192,6 +212,9 @@ test("fillList handles null or undefined items", () => {
   assert.strictEqual(listEl2.children[0].textContent, "—");
 });
 
+/**
+ * Test: fillList clears existing content
+ */
 test("fillList clears existing content", () => {
   const listEl = mockDoc.createElement("ul");
   listEl.appendChild(mockDoc.createElement("li"));
@@ -203,6 +226,9 @@ test("fillList clears existing content", () => {
   assert.strictEqual(listEl.children[0].textContent, "new item");
 });
 
+/**
+ * Test: fillList uses textContent for security
+ */
 test("fillList uses textContent for security", () => {
   const listEl = mockDoc.createElement("ul");
   const malicious = "<img src=x onerror=alert(1)>";
@@ -210,6 +236,9 @@ test("fillList uses textContent for security", () => {
   assert.strictEqual(listEl.children[0].textContent, malicious);
 });
 
+/**
+ * Test: button click maps words and updates UI
+ */
 test("button click maps words and updates UI", async () => {
   const input = mockDoc.getElementById("words");
   const btn = mockDoc.getElementById("mapBtn");
@@ -251,6 +280,9 @@ test("button click maps words and updates UI", async () => {
   assert.strictEqual(synList.children[0].textContent, "hi");
 });
 
+/**
+ * Test: button click handles empty input
+ */
 test("button click handles empty input", async () => {
   const input = mockDoc.getElementById("words");
   const btn = mockDoc.getElementById("mapBtn");
@@ -266,6 +298,9 @@ test("button click handles empty input", async () => {
   assert.strictEqual(resultsSection.classList.contains("hidden"), true);
 });
 
+/**
+ * Test: button click handles tool call error
+ */
 test("button click handles tool call error", async () => {
   const input = mockDoc.getElementById("words");
   const btn = mockDoc.getElementById("mapBtn");
@@ -291,6 +326,9 @@ test("button click handles tool call error", async () => {
   assert.strictEqual(resultsSection.classList.contains("hidden"), true);
 });
 
+/**
+ * Test: button click handles missing token
+ */
 test("button click handles missing token", async () => {
   const input = mockDoc.getElementById("words");
   const btn = mockDoc.getElementById("mapBtn");
@@ -315,6 +353,9 @@ test("button click handles missing token", async () => {
   }
 });
 
+/**
+ * Test: mineBtn click updates topological UI
+ */
 test("mineBtn click updates topological UI", async () => {
   const btn = mockDoc.getElementById("mineBtn");
   const input = mockDoc.getElementById("domains");
@@ -351,6 +392,9 @@ test("mineBtn click updates topological UI", async () => {
   assert.strictEqual(semanticDriftEl.textContent, "Measured semantic shift");
 });
 
+/**
+ * Test: symbiosisBtn click updates symbiosis UI
+ */
 test("symbiosisBtn click updates symbiosis UI", async () => {
   const btn = mockDoc.getElementById("symbiosisBtn");
   const humanLensInput = mockDoc.getElementById("humanLens");
@@ -382,6 +426,9 @@ test("symbiosisBtn click updates symbiosis UI", async () => {
   assert.strictEqual(integratedFrameworkEl.textContent, "Synthesized [Reflexive Dialogue] with [JSON-LD Schema].");
 });
 
+/**
+ * Test: symbiosisBtn click handles missing input
+ */
 test("symbiosisBtn click handles missing input", async () => {
   const btn = mockDoc.getElementById("symbiosisBtn");
   const humanLensInput = mockDoc.getElementById("humanLens");
@@ -400,6 +447,9 @@ test("symbiosisBtn click handles missing input", async () => {
   assert.strictEqual(symbiosisResults.classList.contains("hidden"), true);
 });
 
+/**
+ * Test: paraconsistentBtn click updates synthesis UI with Golden Scar and tension metrics
+ */
 test("paraconsistentBtn click updates synthesis UI with Golden Scar and tension metrics", async () => {
   const btn = mockDoc.getElementById("paraconsistentBtn");
   const humanInput = mockDoc.getElementById("paraHumanInput");
@@ -433,6 +483,9 @@ test("paraconsistentBtn click updates synthesis UI with Golden Scar and tension 
   assert.ok(superpositionEl.textContent.includes("[∇]"));
 });
 
+/**
+ * Test: paraconsistentBtn click handles missing input
+ */
 test("paraconsistentBtn click handles missing input", async () => {
   const btn = mockDoc.getElementById("paraconsistentBtn");
   const humanInput = mockDoc.getElementById("paraHumanInput");
@@ -451,6 +504,9 @@ test("paraconsistentBtn click handles missing input", async () => {
   assert.strictEqual(paraResults.classList.contains("hidden"), true);
 });
 
+/**
+ * Test: mineBtn click handles missing input
+ */
 test("mineBtn click handles missing input", async () => {
   const btn = mockDoc.getElementById("mineBtn");
   const input = mockDoc.getElementById("domains");
@@ -465,6 +521,9 @@ test("mineBtn click handles missing input", async () => {
   assert.strictEqual(topologyResults.classList.contains("hidden"), true);
 });
 
+/**
+ * Test: mineBtn click handles invalid number of domains
+ */
 test("mineBtn click handles invalid number of domains", async () => {
   const btn = mockDoc.getElementById("mineBtn");
   const input = mockDoc.getElementById("domains");
@@ -479,6 +538,9 @@ test("mineBtn click handles invalid number of domains", async () => {
   assert.strictEqual(topologyResults.classList.contains("hidden"), true);
 });
 
+/**
+ * Test: Easter Egg: Konami Code triggers Brand Moment
+ */
 test("Easter Egg: Konami Code triggers Brand Moment", async () => {
   // Reset session activations by reloading the script behavior or manually simulating it.
   // Since it's an IIFE wrapped with isBrowser, we can trigger the event listeners added to mockDoc.
@@ -511,6 +573,9 @@ test("Easter Egg: Konami Code triggers Brand Moment", async () => {
   global.window.dispatchEvent = originalDispatchEvent;
 });
 
+/**
+ * Test: mineBtn click handles tool call error
+ */
 test("mineBtn click handles tool call error", async () => {
   const btn = mockDoc.getElementById("mineBtn");
   const input = mockDoc.getElementById("domains");
@@ -535,6 +600,9 @@ test("mineBtn click handles tool call error", async () => {
   assert.strictEqual(topologyResults.classList.contains("hidden"), true);
 });
 
+/**
+ * Test: symbiosisBtn click handles tool call error
+ */
 test("symbiosisBtn click handles tool call error", async () => {
   const btn = mockDoc.getElementById("symbiosisBtn");
   const humanLensInput = mockDoc.getElementById("humanLens");
@@ -561,6 +629,9 @@ test("symbiosisBtn click handles tool call error", async () => {
   assert.strictEqual(symbiosisResults.classList.contains("hidden"), true);
 });
 
+/**
+ * Test: paraconsistentBtn click handles tool call error
+ */
 test("paraconsistentBtn click handles tool call error", async () => {
   const btn = mockDoc.getElementById("paraconsistentBtn");
   const humanInput = mockDoc.getElementById("paraHumanInput");
@@ -587,6 +658,9 @@ test("paraconsistentBtn click handles tool call error", async () => {
   assert.strictEqual(paraResults.classList.contains("hidden"), true);
 });
 
+/**
+ * Test: mineBtn click handles missing token
+ */
 test("mineBtn click handles missing token", async () => {
   const input = mockDoc.getElementById("domains");
   const btn = mockDoc.getElementById("mineBtn");
@@ -609,6 +683,9 @@ test("mineBtn click handles missing token", async () => {
   }
 });
 
+/**
+ * Test: symbiosisBtn click handles missing token
+ */
 test("symbiosisBtn click handles missing token", async () => {
   const btn = mockDoc.getElementById("symbiosisBtn");
   const symbiosisStatusEl = mockDoc.getElementById("symbiosisStatus");
@@ -629,6 +706,9 @@ test("symbiosisBtn click handles missing token", async () => {
   }
 });
 
+/**
+ * Test: paraconsistentBtn click handles missing token
+ */
 test("paraconsistentBtn click handles missing token", async () => {
   const btn = mockDoc.getElementById("paraconsistentBtn");
   const paraStatusEl = mockDoc.getElementById("paraStatus");
@@ -649,6 +729,9 @@ test("paraconsistentBtn click handles missing token", async () => {
   }
 });
 
+/**
+ * Test: mineBtn click handles tool JSON parse error
+ */
 test("mineBtn click handles tool JSON parse error", async () => {
   const btn = mockDoc.getElementById("mineBtn");
   const input = mockDoc.getElementById("domains");
@@ -669,6 +752,9 @@ test("mineBtn click handles tool JSON parse error", async () => {
   assert.strictEqual(mineStatusEl.textContent, "invalid json error");
 });
 
+/**
+ * Test: symbiosisBtn click handles tool JSON parse error
+ */
 test("symbiosisBtn click handles tool JSON parse error", async () => {
   const btn = mockDoc.getElementById("symbiosisBtn");
   const humanLensInput = mockDoc.getElementById("humanLens");
@@ -691,6 +777,9 @@ test("symbiosisBtn click handles tool JSON parse error", async () => {
   assert.strictEqual(symbiosisStatusEl.textContent, "invalid json error");
 });
 
+/**
+ * Test: paraconsistentBtn click handles tool JSON parse error
+ */
 test("paraconsistentBtn click handles tool JSON parse error", async () => {
   const btn = mockDoc.getElementById("paraconsistentBtn");
   const humanInput = mockDoc.getElementById("paraHumanInput");
@@ -713,6 +802,9 @@ test("paraconsistentBtn click handles tool JSON parse error", async () => {
   assert.strictEqual(paraStatusEl.textContent, "invalid json error");
 });
 
+/**
+ * Test: mapBtn click handles tool JSON parse error
+ */
 test("mapBtn click handles tool JSON parse error", async () => {
   const btn = mockDoc.getElementById("mapBtn");
   const input = mockDoc.getElementById("words");
@@ -733,6 +825,9 @@ test("mapBtn click handles tool JSON parse error", async () => {
   assert.strictEqual(statusEl.textContent, "invalid json error");
 });
 
+/**
+ * Test: mapBtn click triggers Affective Copy Payload loading messages
+ */
 test("mapBtn click triggers Affective Copy Payload loading messages", async () => {
   const btn = mockDoc.getElementById("mapBtn");
   const input = mockDoc.getElementById("words");
@@ -770,6 +865,9 @@ test("mapBtn click triggers Affective Copy Payload loading messages", async () =
   }
 });
 
+/**
+ * Test: mapBtn click triggers Affective Copy Payload loading messages long duration
+ */
 test("mapBtn click triggers Affective Copy Payload loading messages long duration", async () => {
   const btn = mockDoc.getElementById("mapBtn");
   const input = mockDoc.getElementById("words");
@@ -817,6 +915,9 @@ test("mapBtn click triggers Affective Copy Payload loading messages long duratio
   }
 });
 
+/**
+ * Test: paraconsistentBtn click synthesis_log missing handling
+ */
 test("paraconsistentBtn click synthesis_log missing handling", async () => {
   const btn = mockDoc.getElementById("paraconsistentBtn");
   const humanInput = mockDoc.getElementById("paraHumanInput");
@@ -847,6 +948,9 @@ test("paraconsistentBtn click synthesis_log missing handling", async () => {
   assert.strictEqual(synthesisLogEl.classList.contains("hidden"), false);
 });
 
+/**
+ * Test: Easter Egg: Konami Code max activations
+ */
 test("Easter Egg: Konami Code max activations", async () => {
   const KONAMI = [38,38,40,40,37,39,37,39,66,65];
   const listeners = mockDoc._listeners['keydown'] || [];
@@ -876,6 +980,9 @@ test("Easter Egg: Konami Code max activations", async () => {
   }
 });
 
+/**
+ * Test: Easter Egg: Konami Code partial buffer and reset
+ */
 test("Easter Egg: Konami Code partial buffer and reset", async () => {
   const listeners = mockDoc._listeners['keydown'] || [];
 
@@ -901,6 +1008,9 @@ test("Easter Egg: Konami Code partial buffer and reset", async () => {
   }
 });
 
+/**
+ * Test: symbiosisBtn click handles tool call JSON error object with error_code fallback
+ */
 test("symbiosisBtn click handles tool call JSON error object with error_code fallback", async () => {
   const btn = mockDoc.getElementById("symbiosisBtn");
   const humanLensInput = mockDoc.getElementById("humanLens");
@@ -925,6 +1035,9 @@ test("symbiosisBtn click handles tool call JSON error object with error_code fal
   assert.strictEqual(symbiosisStatusEl.textContent, "CUSTOM_ERROR_CODE");
 });
 
+/**
+ * Test: mineBtn click handles tool call JSON error object with error_code fallback
+ */
 test("mineBtn click handles tool call JSON error object with error_code fallback", async () => {
   const btn = mockDoc.getElementById("mineBtn");
   const input = mockDoc.getElementById("domains");
@@ -947,6 +1060,9 @@ test("mineBtn click handles tool call JSON error object with error_code fallback
   assert.strictEqual(mineStatusEl.textContent, "MINE_ERROR_CODE");
 });
 
+/**
+ * Test: paraconsistentBtn click handles tool call JSON error object with error_code fallback
+ */
 test("paraconsistentBtn click handles tool call JSON error object with error_code fallback", async () => {
   const btn = mockDoc.getElementById("paraconsistentBtn");
   const humanInput = mockDoc.getElementById("paraHumanInput");
@@ -971,6 +1087,9 @@ test("paraconsistentBtn click handles tool call JSON error object with error_cod
   assert.strictEqual(paraStatusEl.textContent, "PARA_ERROR_CODE");
 });
 
+/**
+ * Test: mapBtn click handles tool call JSON error object with error_code fallback
+ */
 test("mapBtn click handles tool call JSON error object with error_code fallback", async () => {
   const btn = mockDoc.getElementById("mapBtn");
   const input = mockDoc.getElementById("words");
@@ -993,6 +1112,9 @@ test("mapBtn click handles tool call JSON error object with error_code fallback"
   assert.strictEqual(statusEl.textContent, "MAP_ERROR_CODE");
 });
 
+/**
+ * Test: symbiosisBtn click handles generic fallback error
+ */
 test("symbiosisBtn click handles generic fallback error", async () => {
   const btn = mockDoc.getElementById("symbiosisBtn");
   const humanLensInput = mockDoc.getElementById("humanLens");
@@ -1015,6 +1137,9 @@ test("symbiosisBtn click handles generic fallback error", async () => {
   assert.strictEqual(symbiosisStatusEl.textContent, "Request failed");
 });
 
+/**
+ * Test: mineBtn click handles generic fallback error
+ */
 test("mineBtn click handles generic fallback error", async () => {
   const btn = mockDoc.getElementById("mineBtn");
   const input = mockDoc.getElementById("domains");
@@ -1035,6 +1160,9 @@ test("mineBtn click handles generic fallback error", async () => {
   assert.strictEqual(mineStatusEl.textContent, "Request failed");
 });
 
+/**
+ * Test: paraconsistentBtn click handles generic fallback error
+ */
 test("paraconsistentBtn click handles generic fallback error", async () => {
   const btn = mockDoc.getElementById("paraconsistentBtn");
   const humanInput = mockDoc.getElementById("paraHumanInput");
@@ -1057,6 +1185,9 @@ test("paraconsistentBtn click handles generic fallback error", async () => {
   assert.strictEqual(paraStatusEl.textContent, "Request failed");
 });
 
+/**
+ * Test: mapBtn click handles generic fallback error
+ */
 test("mapBtn click handles generic fallback error", async () => {
   const btn = mockDoc.getElementById("mapBtn");
   const input = mockDoc.getElementById("words");
@@ -1077,6 +1208,9 @@ test("mapBtn click handles generic fallback error", async () => {
   assert.strictEqual(statusEl.textContent, "Request failed");
 });
 
+/**
+ * Test: symbiosisBtn click handles null error message
+ */
 test("symbiosisBtn click handles null error message", async () => {
   const btn = mockDoc.getElementById("symbiosisBtn");
   const humanLensInput = mockDoc.getElementById("humanLens");
@@ -1104,6 +1238,9 @@ test("symbiosisBtn click handles null error message", async () => {
   }
 });
 
+/**
+ * Test: mineBtn click handles null error message
+ */
 test("mineBtn click handles null error message", async () => {
   const btn = mockDoc.getElementById("mineBtn");
   const input = mockDoc.getElementById("domains");
@@ -1129,6 +1266,9 @@ test("mineBtn click handles null error message", async () => {
   }
 });
 
+/**
+ * Test: paraconsistentBtn click handles null error message
+ */
 test("paraconsistentBtn click handles null error message", async () => {
   const btn = mockDoc.getElementById("paraconsistentBtn");
   const humanInput = mockDoc.getElementById("paraHumanInput");
@@ -1156,6 +1296,9 @@ test("paraconsistentBtn click handles null error message", async () => {
   }
 });
 
+/**
+ * Test: mapBtn click handles null error message
+ */
 test("mapBtn click handles null error message", async () => {
   const btn = mockDoc.getElementById("mapBtn");
   const input = mockDoc.getElementById("words");
@@ -1181,6 +1324,9 @@ test("mapBtn click handles null error message", async () => {
   }
 });
 
+/**
+ * Test: symbiosisBtn click handles tool JSON parse error empty fallback
+ */
 test("symbiosisBtn click handles tool JSON parse error empty fallback", async () => {
   const btn = mockDoc.getElementById("symbiosisBtn");
   const humanLensInput = mockDoc.getElementById("humanLens");
@@ -1203,6 +1349,9 @@ test("symbiosisBtn click handles tool JSON parse error empty fallback", async ()
   assert.strictEqual(symbiosisStatusEl.textContent, "Request failed");
 });
 
+/**
+ * Test: mineBtn click handles tool JSON parse error empty fallback
+ */
 test("mineBtn click handles tool JSON parse error empty fallback", async () => {
   const btn = mockDoc.getElementById("mineBtn");
   const input = mockDoc.getElementById("domains");
@@ -1223,6 +1372,9 @@ test("mineBtn click handles tool JSON parse error empty fallback", async () => {
   assert.strictEqual(mineStatusEl.textContent, "Request failed");
 });
 
+/**
+ * Test: paraconsistentBtn click handles tool JSON parse error empty fallback
+ */
 test("paraconsistentBtn click handles tool JSON parse error empty fallback", async () => {
   const btn = mockDoc.getElementById("paraconsistentBtn");
   const humanInput = mockDoc.getElementById("paraHumanInput");
@@ -1245,6 +1397,9 @@ test("paraconsistentBtn click handles tool JSON parse error empty fallback", asy
   assert.strictEqual(paraStatusEl.textContent, "Request failed");
 });
 
+/**
+ * Test: mapBtn click handles tool JSON parse error empty fallback
+ */
 test("mapBtn click handles tool JSON parse error empty fallback", async () => {
   const btn = mockDoc.getElementById("mapBtn");
   const input = mockDoc.getElementById("words");
@@ -1266,6 +1421,9 @@ test("mapBtn click handles tool JSON parse error empty fallback", async () => {
 });
 
 
+/**
+ * Test: inversionBtn click handles missing input
+ */
 test("inversionBtn click handles missing input", async () => {
   const btn = mockDoc.getElementById("inversionBtn");
   const humanInput = mockDoc.getElementById("invHumanInput");
@@ -1281,6 +1439,9 @@ test("inversionBtn click handles missing input", async () => {
   assert.strictEqual(invStatusEl.textContent, "Please enter both hypothesis and constraint.");
 });
 
+/**
+ * Test: inversionBtn click updates UI with payload
+ */
 test("inversionBtn click updates UI with payload", async () => {
   const btn = mockDoc.getElementById("inversionBtn");
   const humanInput = mockDoc.getElementById("invHumanInput");
