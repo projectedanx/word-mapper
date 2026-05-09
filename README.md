@@ -72,8 +72,6 @@ Analyzes a set of up to 3 words and returns their semantic relationships.
 }
 ```
 
-
-
 ### Tool: `paraconsistent_synthesis` (via MCP)
 Fuses human tacit knowledge with rigid AI structural determinism to calculate epistemic drift and yield an emergent Golden Scar (Φ).
 
@@ -117,7 +115,6 @@ Calculates the epistemic drift between human intuition and AI constraints to pro
 ## Lessons Learned
 
 - **Agentic Inversion (Paraconsistent Synthesis):** By capturing the tension between high-entropy human tacit knowledge and rigid AI determinism, the system moves beyond passive data retrieval into an active, emergent structural process generating a Golden Scar resolution (Φ = 1.618).
-
 - **Integration:** Bridging the Datamuse API with a lightweight Express backend highlights the power of decoupling data retrieval from client-side rendering.
 - **Context Engineering:** Relying purely on dictionary mappings is linear. The idea of adding a "mini-blend" feature illustrates how simple concatenations can prompt deeper semantic ideation for LLMs.
-- **Documentation:** Meticulously documenting functions with JSDoc and providing a comprehensive README significantly improves onboarding, ensuring that both internal mechanisms (like the Datamuse fetch cycle) and outward APIs are clear to new developers.
+- **Documentation:** Documenting functions with JSDoc and providing a README improves onboarding, ensuring that both internal mechanisms (like the Datamuse fetch cycle) and outward APIs are clear to new developers.
