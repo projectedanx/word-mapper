@@ -236,7 +236,12 @@ server.registerTool(
   "mine_lexical_topology",
   {
     title: "Lexical Topology Miner",
-    description: "Computes thermodynamic constraints and non-Euclidean routing vectors for two orthogonal domains, returning the Four Analysis Zones and Pluriversal Knowledge Capsule.",
+    description: [
+      "PURPOSE: Computes thermodynamic constraints and non-Euclidean routing vectors for two orthogonal domains.",
+      "GUIDELINES: Invoke when extracting semantic topology across disparate fields.",
+      "LIMITATIONS: Accepts exactly two domains. Maximum 100 characters per domain string.",
+      "PARAMETERS: domains - array of two string domains."
+    ].join(" "),
     inputSchema: z.object({
       domains: z
         .array(z.string().max(100))
@@ -301,7 +306,12 @@ server.registerTool(
   "synthesize_symbiosis",
   {
     title: "Human-AI Symbiosis Engine",
-    description: "Integrates a 'Human Lens' (subjective context, reflexive dialogue, tacit knowledge) with an 'AI Specification' (deterministic extrusion, strict schema, scalable computation) to yield an emergent framework.",
+    description: [
+      "PURPOSE: Integrates a Human Lens with an AI Specification to yield an emergent framework.",
+      "GUIDELINES: Use to synthesize tacit knowledge against deterministic structures.",
+      "LIMITATIONS: Human lens and AI specification strings must not exceed 200 characters.",
+      "PARAMETERS: human_lens - tacit context string; ai_spec - formal structure string."
+    ].join(" "),
     inputSchema: z.object({
       human_lens: z
         .string()
@@ -348,7 +358,12 @@ server.registerTool(
   "paraconsistent_synthesis",
   {
     title: "Paraconsistent Synthesis Node",
-    description: "Fuses human tacit knowledge with AI structural determinism, computing tension metrics and emitting a Golden Scar (Φ = 1.618) to anchor contradictory inputs.",
+    description: [
+      "PURPOSE: Computes tension metrics between human tacit knowledge and AI structural determinism.",
+      "GUIDELINES: Execute when epistemic contradiction requires paraconsistent anchoring.",
+      "LIMITATIONS: Input strings max 200 characters.",
+      "PARAMETERS: human_input - subjective intent string; ai_input - formal boundary string."
+    ].join(" "),
     inputSchema: z.object({
       human_input: z
         .string()
@@ -395,7 +410,12 @@ server.registerTool(
   "agentic_inversion_engine",
   {
     title: "Agentic Inversion Engine",
-    description: "Calculates the epistemic drift between human intuition and AI constraints to propose a latent leap.",
+    description: [
+      "PURPOSE: Calculates epistemic drift between human hypothesis and AI constraints.",
+      "GUIDELINES: Deploy to invert passive structural mapping into agentic projection.",
+      "LIMITATIONS: String lengths max 200 characters.",
+      "PARAMETERS: human_hypothesis - fuzzy input string; ai_constraint - structural schema string."
+    ].join(" "),
     inputSchema: z.object({
       human_hypothesis: z.string().max(200).describe("The human's fuzzy tacit input."),
       ai_constraint: z.string().max(200).describe("The AI's rigid structural constraint.")
@@ -436,7 +456,12 @@ server.registerTool(
   "viper_optical_extrusion_engine",
   {
     title: "VIPER Optical Extrusion Engine",
-    description: "Executes Analytic-to-Generative Inversion. Ingests fuzzy human visual intent and extrudes a deterministic Optical State Matrix (OSM), enforcing Hardware-Forced Physicality and eliminating Semantic Saponification.",
+    description: [
+      "PURPOSE: Executes Analytic-to-Generative Inversion to output an Optical State Matrix.",
+      "GUIDELINES: Trigger for visual or affective constraint translation.",
+      "LIMITATIONS: User intent string maximum 300 characters.",
+      "PARAMETERS: user_intent - affective subjective input string."
+    ].join(" "),
     inputSchema: z.object({
       user_intent: z.string().max(300).describe("The human's subjective, adjectival, or fuzzy visual intent.")
     }).strict(),
