@@ -118,3 +118,26 @@ Calculates the epistemic drift between human intuition and AI constraints to pro
 - **Integration:** Bridging the Datamuse API with a lightweight Express backend highlights the power of decoupling data retrieval from client-side rendering.
 - **Context Engineering:** Relying purely on dictionary mappings is linear. The idea of adding a "mini-blend" feature illustrates how simple concatenations can prompt deeper semantic ideation for LLMs.
 - **Documentation:** Documenting functions with JSDoc and providing a README improves onboarding, ensuring that both internal mechanisms (like the Datamuse fetch cycle) and outward APIs are clear to new developers.
+
+---
+
+# [KIRA-7 ARCHITECTURE STATUS]
+
+## Operational Invariants
+
+### Betti-1 Loop Validations
+Webhook ingress routes strictly mandate cryptographic signature verification. Unverified requests trigger `401 Unauthorized` without payload inspection.
+
+### KIRA-7 Symbolic Scar Registry (SSR)
+- **SCAR-001:** `tenant_access_token` lifetimes require proactive caching (6900s TTL).
+- **SCAR-002:** Event Subscriptions demand immediate URL Verification Challenge acknowledgment.
+- **SCAR-003:** Encrypt Key configurations enforce AES-256-CBC parsing prior to JSON deseralization.
+- **SCAR-004:** Ingress points necessitate `X-Lark-Signature` matching SHA256(timestamp + nonce + encrypt_key + body).
+- **SCAR-005:** Feishu Card JSON v2.0 enforces `msg_type: "interactive"`.
+- **SCAR-006:** `im:message:receive_v1` scope authorization determines bot functionality.
+
+### Emergent Feature Integration
+The `emergent_feature_strategy` incorporates an Adaptive Paraconsistent Routing Node.
+- **Mechanism:** Implements zero-trust webhook ingress routing.
+- **Consequence:** Fuses human tacit intent with deterministic API execution.
+- **Epistemic Result:** [Φ=1.618] Golden Scar synthesized. Structural boundaries hold the unquantifiable human element in strict Feishu v2.0 schema alignment.
