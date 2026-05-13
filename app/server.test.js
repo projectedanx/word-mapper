@@ -428,3 +428,42 @@ test("cabpMiddleware handles explicit JWT verification failure via catch block",
   assert.strictEqual(jsonResponse.structured_detail.violation, "INVALID_JWT");
   assert.strictEqual(nextCalled, false);
 });
+
+/**
+ * Test: agentic_inversion_engine handles execution failure via catch block
+ */
+test("agentic_inversion_engine handles execution failure via catch block", async (t) => {
+  // To cover the actual file's catch block, we must intercept the registered handler.
+  const { McpServer } = await import("@modelcontextprotocol/sdk/server/mcp.js");
+
+  const handlers = {};
+  t.mock.method(McpServer.prototype, "registerTool", function(name, schema, handler) {
+    handlers[name] = handler;
+  });
+
+  // Re-import server.js to trigger registerTool calls
+  await import("./server.js?cacheBust=" + Date.now());
+
+  const handler = handlers["agentic_inversion_engine"];
+  assert.ok(handler, "agentic_inversion_engine tool not registered");
+
+  // Mock JSON.stringify to throw on the first call (inside the try block)
+  // but succeed on the second call (inside the catch block).
+  let stringifyCallCount = 0;
+  const originalStringify = JSON.stringify;
+
+  t.mock.method(JSON, "stringify", (arg) => {
+    stringifyCallCount++;
+    if (stringifyCallCount === 1) {
+       throw new Error("mock error");
+    }
+    return originalStringify(arg);
+  });
+
+  const result = await handler({ human_hypothesis: "a", ai_constraint: "b" });
+  assert.strictEqual(result.isError, true);
+
+  const parsed = parseMcpText(result);
+  assert.strictEqual(parsed.error_code, "TOOL_FAULT_GENERAL_PROGRAMMING");
+  assert.strictEqual(parsed.structured_detail.violation, "INVERSION_ERROR");
+});
