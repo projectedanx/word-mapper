@@ -849,12 +849,8 @@ test("mapBtn click triggers Affective Copy Payload loading messages", async () =
       await new Promise(r => setTimeout(r, 10));
       assert.strictEqual(statusEl.textContent, "Crunching the numbers.");
 
-      // We can't really test setInterval easily without faking timers
-      // The interval logic is:
-      // if (loadDuration >= 4000) { "This is taking longer than a Tuesday standup." }
-      // else if (loadDuration >= 1500) { "Your data is having a moment." }
-
-      // So we will just test the initial state and then resolve.
+      // Detailed interval logic is tested in the subsequent test case using fake timers.
+      // Here we just test the initial state and then resolve.
       resolver({
           isError: true,
           content: [{ text: "error" }]
