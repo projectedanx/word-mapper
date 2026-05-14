@@ -95,6 +95,23 @@ class MockElement {
     if (this.parentNode) return this.parentNode.closest(selector);
     return null;
   }
+
+  querySelector(selector) {
+    if (selector[0] === '#') {
+      const id = selector.slice(1);
+      const search = (el) => {
+        if (el.id === id) return el;
+        const children = el.children;
+        for (let i = 0, len = children.length; i < len; i++) {
+          const res = search(children[i]);
+          if (res) return res;
+        }
+        return null;
+      };
+      return search(this);
+    }
+    return null;
+  }
 }
 
 class MockDocument {
@@ -185,7 +202,7 @@ test("Easter Egg Overlay prevents XSS", async () => {
     mockDoc.dispatchEvent({ type: 'keydown', keyCode });
   });
 
-  const overlay = mockDoc.body.children.find(c => c.id === "whimsy-konami-overlay");
+  const overlay = mockDoc.body.querySelector('#whimsy-konami-overlay');
   assert.ok(overlay, "Overlay should be created");
 
   // Verify safe construction: No innerHTML should be used.
