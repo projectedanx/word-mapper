@@ -136,7 +136,8 @@ export async function cabpMiddleware(req, res, next) {
       scopes: claims.scopes || [],
     };
     next();
-  } catch {
+  } catch (error) {
+    console.error("JWT verification failed:", error);
     res.status(403).json({
       error_code: "TOOL_FAULT_SERVER_HOST_CONFIGURATION",
       fault_category: "SERVER_HOST_CONFIGURATION",
@@ -214,7 +215,8 @@ server.registerTool(
           })
         }]
       };
-    } catch {
+    } catch (error) {
+      console.error("Tool execution failed (map_semantic_relations):", error);
       return {
         content: [{
           type: "text",
@@ -283,7 +285,8 @@ server.registerTool(
           })
         }]
       };
-    } catch {
+    } catch (error) {
+      console.error("Tool execution failed (mine_lexical_topology):", error);
       return {
         content: [{
           type: "text",
@@ -335,7 +338,8 @@ server.registerTool(
           })
         }]
       };
-    } catch {
+    } catch (error) {
+      console.error("Tool execution failed (synthesize_symbiosis):", error);
       return {
         content: [{
           type: "text",
@@ -387,7 +391,8 @@ server.registerTool(
           })
         }]
       };
-    } catch {
+    } catch (error) {
+      console.error("Tool execution failed (paraconsistent_synthesis):", error);
       return {
         content: [{
           type: "text",
@@ -433,7 +438,8 @@ server.registerTool(
           })
         }]
       };
-    } catch {
+    } catch (error) {
+      console.error("Tool execution failed (agentic_inversion_engine):", error);
       return {
         content: [{
           type: "text",
@@ -498,7 +504,8 @@ server.registerTool(
           })
         }]
       };
-    } catch {
+    } catch (error) {
+      console.error("Tool execution failed (viper_optical_extrusion_engine):", error);
       return {
         content: [{
           type: "text",
