@@ -2913,7 +2913,6 @@ var mcp_sdk_global = (() => {
           parentDataProperty: names_1.default.parentDataProperty,
           dataNames: [names_1.default.data],
           dataPathArr: [codegen_1.nil],
-          // TODO can its length be used as dataLevel if nil is removed?
           dataLevel: 0,
           dataTypes: [],
           definedProperties: /* @__PURE__ */ new Set(),
