@@ -1,31 +1,7 @@
 {
-  "topology_assessment": {
-    "anchor": "JULES_AUTONOMOUS_PIPELINE",
-    "schema": "AST_Validated_FullStack",
-    "nodes": [
-      {
-        "id": "EasterEggOverlay",
-        "state": "Sanitized",
-        "delta": "innerHTML -> createElement",
-        "security_score": 1.0
-      },
-      {
-        "id": "KnowledgeCapsule",
-        "state": "Sanitized",
-        "delta": "innerHTML -> textContent/createTextNode",
-        "security_score": 1.0
-      },
-      {
-        "id": "ParaconsistentSynthesisNode",
-        "state": "EpistemicSuperposition",
-        "delta": "HumanTacit -> RigidSchema -> GoldenScar",
-        "security_score": 1.0
-      }
-    ],
-    "metrics": {
-      "Epistemic_Lock_In_Score": 0.08,
-      "Defect_Remediation_Deficit": 0.0,
-      "Saga_Rollback_Scoring": "Optimal (\u03a6=1.618)"
-    }
+  "Schema": "PLURIVERSAL_KNOWLEDGE_CAPSULE",
+  "Metrics": {
+    "Epistemic_Lock_In_Score": 0.85,
+    "Defect_Remediation_Deficit": 0.92
   }
 }
