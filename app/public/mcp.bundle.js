@@ -5418,18 +5418,17 @@ var mcp_sdk_global = (() => {
       exports.validatePropertyDeps = validatePropertyDeps;
       function validateSchemaDeps(cxt, schemaDeps = cxt.schema) {
         const { gen, data, keyword, it } = cxt;
-        const valid = gen.name("valid");
         for (const prop in schemaDeps) {
           if ((0, util_1.alwaysValidSchema)(it, schemaDeps[prop]))
             continue;
+          const valid = gen.let("valid");
           gen.if(
             (0, code_1.propertyInData)(gen, data, prop, it.opts.ownProperties),
             () => {
               const schCxt = cxt.subschema({ keyword, schemaProp: prop }, valid);
               cxt.mergeValidEvaluated(schCxt, valid);
             },
-            () => gen.var(valid, true)
-            // TODO var
+            () => gen.assign(valid, true)
           );
           cxt.ok(valid);
         }
