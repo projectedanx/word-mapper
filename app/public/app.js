@@ -517,6 +517,198 @@ if (isBrowser) {
     }
   });
 
+
+  // MULTI-AGENT ORCHESTRATOR LOGIC
+  const agentSelector = document.getElementById('agentSelector');
+  const orchestratorInput1 = document.getElementById('orchestratorInput1');
+  const orchestratorInput2 = document.getElementById('orchestratorInput2');
+  const orchestratorLabel1 = document.getElementById('orchestratorLabel1');
+  const orchestratorLabel2 = document.getElementById('orchestratorLabel2');
+  const orchestratorBtn = document.getElementById('orchestratorBtn');
+  const orchestratorStatusEl = document.getElementById('orchestratorStatus');
+  const orchestratorResults = document.getElementById('orchestratorResults');
+  const orchestratorGrid = document.getElementById('orchestratorGrid');
+  const orchestratorLog = document.getElementById('orchestratorLog');
+
+  const updateOrchestratorUI = () => {
+    const agent = agentSelector?.value;
+    if (!agent) return;
+
+    if (agent === 'synthesize_symbiosis') {
+      orchestratorLabel1.textContent = "Human Lens (tacit knowledge):";
+      orchestratorInput1.placeholder = "e.g. Reflexive Dialogue, tacit operations";
+      orchestratorInput1.style.display = "block";
+      orchestratorLabel1.style.display = "block";
+
+      orchestratorLabel2.textContent = "AI Specification (structural constraint):";
+      orchestratorInput2.placeholder = "e.g. JSON-LD Schema, Draft-Conditioned Decoding";
+      orchestratorInput2.style.display = "block";
+      orchestratorLabel2.style.display = "block";
+    } else if (agent === 'paraconsistent_synthesis') {
+      orchestratorLabel1.textContent = "Human Tacit Input (Entropy):";
+      orchestratorInput1.placeholder = "e.g. Unquantifiable subjective tension";
+      orchestratorInput1.style.display = "block";
+      orchestratorLabel1.style.display = "block";
+
+      orchestratorLabel2.textContent = "AI Structural Input (Topology):";
+      orchestratorInput2.placeholder = "e.g. Rigid schema constraints";
+      orchestratorInput2.style.display = "block";
+      orchestratorLabel2.style.display = "block";
+    } else if (agent === 'agentic_inversion_engine') {
+      orchestratorLabel1.textContent = "Human Hypothesis (Fuzzy Intent):";
+      orchestratorInput1.placeholder = "e.g. Need to bridge logic and intuition";
+      orchestratorInput1.style.display = "block";
+      orchestratorLabel1.style.display = "block";
+
+      orchestratorLabel2.textContent = "AI Constraint (Rigid Schema):";
+      orchestratorInput2.placeholder = "e.g. JSON-LD requirement";
+      orchestratorInput2.style.display = "block";
+      orchestratorLabel2.style.display = "block";
+    } else if (agent === 'viper_optical_extrusion_engine') {
+      orchestratorLabel1.textContent = "User Intent (Affective/Visual input):";
+      orchestratorInput1.placeholder = "e.g. A cinematic moody masterpiece";
+      orchestratorInput1.style.display = "block";
+      orchestratorLabel1.style.display = "block";
+
+      orchestratorInput2.style.display = "none";
+      orchestratorLabel2.style.display = "none";
+    }
+  };
+
+  agentSelector?.addEventListener('change', updateOrchestratorUI);
+
+  if(agentSelector) updateOrchestratorUI();
+
+  orchestratorBtn?.addEventListener("click", async (event) => {
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      orchestratorStatusEl.textContent = "Authentication required. Please log in.";
+      orchestratorResults.classList.add("hidden");
+      return;
+    }
+
+    const agent = agentSelector.value;
+    const input1 = orchestratorInput1.value.trim();
+    const input2 = orchestratorInput2.value.trim();
+
+    if (!input1 || (agent !== 'viper_optical_extrusion_engine' && !input2)) {
+      orchestratorStatusEl.textContent = "Please provide all required inputs.";
+      orchestratorResults.classList.add("hidden");
+      return;
+    }
+
+    orchestratorStatusEl.textContent = "Executing Agent Workflow...";
+    orchestratorResults.classList.add("hidden");
+    orchestratorGrid.textContent = "";
+    orchestratorLog.textContent = "";
+    orchestratorLog.classList.add("hidden");
+
+    let args = {};
+    if (agent === 'synthesize_symbiosis') {
+      args = { human_lens: input1, ai_spec: input2 };
+    } else if (agent === 'paraconsistent_synthesis') {
+      args = { human_input: input1, ai_input: input2 };
+    } else if (agent === 'agentic_inversion_engine') {
+      args = { human_hypothesis: input1, ai_constraint: input2 };
+    } else if (agent === 'viper_optical_extrusion_engine') {
+      args = { user_intent: input1 };
+    }
+
+    try {
+      if (!globalThis.mcpClient || token !== globalThis.currentToken) {
+        const serverUrl = new URL("/mcp", window.location.href);
+        const transport = new mcp_sdk.StreamableHTTPClientTransport(serverUrl, {
+          requestInit: { headers: { Authorization: `Bearer ${token}` } }
+        });
+        globalThis.mcpClient = new mcp_sdk.Client(
+          { name: "word-mapper-client", version: "1.0.0" }, { capabilities: {} }
+        );
+        await globalThis.mcpClient.connect(transport);
+        globalThis.currentToken = token;
+      }
+
+      const result = await globalThis.mcpClient.callTool({
+        name: agent,
+        arguments: args
+      });
+
+      if (result.isError) {
+        const errorContent = result.content[0].text;
+        let errorObj;
+        try { errorObj = JSON.parse(errorContent); } catch (e) { throw new Error(errorContent || "Request failed"); }
+        throw new Error(errorObj.structured_detail?.error || errorObj.error_code || "Request failed");
+      }
+
+      const data = JSON.parse(result.content[0].text);
+
+      const renderCard = (title, content, valueColor) => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.style.borderColor = valueColor || '#374151';
+
+          const titleEl = document.createElement('h3');
+          titleEl.textContent = title;
+
+          const contentEl = document.createElement('div');
+          contentEl.style.fontSize = valueColor ? '1.25rem' : '0.85rem';
+          if(valueColor) {
+              contentEl.style.fontWeight = 'bold';
+              contentEl.style.color = valueColor;
+          }
+
+          if(typeof content === 'object') {
+             const pre = document.createElement('pre');
+             pre.style.whiteSpace = 'pre-wrap';
+             pre.style.wordBreak = 'break-word';
+             pre.textContent = JSON.stringify(content, null, 2);
+             contentEl.appendChild(pre);
+          } else {
+             contentEl.textContent = String(content);
+          }
+
+          card.appendChild(titleEl);
+          card.appendChild(contentEl);
+          return card;
+      };
+
+      if (agent === 'synthesize_symbiosis') {
+          orchestratorGrid.appendChild(renderCard('Integrated Framework', data.integrated_framework));
+          orchestratorGrid.appendChild(renderCard('Emergent Value', data.emergent_value));
+          orchestratorGrid.appendChild(renderCard('Productivity J-Curve', data.productivity_j_curve_impact));
+      } else if (agent === 'paraconsistent_synthesis') {
+          orchestratorGrid.appendChild(renderCard('Golden Scar (Φ)', data.golden_scar, '#facc15'));
+          orchestratorGrid.appendChild(renderCard('Superposition Payload', data.superposition_payload, '#d8b4fe'));
+          if (data.synthesis_log) {
+            orchestratorLog.textContent = data.synthesis_log;
+            orchestratorLog.classList.remove("hidden");
+          }
+      } else if (agent === 'agentic_inversion_engine') {
+          orchestratorGrid.appendChild(renderCard('Epistemic Drift', data.epistemic_drift, '#ef4444'));
+          orchestratorGrid.appendChild(renderCard('Latent Leap (Φ)', data.latent_leap, '#10b981'));
+          if (data.paraconsistent_contradiction) {
+            orchestratorLog.textContent = data.paraconsistent_contradiction;
+            orchestratorLog.classList.remove("hidden");
+            orchestratorLog.style.borderColor = '#f87171';
+          }
+      } else if (agent === 'viper_optical_extrusion_engine') {
+          orchestratorGrid.appendChild(renderCard('Diagnostic', data.DIAGNOSTIC));
+          orchestratorGrid.appendChild(renderCard('Optical State Matrix', data.OPTICAL_STATE_MATRIX));
+      }
+
+      orchestratorResults.classList.remove("hidden");
+      orchestratorStatusEl.textContent = "Agent Workflow Complete.";
+    } catch (err) {
+      console.error(err);
+      orchestratorStatusEl.textContent = err.message || "An error occurred executing the agent.";
+      orchestratorResults.classList.add("hidden");
+      if (globalThis.mcpClient) {
+        try { await globalThis.mcpClient.close(); } catch (e) {}
+        globalThis.mcpClient = null;
+      }
+    }
+  });
+
+// WHIMSY INJECT
 // WHIMSY INJECT — Manifold β — Easter Egg: Konami Code Brand Moment
 if (isBrowser) {
   /**

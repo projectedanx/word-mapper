@@ -112,6 +112,18 @@ Calculates the epistemic drift between human intuition and AI constraints to pro
 }
 ```
 
+
+## Multi-Agent Instance Orchestrator
+
+Word Mapper now includes a dedicated frontend interface for multi-agent instances. This Orchestrator dynamically routes inputs to the corresponding backend engines:
+
+- **Synthesis Agent:** Interfaces with the `synthesize_symbiosis` tool.
+- **Paraconsistent Agent:** Interfaces with the `paraconsistent_synthesis` tool.
+- **Inversion Agent:** Interfaces with the `agentic_inversion_engine` tool.
+- **Optical Agent:** Interfaces with the `viper_optical_extrusion_engine` tool.
+
+The UI automatically updates field labels to align with each agent's required parameters and displays results natively within a responsive layout.
+
 ## Lessons Learned
 
 - **Agentic Inversion (Paraconsistent Synthesis):** By capturing the tension between high-entropy human tacit knowledge and rigid AI determinism, the system moves beyond passive data retrieval into an active, emergent structural process generating a Golden Scar resolution (Φ = 1.618).

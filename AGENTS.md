@@ -497,6 +497,12 @@ test_invocation: |
 
 ---
 
+
+### Multi-Agent Instance Orchestrator
+- **Implementation Strategy**: A frontend orchestrator UI (`app/public/index.html`, `app/public/app.js`) was added to allow interaction with discrete agent instances based on context and repository functionality.
+- **Dynamic Routing**: Extracted logic routes requests dynamically (`agentSelector`) to specific underlying tool invocations (`synthesize_symbiosis`, `paraconsistent_synthesis`, `agentic_inversion_engine`, `viper_optical_extrusion_engine`).
+- **Validation**: Added manual DOM mock tests within `app/public/app.test.js` to assert the updated labels, payload display, and generic fallback errors across all orchestrator execution pathways, conforming with memory constraints for UI robustness.
+
 ## Cross-DRP Links
 
 - **DRP-PROMPT-VERSIONING-MEMORY-2025**: `system_prompt_spec.version` tracks RAG prompt improvements; links to memory system for context persistence
