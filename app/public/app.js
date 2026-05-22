@@ -42,7 +42,7 @@ const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefine
   const productivityJCurveEl = document.getElementById('productivityJCurve');
 
   symbiosisBtn?.addEventListener("click", async (event) => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (!token) {
       symbiosisStatusEl.textContent = "Authentication required. Please log in.";
       symbiosisResults.classList.add("hidden");
@@ -150,7 +150,7 @@ if (isBrowser) {
    * @returns {Promise<void>} A promise that resolves when the mapping and DOM update are complete.
    */
   btn?.addEventListener("click", async (event) => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (!token) {
       statusEl.textContent = "Authentication required. Please log in.";
       resultsSection.classList.add("hidden");
@@ -257,7 +257,7 @@ if (isBrowser) {
   const knowledgeCapsuleEl = document.getElementById('knowledgeCapsule');
 
   mineBtn?.addEventListener("click", async (event) => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (!token) {
       mineStatusEl.textContent = "Authentication required. Please log in.";
       topologyResults.classList.add("hidden");
@@ -359,7 +359,7 @@ if (isBrowser) {
   const synthesisLogEl = document.getElementById('synthesisLog');
 
   paraconsistentBtn?.addEventListener("click", async (event) => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (!token) {
       paraStatusEl.textContent = "Authentication required. Please log in.";
       paraResults.classList.add("hidden");
@@ -400,7 +400,7 @@ if (isBrowser) {
   const paraconsistentContradictionEl = document.getElementById('paraconsistentContradiction');
 
   inversionBtn?.addEventListener("click", async (event) => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (!token) {
       invStatusEl.textContent = "Authentication required. Please log in.";
       invResults.classList.add("hidden");
