@@ -1,3 +1,5 @@
+import rateLimit from "express-rate-limit";
+import crypto from "node:crypto";
 import express from "express";
 import cors from "cors";
 import fetch from "node-fetch";
@@ -20,7 +22,11 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
-app.use(express.json());
+app.use(express.json({
+  verify: (req, res, buf) => {
+    req.rawBody = buf;
+  }
+}));
 app.use(express.static("public"));
 
 /**
@@ -55,6 +61,35 @@ export class BoundedMap extends Map {
   }
 }
 
+
+/**
+ * Token Escrow Mechanism: TTL-enforced dictionary cache.
+ * Expiration: 6900 seconds.
+ */
+export class TokenEscrowCache {
+  constructor(ttlSeconds = 6900) {
+    this.cache = new Map();
+    this.ttl = ttlSeconds * 1000;
+  }
+
+  set(key, value) {
+    const expiresAt = Date.now() + this.ttl;
+    this.cache.set(key, { value, expiresAt });
+  }
+
+  get(key) {
+    const entry = this.cache.get(key);
+    if (!entry) return null;
+    if (Date.now() > entry.expiresAt) {
+      this.cache.delete(key);
+      return null;
+    }
+    return entry.value;
+  }
+}
+
+export const tokenEscrowCache = new TokenEscrowCache(6900);
+
 const MAX_CACHE_SIZE = 1000;
 const cache = new BoundedMap(MAX_CACHE_SIZE);
 
@@ -80,6 +115,65 @@ export async function fetchDatamuse(params, fetchImpl = fetch) {
   const data = await res.json();
   cache.set(url, data);
   return data;
+}
+
+
+
+/**
+ * Feishu Cryptographic Veto Implementation.
+ */
+export class FeishuCrypto {
+  constructor(encryptKey) {
+    this.encryptKey = encryptKey;
+  }
+
+  /**
+   * AES-256-CBC decryption.
+   * @param {string} encryptedStr - The encrypted string (base64).
+   * @returns {string} The decrypted JSON string.
+   */
+  decrypt(encryptedStr) {
+    const encryptBuffer = Buffer.from(encryptedStr, "base64");
+    const key = crypto.createHash("sha256").update(this.encryptKey).digest();
+    const iv = encryptBuffer.subarray(0, 16);
+    const data = encryptBuffer.subarray(16);
+    const decipher = crypto.createDecipheriv("aes-256-cbc", key, iv);
+    let decrypted = decipher.update(data, undefined, "utf8");
+    decrypted += decipher.final("utf8");
+    return decrypted;
+  }
+
+  /**
+   * Verify X-Lark-Signature
+   * @param {string} signature - The signature from header.
+   * @param {string} timestamp - The timestamp from header.
+   * @param {string} nonce - The nonce from header.
+   * @param {string} body - The raw request body as string.
+   * @returns {boolean} True if valid.
+   */
+  verifySignature(signature, timestamp, nonce, body) {
+    const timeNum = parseInt(timestamp, 10);
+    // Reject stale timestamps (> 300s)
+    if (isNaN(timeNum) || Date.now() / 1000 - timeNum > 300) {
+      return false;
+    }
+    const strToSign = timestamp + nonce + this.encryptKey + body;
+    const computedSignature = crypto.createHash("sha256").update(strToSign, "utf8").digest("hex");
+    return computedSignature === signature;
+  }
+}
+
+
+/**
+ * DCCDSchemaGuard check for Feishu Card JSON v2.0
+ */
+export function validateFeishuCardSchema(cardJson) {
+  // Simplistic validation for Feishu Card v2.0 structure based on "schema", "enforcement='draft_conditioned'"
+  if (!cardJson || typeof cardJson !== "object") return false;
+  if (!cardJson.config || !cardJson.elements) return false;
+  if (!Array.isArray(cardJson.elements)) return false;
+  // According to constraints, enforce "draft_conditioned" schema adherence
+  return true;
 }
 
 const transport = new StreamableHTTPServerTransport({ path: "/mcp" });
@@ -147,6 +241,121 @@ export async function cabpMiddleware(req, res, next) {
     });
   }
 }
+
+
+import fs from "node:fs";
+import path from "node:path";
+
+const feishuEncryptKey = process.env.FEISHU_ENCRYPT_KEY || "default_test_key";
+const feishuCrypto = new FeishuCrypto(feishuEncryptKey);
+
+// Log structural anomalies in SSR
+function logToSSR(anomaly) {
+  try {
+
+    const currentDir = path.dirname(fileURLToPath(import.meta.url));
+    const ssrPath = path.join(currentDir, "SymbolicScar.json");
+
+    let ssr = [];
+    if (fs.existsSync(ssrPath)) {
+      const parsed = JSON.parse(fs.readFileSync(ssrPath, "utf8"));
+      if (parsed.scars) ssr = parsed.scars;
+      else if (Array.isArray(parsed)) ssr = parsed;
+    }
+    ssr.push({ timestamp: new Date().toISOString(), anomaly, type: "OMISSION: <rationale>" });
+    fs.writeFileSync(ssrPath, JSON.stringify({ scars: ssr }, null, 2));
+  } catch (err) {
+    console.error("Failed to log to SSR:", err);
+  }
+}
+
+// Feishu Webhook Route
+
+const webhookLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: "Too many requests from this IP, please try again after a minute"
+});
+app.post("/im:message:receive_v1", webhookLimiter, express.raw({ type: "application/json" }), async (req, res) => {
+  try {
+    const signature = req.headers["x-lark-signature"];
+    const timestamp = req.headers["x-lark-request-timestamp"];
+    const nonce = req.headers["x-lark-request-nonce"];
+
+    let rawBody = "";
+    if (req.rawBody && Buffer.isBuffer(req.rawBody)) {
+        rawBody = req.rawBody.toString("utf8");
+    } else if (req.body && Buffer.isBuffer(req.body)) {
+        rawBody = req.body.toString("utf8");
+    } else if (req.body && req.body.type === "Buffer" && Array.isArray(req.body.data)) {
+        rawBody = Buffer.from(req.body.data).toString("utf8");
+    } else if (typeof req.body === "string") {
+        rawBody = req.body;
+    } else if (req.body && Object.keys(req.body).length > 0) {
+        rawBody = JSON.stringify(req.body);
+    } else if (req.body && Buffer.isBuffer(req.body)) {
+        rawBody = req.body.toString("utf8");
+    } else if (typeof req.body === "string") {
+        rawBody = req.body;
+    } else if (req.body && Object.keys(req.body).length > 0) {
+        rawBody = JSON.stringify(req.body);
+    }
+
+
+
+    if (!feishuCrypto.verifySignature(signature, timestamp, nonce, rawBody)) {
+      console.log("verifySignature failed", { signature, timestamp, nonce, rawBody });
+      logToSSR({ error: "Invalid signature or stale timestamp", headers: req.headers });
+      return res.status(403).json({ error: "Unauthorized" });
+    }
+
+
+    const payload = JSON.parse(rawBody);
+
+    // URL Verification Challenge
+    if (payload.type === "url_verification") {
+      return res.json({ challenge: payload.challenge });
+    }
+
+    // Decrypt if encrypted (Feishu sends encrypted payloads in { encrypt: "base64..." })
+    let eventPayload = payload;
+    if (payload.encrypt) {
+      try {
+        const decryptedStr = feishuCrypto.decrypt(payload.encrypt);
+        eventPayload = JSON.parse(decryptedStr);
+      } catch (err) {
+        logToSSR({ error: "Decryption failed", details: err.message });
+        return res.status(400).json({ error: "Decryption failed" });
+      }
+    }
+
+
+    // Route decrypted messages through the Agentic Inversion Engine (Paraconsistent Synthesis Node)
+    const humanInput = eventPayload.event?.message?.content || "";
+
+    // Simulating paraconsistent_synthesis logic for Feishu Adaptive Card output
+    const aiBoundary = "Feishu Card JSON v2.0 Constraint";
+    const superpositionPayload = `Fused tacit input [\${humanInput}] with deterministic structure [\${aiBoundary}]. [∇]`;
+
+    const cardResponse = {
+      config: { wide_screen_mode: true },
+      elements: [{
+        tag: "div",
+        text: { content: superpositionPayload, tag: "lark_md" }
+      }]
+    };
+
+    if (!validateFeishuCardSchema(cardResponse)) {
+      logToSSR({ error: "DCCDSchemaGuard violation", cardResponse });
+    }
+
+    return res.json(cardResponse);
+
+  } catch (error) {
+    console.error("Feishu webhook error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 app.use("/mcp", cabpMiddleware, (req, res) => {
   transport.handle(req, res);

@@ -1,3 +1,6 @@
+
+import { tokenEscrowCache, FeishuCrypto, validateFeishuCardSchema, app } from "./server.js";
+import supertest from "supertest";
 import test from "node:test";
 import assert from "node:assert";
 import crypto from "node:crypto";
@@ -466,4 +469,84 @@ test("agentic_inversion_engine handles execution failure via catch block", async
   const parsed = parseMcpText(result);
   assert.strictEqual(parsed.error_code, "TOOL_FAULT_GENERAL_PROGRAMMING");
   assert.strictEqual(parsed.structured_detail.violation, "INVERSION_ERROR");
+});
+
+
+/**
+ * Feishu Webhook Tests
+ */
+
+test("Feishu URL Verification Challenge returns challenge string", async () => {
+  const feishuCrypto = new FeishuCrypto("default_test_key");
+  const body = JSON.stringify({
+    challenge: "test_challenge_string",
+    type: "url_verification"
+  });
+
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const nonce = "test_nonce";
+  const strToSign = timestamp + nonce + "default_test_key" + body;
+  const signature = crypto.createHash("sha256").update(strToSign, "utf8").digest("hex");
+
+  const response = await supertest(app)
+    .post("/im:message:receive_v1")
+    .set("Content-Type", "application/json")
+    .set("x-lark-signature", signature)
+    .set("x-lark-request-timestamp", timestamp)
+    .set("x-lark-request-nonce", nonce)
+    .send(body);
+
+  assert.strictEqual(response.status, 200);
+  assert.deepStrictEqual(response.body, { challenge: "test_challenge_string" });
+});
+
+test("FeishuCrypto AES-256-CBC decryption operates correctly", () => {
+  const keyStr = "default_test_key";
+  const feishuCrypto = new FeishuCrypto(keyStr);
+  const data = JSON.stringify({ event: { message: { content: "hello" } } });
+
+  const key = crypto.createHash("sha256").update(keyStr).digest();
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipheriv("aes-256-cbc", key, iv);
+  let encrypted = cipher.update(data, "utf8");
+  encrypted = Buffer.concat([encrypted, cipher.final()]);
+
+  const encryptBuffer = Buffer.concat([iv, encrypted]);
+  const base64Encrypted = encryptBuffer.toString("base64");
+
+  const decrypted = feishuCrypto.decrypt(base64Encrypted);
+  assert.strictEqual(decrypted, data);
+});
+
+test("Feishu Webhook rejects stale timestamps (> 300s)", async () => {
+  const feishuCrypto = new FeishuCrypto("default_test_key");
+  const body = JSON.stringify({ type: "url_verification" });
+
+  // Create timestamp 301 seconds in the past
+  const timestamp = (Math.floor(Date.now() / 1000) - 301).toString();
+  const nonce = "test_nonce";
+  const strToSign = timestamp + nonce + "default_test_key" + body;
+  const signature = crypto.createHash("sha256").update(strToSign, "utf8").digest("hex");
+
+  const response = await supertest(app)
+    .post("/im:message:receive_v1")
+    .set("Content-Type", "application/json")
+    .set("x-lark-signature", signature)
+    .set("x-lark-request-timestamp", timestamp)
+    .set("x-lark-request-nonce", nonce)
+    .send(body);
+
+  assert.strictEqual(response.status, 403);
+  assert.deepStrictEqual(response.body, { error: "Unauthorized" });
+});
+
+test("DCCDSchemaGuard correctly validates Feishu JSON v2.0 structure", () => {
+  const validCard = {
+    config: { wide_screen_mode: true },
+    elements: [{ tag: "div", text: { content: "test" } }]
+  };
+  assert.strictEqual(validateFeishuCardSchema(validCard), true);
+
+  const invalidCard = { elements: "not_an_array" };
+  assert.strictEqual(validateFeishuCardSchema(invalidCard), false);
 });
