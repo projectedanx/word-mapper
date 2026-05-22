@@ -1,3 +1,4 @@
+import rateLimit from "express-rate-limit";
 import crypto from "node:crypto";
 import express from "express";
 import cors from "cors";
@@ -269,7 +270,13 @@ function logToSSR(anomaly) {
 }
 
 // Feishu Webhook Route
-app.post("/im:message:receive_v1", express.raw({ type: "application/json" }), async (req, res) => {
+
+const webhookLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: "Too many requests from this IP, please try again after a minute"
+});
+app.post("/im:message:receive_v1", webhookLimiter, express.raw({ type: "application/json" }), async (req, res) => {
   try {
     const signature = req.headers["x-lark-signature"];
     const timestamp = req.headers["x-lark-request-timestamp"];
