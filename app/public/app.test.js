@@ -154,7 +154,7 @@ class MockDocument {
 const mockDoc = new MockDocument();
 global.window = { location: { href: "http://localhost/" } };
 global.document = mockDoc;
-global.localStorage = { getItem: () => "token" };
+global.sessionStorage = { getItem: () => "token" };
 
 let callToolResult = {
   isError: false,
@@ -335,10 +335,10 @@ test("button click handles missing token", async () => {
   const statusEl = mockDoc.getElementById("status");
   const resultsSection = mockDoc.getElementById("results");
 
-  // Save original localStorage.getItem and mock it to return null
-  const originalGetItem = global.localStorage.getItem;
+  // Save original sessionStorage.getItem and mock it to return null
+  const originalGetItem = global.sessionStorage.getItem;
   try {
-    global.localStorage.getItem = () => null;
+    global.sessionStorage.getItem = () => null;
 
     input.value = "test";
     btn.click();
@@ -348,8 +348,8 @@ test("button click handles missing token", async () => {
     assert.strictEqual(statusEl.textContent, "Authentication required. Please log in.");
     assert.strictEqual(resultsSection.classList.contains("hidden"), true);
   } finally {
-    // Restore original localStorage.getItem
-    global.localStorage.getItem = originalGetItem;
+    // Restore original sessionStorage.getItem
+    global.sessionStorage.getItem = originalGetItem;
   }
 });
 
@@ -667,9 +667,9 @@ test("mineBtn click handles missing token", async () => {
   const mineStatusEl = mockDoc.getElementById("mineStatus");
   const topologyResults = mockDoc.getElementById("topologyResults");
 
-  const originalGetItem = global.localStorage.getItem;
+  const originalGetItem = global.sessionStorage.getItem;
   try {
-    global.localStorage.getItem = () => null;
+    global.sessionStorage.getItem = () => null;
 
     input.value = "domain1, domain2";
     btn.click();
@@ -679,7 +679,7 @@ test("mineBtn click handles missing token", async () => {
     assert.strictEqual(mineStatusEl.textContent, "Authentication required. Please log in.");
     assert.strictEqual(topologyResults.classList.contains("hidden"), true);
   } finally {
-    global.localStorage.getItem = originalGetItem;
+    global.sessionStorage.getItem = originalGetItem;
   }
 });
 
@@ -691,9 +691,9 @@ test("symbiosisBtn click handles missing token", async () => {
   const symbiosisStatusEl = mockDoc.getElementById("symbiosisStatus");
   const symbiosisResults = mockDoc.getElementById("symbiosisResults");
 
-  const originalGetItem = global.localStorage.getItem;
+  const originalGetItem = global.sessionStorage.getItem;
   try {
-    global.localStorage.getItem = () => null;
+    global.sessionStorage.getItem = () => null;
 
     btn.click();
 
@@ -702,7 +702,7 @@ test("symbiosisBtn click handles missing token", async () => {
     assert.strictEqual(symbiosisStatusEl.textContent, "Authentication required. Please log in.");
     assert.strictEqual(symbiosisResults.classList.contains("hidden"), true);
   } finally {
-    global.localStorage.getItem = originalGetItem;
+    global.sessionStorage.getItem = originalGetItem;
   }
 });
 
@@ -714,9 +714,9 @@ test("paraconsistentBtn click handles missing token", async () => {
   const paraStatusEl = mockDoc.getElementById("paraStatus");
   const paraResults = mockDoc.getElementById("paraResults");
 
-  const originalGetItem = global.localStorage.getItem;
+  const originalGetItem = global.sessionStorage.getItem;
   try {
-    global.localStorage.getItem = () => null;
+    global.sessionStorage.getItem = () => null;
 
     btn.click();
 
@@ -725,7 +725,7 @@ test("paraconsistentBtn click handles missing token", async () => {
     assert.strictEqual(paraStatusEl.textContent, "Authentication required. Please log in.");
     assert.strictEqual(paraResults.classList.contains("hidden"), true);
   } finally {
-    global.localStorage.getItem = originalGetItem;
+    global.sessionStorage.getItem = originalGetItem;
   }
 });
 

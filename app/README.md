@@ -27,7 +27,7 @@ cd app && npm install
 ### 2. Authenticate
 Provide the required token to the environment.
 ```javascript
-localStorage.setItem('token', 'YOUR_JWT_TOKEN');
+sessionStorage.setItem('token', 'YOUR_JWT_TOKEN');
 ```
 
 ### 3. First Call
