@@ -1465,3 +1465,89 @@ test("inversionBtn click updates UI with payload", async () => {
   assert.strictEqual(epistemicDriftEl.textContent, "0.08");
   assert.strictEqual(invStatusEl.textContent, "Inversion complete.");
 });
+
+
+test("agentSelector change updates input labels", async () => {
+  const agentSelector = mockDoc.getElementById("agentSelector");
+  const orchestratorInput2 = mockDoc.getElementById("orchestratorInput2");
+  const orchestratorLabel1 = mockDoc.getElementById("orchestratorLabel1");
+  const orchestratorLabel2 = mockDoc.getElementById("orchestratorLabel2");
+
+  agentSelector.value = "viper_optical_extrusion_engine";
+  const listeners = agentSelector._listeners['change'] || [];
+  listeners.forEach(fn => fn({ target: agentSelector, preventDefault: () => {} }));
+
+  assert.strictEqual(orchestratorLabel1.textContent, "User Intent (Affective/Visual input):");
+  assert.strictEqual(orchestratorInput2.style.display, "none");
+  assert.strictEqual(orchestratorLabel2.style.display, "none");
+});
+
+test("orchestratorBtn click handles missing input", async () => {
+  const orchestratorBtn = mockDoc.getElementById("orchestratorBtn");
+  const orchestratorInput1 = mockDoc.getElementById("orchestratorInput1");
+  const orchestratorInput2 = mockDoc.getElementById("orchestratorInput2");
+  const orchestratorStatusEl = mockDoc.getElementById("orchestratorStatus");
+  const agentSelector = mockDoc.getElementById("agentSelector");
+
+  agentSelector.value = "synthesize_symbiosis";
+  orchestratorInput1.value = "";
+  orchestratorInput2.value = "";
+
+  const originalGetItem = global.sessionStorage.getItem;
+  global.sessionStorage.getItem = () => "token";
+
+  try {
+      const listeners = orchestratorBtn._listeners['click'] || [];
+      for (const fn of listeners) {
+        await fn({ target: orchestratorBtn, preventDefault: () => {} });
+      }
+
+      await new Promise(r => setTimeout(r, 50));
+      assert.strictEqual(orchestratorStatusEl.textContent, "Please provide all required inputs.");
+  } finally {
+      global.sessionStorage.getItem = originalGetItem;
+  }
+});
+
+test("orchestratorBtn click updates UI with payload", async () => {
+  const orchestratorBtn = mockDoc.getElementById("orchestratorBtn");
+  const orchestratorInput1 = mockDoc.getElementById("orchestratorInput1");
+  const orchestratorInput2 = mockDoc.getElementById("orchestratorInput2");
+  const orchestratorStatusEl = mockDoc.getElementById("orchestratorStatus");
+  const agentSelector = mockDoc.getElementById("agentSelector");
+  const orchestratorResults = mockDoc.getElementById("orchestratorResults");
+  const orchestratorGrid = mockDoc.getElementById("orchestratorGrid");
+
+  agentSelector.value = "agentic_inversion_engine";
+  orchestratorInput1.value = "test_hyp";
+  orchestratorInput2.value = "test_con";
+
+  const originalCallToolResult = callToolResult;
+  callToolResult = {
+      isError: false,
+      content: [{ text: JSON.stringify({
+          epistemic_drift: "0.1",
+          latent_leap: "test_leap",
+          paraconsistent_contradiction: "test_contra"
+      }) }]
+  };
+
+  const originalGetItem = global.sessionStorage.getItem;
+  global.sessionStorage.getItem = () => "token";
+
+  try {
+      const listeners = orchestratorBtn._listeners['click'] || [];
+      for (const fn of listeners) {
+        await fn({ target: orchestratorBtn, preventDefault: () => {} });
+      }
+
+      await new Promise(r => setTimeout(r, 50));
+
+      assert.strictEqual(orchestratorResults.classList.contains("hidden"), false);
+      assert.strictEqual(orchestratorStatusEl.textContent, "Agent Workflow Complete.");
+      assert.strictEqual(orchestratorGrid.children.length, 2);
+  } finally {
+      callToolResult = originalCallToolResult;
+      global.sessionStorage.getItem = originalGetItem;
+  }
+});

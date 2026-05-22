@@ -175,6 +175,38 @@
         <div id="paraconsistentContradiction" class="blend hidden" style="border-color: #f87171;"></div>
       </section>
 
+
+      <section class="input-section" style="margin-top: 2rem; border-top: 1px solid #1f2937; padding-top: 2rem;" id="orchestratorSection">
+        <h2>Multi-Agent Instance Orchestrator</h2>
+        <p class="tagline">Select an agent instance and provide the required inputs.</p>
+
+        <label for="agentSelector">Select Agent:</label>
+        <select id="agentSelector" style="width: 100%; padding: 0.5rem; margin-bottom: 1rem; background: #1f2937; color: #f3f4f6; border: 1px solid #374151; border-radius: 0.25rem;">
+          <option value="synthesize_symbiosis">Synthesis Agent</option>
+          <option value="paraconsistent_synthesis">Paraconsistent Agent</option>
+          <option value="agentic_inversion_engine">Inversion Agent</option>
+          <option value="viper_optical_extrusion_engine">Optical Agent</option>
+        </select>
+        <br/>
+
+        <label id="orchestratorLabel1" for="orchestratorInput1">Human Lens (tacit knowledge):</label>
+        <input id="orchestratorInput1" type="text" placeholder="e.g. Reflexive Dialogue" />
+        <br/><br/>
+
+        <label id="orchestratorLabel2" for="orchestratorInput2">AI Specification (structural constraint):</label>
+        <input id="orchestratorInput2" type="text" placeholder="e.g. JSON-LD Schema" />
+
+        <button id="orchestratorBtn" style="margin-top: 1rem; background: #2563eb;">Execute Agent</button>
+        <div id="orchestratorStatus" class="status"></div>
+      </section>
+
+      <section id="orchestratorResults" class="results hidden">
+        <h2>Agent Artifact</h2>
+        <div class="grid" id="orchestratorGrid">
+        </div>
+        <div id="orchestratorLog" class="blend hidden" style="border-color: #2563eb;"></div>
+      </section>
+
     </main>
   </div>
 

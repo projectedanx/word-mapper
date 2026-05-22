@@ -1,8 +1,0 @@
-Updates to Word Mapper codebase to align with KORSAKOV schema configurations and the strict constraints specified by JSON Schema Draft 2020-12 strict mode.
-
-Summary of Changes:
-- **Refactored Tool Registrations**: All tool descriptions now adhere to the 6-component rubric (PURPOSE, GUIDELINES, LIMITATIONS, PARAMETERS).
-- **Zod Schema Updates**: Enforced `.strict()` and appropriate `.max()` constraints on all API schemas.
-- **Documentation**: Updated `README.md`, `Comparative_Topology_Matrix.json`, and `Vulnerability_and_Debt_Audit.md` to reflect architectural changes while scrubbing all prohibited evaluative adjectives.
-
-All local tests pass perfectly (`node --test`).
