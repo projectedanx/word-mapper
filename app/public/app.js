@@ -1,3 +1,18 @@
+
+function parseMcpResponse(result) {
+  if (result.isError) {
+    const errorContent = result.content[0].text;
+    let errorObj;
+    try {
+      errorObj = JSON.parse(errorContent);
+    } catch (e) {
+      throw new Error(errorContent || "Request failed");
+    }
+    throw new Error(errorObj.structured_detail?.error || errorObj.error_code || "Request failed");
+  }
+  return JSON.parse(result.content[0].text);
+}
+
 /**
  * Populates an HTML list element with a series of text items.
  * Clears the list before adding items. If the items array is empty or undefined,
@@ -84,19 +99,7 @@ const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefine
         name: "synthesize_symbiosis",
         arguments: { human_lens: humanLens, ai_spec: aiSpec }
       });
-
-      if (result.isError) {
-        const errorContent = result.content[0].text;
-        let errorObj;
-        try {
-          errorObj = JSON.parse(errorContent);
-        } catch (e) {
-          throw new Error(errorContent || "Request failed");
-        }
-        throw new Error(errorObj.structured_detail?.error || errorObj.error_code || "Request failed");
-      }
-
-      const data = JSON.parse(result.content[0].text);
+      const data = parseMcpResponse(result);
 
       integratedFrameworkEl.textContent = data.integrated_framework;
       emergentValueEl.textContent = data.emergent_value;
@@ -205,19 +208,7 @@ if (isBrowser) {
         name: "map_semantic_relations",
         arguments: { words }
       });
-
-      if (result.isError) {
-        const errorContent = result.content[0].text;
-        let errorObj;
-        try {
-          errorObj = JSON.parse(errorContent);
-        } catch (e) {
-          throw new Error(errorContent || "Request failed");
-        }
-        throw new Error(errorObj.structured_detail?.error || errorObj.error_code || "Request failed");
-      }
-
-      const data = JSON.parse(result.content[0].text);
+      const data = parseMcpResponse(result);
 
       primaryWordEl.textContent = `Primary focus: "${data.primary}" (inputs: ${data.words.join(", ")})`;
 
@@ -306,19 +297,7 @@ if (isBrowser) {
         name: "mine_lexical_topology",
         arguments: { domains }
       });
-
-      if (result.isError) {
-        const errorContent = result.content[0].text;
-        let errorObj;
-        try {
-          errorObj = JSON.parse(errorContent);
-        } catch (e) {
-          throw new Error(errorContent || "Request failed");
-        }
-        throw new Error(errorObj.structured_detail?.error || errorObj.error_code || "Request failed");
-      }
-
-      const data = JSON.parse(result.content[0].text);
+      const data = parseMcpResponse(result);
 
       semanticDriftEl.textContent = data.analysis_zones.semantic_drift;
       connotationVectorsEl.textContent = data.analysis_zones.connotation_vectors;
@@ -435,15 +414,7 @@ if (isBrowser) {
         name: "agentic_inversion_engine",
         arguments: { human_hypothesis: humanHypothesis, ai_constraint: aiConstraint }
       });
-
-      if (result.isError) {
-        const errorContent = result.content[0].text;
-        let errorObj;
-        try { errorObj = JSON.parse(errorContent); } catch (e) { throw new Error(errorContent || "Request failed"); }
-        throw new Error(errorObj.structured_detail?.error || errorObj.error_code || "Request failed");
-      }
-
-      const data = JSON.parse(result.content[0].text);
+      const data = parseMcpResponse(result);
 
       epistemicDriftEl.textContent = String(data.epistemic_drift);
       latentLeapEl.textContent = data.latent_leap;
@@ -484,19 +455,7 @@ if (isBrowser) {
         name: "paraconsistent_synthesis",
         arguments: { human_input: humanInput, ai_input: aiInput }
       });
-
-      if (result.isError) {
-        const errorContent = result.content[0].text;
-        let errorObj;
-        try {
-          errorObj = JSON.parse(errorContent);
-        } catch (e) {
-          throw new Error(errorContent || "Request failed");
-        }
-        throw new Error(errorObj.structured_detail?.error || errorObj.error_code || "Request failed");
-      }
-
-      const data = JSON.parse(result.content[0].text);
+      const data = parseMcpResponse(result);
 
       goldenScarEl.textContent = String(data.golden_scar);
       superpositionPayloadEl.textContent = data.superposition_payload;
@@ -631,15 +590,7 @@ if (isBrowser) {
         name: agent,
         arguments: args
       });
-
-      if (result.isError) {
-        const errorContent = result.content[0].text;
-        let errorObj;
-        try { errorObj = JSON.parse(errorContent); } catch (e) { throw new Error(errorContent || "Request failed"); }
-        throw new Error(errorObj.structured_detail?.error || errorObj.error_code || "Request failed");
-      }
-
-      const data = JSON.parse(result.content[0].text);
+      const data = parseMcpResponse(result);
 
       const renderCard = (title, content, valueColor) => {
           const card = document.createElement('div');
