@@ -1,0 +1,2 @@
+Instability: The root directory was cluttered with unimported Python utility scripts (`fix_rate.py`, `parse_refactor.py`, `patch_rate_limit.py`) acting as hallway trash, and `app/package.json` used loose dependency versioning (`^`) which introduces build instability.
+Fortification: Swept all unimported `.py` files from the root directory to enforce root hygiene and pinned all dependencies in `app/package.json` to exact semantic versions to guarantee deterministic builds.
