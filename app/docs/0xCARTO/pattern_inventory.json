@@ -1,0 +1,69 @@
+{
+  "DRP_ID": "DRP-2026-CARTO-0.0.1",
+  "generated": "2026-06-03T00:19:00+10:00",
+  "patterns": [
+    {
+      "pattern_name": "Mycelial_CI_Trace",
+      "type": "Structural_Dependency",
+      "operational_definition": "Mapping of all CI/CD artifacts to their causal AST origins, exposing hidden environmental constraints and nominative traps.",
+      "measurement_proxy": "Count of undocumented implicit dependencies discovered per 1000 LOC traversed.",
+      "task_conditioned_baseline": "GDS >= 0.95 required before documentation extrusion begins.",
+      "falsification_condition": "Pattern is falsified if a documented 'deploy' step demonstrably does not deploy in live execution.",
+      "expected_artifacts": [
+        "Mermaid.js architecture graph",
+        "CI/CD sequence diagram",
+        "Nominative Trap registry"
+      ]
+    },
+    {
+      "pattern_name": "Golden_Scar_Tension",
+      "type": "Semantic_Conflict",
+      "operational_definition": "Preservation of non-standard logic, naming conventions, and developer cultural artifacts that encode causal intent irreducible to standard equivalents.",
+      "measurement_proxy": "Pluriversal Drift Index (PDI) - ratio of standardized-to-preserved artifacts.",
+      "task_conditioned_baseline": "PDI > 0.35 triggers preservation protocol. PDI < 0.10 indicates over-standardization risk.",
+      "falsification_condition": "Pattern is falsified if standardized naming produces equivalent developer comprehension scores in HITL annotation review.",
+      "expected_artifacts": [
+        "Ontological Glossary",
+        "Symbolic Scar Tissue Log",
+        "Cultural Artifact Registry"
+      ]
+    },
+    {
+      "pattern_name": "Betti1_Cycle_Detection",
+      "type": "Topological_Integrity",
+      "operational_definition": "Detection of circular dependency loops in the CI/CD job dependency graph using algebraic topology (first Betti number).",
+      "measurement_proxy": "Count of independent loops in the CI dependency graph. Target: 0.",
+      "task_conditioned_baseline": "Any Betti-1 cycle > 0 triggers EpistemicEscrow halt.",
+      "falsification_condition": "Falsified if a detected 'cycle' is a phantom artifact of YAML anchors that resolve linearly at runtime.",
+      "expected_artifacts": [
+        "circular_dependency_alert.yaml",
+        "DAG visualization in Mermaid.js"
+      ]
+    },
+    {
+      "pattern_name": "Thermodynamic_Entropy_Audit",
+      "type": "Efficiency_Topology",
+      "operational_definition": "Quantification of build inefficiency as thermodynamic entropy: redundant steps, unparallelized suites, and cache-miss patterns mapped as heat loss.",
+      "measurement_proxy": "Overall Repository Entropy Score (0.0-1.0). Target: < 0.15.",
+      "task_conditioned_baseline": "Score > 0.50 = critical intervention required. Score 0.15-0.50 = optimization recommended.",
+      "falsification_condition": "Falsified if parallelization of identified redundant steps does not reduce wall-clock CI time by >= 20%.",
+      "expected_artifacts": [
+        "Entropy audit table",
+        "Bottleneck heatmap",
+        "Optimization priority queue"
+      ]
+    },
+    {
+      "pattern_name": "Pluriversal_Temporal_Drift",
+      "type": "Cultural_Temporal",
+      "operational_definition": "Detection of timezone and temporality assumptions baked into cron schedules, logging timestamps, and async timeouts that silently break for non-WEIRD contributors.",
+      "measurement_proxy": "Count of UTC-assumed operations that produce incorrect behavior for contributors in UTC+-8 or greater.",
+      "task_conditioned_baseline": "Any timezone-implicit cron in a multi-contributor repo is a documentation obligation.",
+      "falsification_condition": "Falsified if all cron schedules are documented with explicit UTC conversion tables and no complaints exist in Issues.",
+      "expected_artifacts": [
+        "Temporal Conflict Registry",
+        "Cron schedule localization table"
+      ]
+    }
+  ]
+}
