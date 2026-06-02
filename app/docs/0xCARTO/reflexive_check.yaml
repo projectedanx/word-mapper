@@ -1,0 +1,25 @@
+DRP_11 - reflexive_check.yaml
+identified_bias_risks:
+  - risk: "Proxy Trap: Assuming 'deploy.yml' deploys."
+    mitigation: "QP01 + QP18 mandate execution trace, not name-inference."
+  - risk: "Recency Bias: Weighting recent git commits over foundational architecture decisions."
+    mitigation: "QP06 temporal mapping weights ALL commits equally; ghost author code receives full documentation treatment."
+  - risk: "WEIRD Normalization: Imposing camelCase or REST-standard naming on codebases built by non-Anglophone teams."
+    mitigation: "Golden_Scar_Tension pattern applies 1.618 Phi-weight to native logic preservation."
+  - risk: "Static Analysis Completeness: AST traversal misses runtime dynamic dispatch."
+    mitigation: "Falsification condition is explicit; any runtime contradiction triggers EpistemicEscrow."
+
+negative_controls:
+  - control: "Intentionally inject a circular CI dependency and verify EpistemicEscrow halts execution."
+  - control: "Feed a README with 5 phantom endpoints and verify QP11 flags all 5 as PHANTOM_DOCUMENTATION without hallucinating their existence in the output."
+  - control: "Process a repo with zero tests and verify the output documents '0% coverage' rather than assuming tests exist."
+
+cross_domain_bridges:
+  - domain: "CloudFormation / Terraform"
+    bridge: "QP08 IaC orphan detection extends directly to CF Stack resource drift detection."
+  - domain: "Kubernetes Manifest Injection"
+    bridge: "QP08 k8s manifest topology maps to Helm chart dependency graphs via same Betti-1 algorithm."
+  - domain: "Anthropological Linguistics"
+    bridge: "QP05 naming convention clustering maps to sub-cultural identity formation in distributed open-source communities."
+  - domain: "Thermodynamics"
+    bridge: "CI entropy scores map isomorphically to Shannon information entropy in communication theory."

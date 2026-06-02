@@ -1,0 +1,121 @@
+DRP-2026-CARTO-0.0.1 | Pattern Query Topology
+pattern_queries:
+  - id: QP01
+    target: "*.sh"
+    logic: "Find all shell scripts. Cross-reference against .github/workflows/*.yml. Flag any .sh invoked outside CI context as UNMOORED_SCRIPT."
+    lens: L1
+    artifact_type: "Orphaned Execution Node"
+
+  - id: QP02
+    target: "package.json[devDependencies] <-> .github/workflows/*.yml"
+    logic: "Map devDependencies against CI job steps. Any devDependency not invoked in any workflow step = ORPHANED_TEST_DEPENDENCY."
+    lens: L3
+    artifact_type: "Dead Weight / Entropy Contributor"
+
+  - id: QP03
+    target: "Dockerfile* + docker-compose*.yml"
+    logic: "Trace all ENV declarations in Dockerfile. Check if each ENV variable appears in docker-compose, .env.example, or CI secrets. Missing = UNDECLARED_ENVIRONMENT_ASSUMPTION."
+    lens: L1
+    artifact_type: "Hidden Environmental Constraint"
+
+  - id: QP04
+    target: ".github/workflows/*.yml[on.schedule]"
+    logic: "Extract all cron expressions. Convert to UTC and all maintainer timezones (inferred from git commit timestamps). Flag silent timezone collisions."
+    lens: L2
+    artifact_type: "Temporal Pluriversal Conflict"
+
+  - id: QP05
+    target: "src/**/*.{js,ts,py,go,rs}[function_names]"
+    logic: "Classify all function names by naming convention: camelCase, snake_case, PascalCase, kebab-case, ALL_CAPS. Map distribution. Bimodal distribution = two competing sub-cultures."
+    lens: L4
+    artifact_type: "Developer Culture Fingerprint"
+
+  - id: QP06
+    target: "git blame --all | aggregate by author"
+    logic: "Extract temporality layers. Map which architectural decisions were made by which contributors and when. Identify 'ghost authors' - contributors whose code remains but who are no longer active."
+    lens: L4
+    artifact_type: "Symbolic Scar Tissue Log Entry"
+
+  - id: QP07
+    target: ".github/workflows/*.yml[jobs..needs]"
+    logic: "Construct a directed acyclic graph (DAG) of CI job dependencies. Apply Betti-1 cycle detection. Any cycle = CIRCULAR_CI_DEPENDENCY -> EpistemicEscrow halt."
+    lens: L3
+    artifact_type: "CI Topology Graph / Betti-1 Cycle Alert"
+
+  - id: QP08
+    target: "*.{tf,tfvars} + CloudFormation/*.yaml + k8s/*.yaml"
+    logic: "Detect infrastructure-as-code artifacts. Map resource declarations against CI deploy steps. Any IaC resource not referenced in any deploy job = ORPHANED_INFRASTRUCTURE."
+    lens: L1
+    artifact_type: "Infrastructure Topology Mismatch"
+
+  - id: QP09
+    target: "requirements.txt | Pipfile | pyproject.toml | go.sum | Cargo.lock | package-lock.json"
+    logic: "Parse all lockfiles. Check for pinned vs. unpinned dependencies. Any unpinned production dependency = NON_DETERMINISTIC_BUILD_RISK."
+    lens: L3
+    artifact_type: "Entropy Vector (Build Reproducibility)"
+
+  - id: QP10
+    target: "src/**/*.{js,ts}[import statements] <-> package.json[dependencies]"
+    logic: "Cross-reference all import statements against package.json. Any imported module not in dependencies (only in devDependencies) = PRODUCTION_DEV_BOUNDARY_VIOLATION."
+    lens: L5
+    artifact_type: "Paraconsistent Dependency State"
+
+  - id: QP11
+    target: "README.md + docs/**/*.md"
+    logic: "Extract all documented endpoints, functions, and modules. Cross-reference against actual codebase. Any documented artifact not found in code = PHANTOM_DOCUMENTATION. Any code artifact not in docs = UNDOCUMENTED_FEATURE."
+    lens: L1
+    artifact_type: "Ground Truth Isomorphism Delta"
+
+  - id: QP12
+    target: ".env.example | .env.template | config/*.{yaml,json}"
+    logic: "Extract all environment variable declarations. Cross-reference against all source files that call process.env.*, os.environ, or equivalent. Missing from .env.example = SILENT_REQUIRED_ENV."
+    lens: L1
+    artifact_type: "Hidden Boot Requirement"
+
+  - id: QP13
+    target: "*.{yaml,yml}[on.workflow_dispatch.inputs]"
+    logic: "Extract all manually-triggered workflow inputs. Check if each input has a default value. Inputs without defaults that are also not documented = OPERATOR_KNOWLEDGE_TRAP."
+    lens: L2
+    artifact_type: "Undocumented Operational Prerequisite"
+
+  - id: QP14
+    target: "src/**/*.{js,ts,py}[TODO|FIXME|HACK|XXX|NOTE comments]"
+    logic: "Extract and categorize all code comments by type. Map against git blame to determine age. A TODO comment older than 90 days = PETRIFIED_INTENTION (no longer actionable, now architectural debt)."
+    lens: L5
+    artifact_type: "Golden Scar Candidate"
+
+  - id: QP15
+    target: "test/**/* | spec/**/* | tests/**/*"
+    logic: "Calculate test coverage topology: which source modules have zero test coverage. Map against QP02 orphaned dependencies. Modules with orphaned test deps AND zero coverage = PHANTOM_TEST_INFRASTRUCTURE."
+    lens: L3
+    artifact_type: "Thermodynamic Test Waste"
+
+  - id: QP16
+    target: ".github/CODEOWNERS + .github/PULL_REQUEST_TEMPLATE.md"
+    logic: "Check if CODEOWNERS exists. If yes, verify every owned path exists in the repo. Ghost ownership paths = STALE_GOVERNANCE_ARTIFACT."
+    lens: L4
+    artifact_type: "Governance Topology Decay"
+
+  - id: QP17
+    target: "src/**/*.{js,ts,py,go}[exported public API surface]"
+    logic: "Extract all publicly exported functions/classes/types. Diff against version tag history (if semver tags exist). Any export added without a version bump = SEMANTIC_VERSION_DRIFT."
+    lens: L2
+    artifact_type: "API Contract Integrity Failure"
+
+  - id: QP18
+    target: "Makefile | taskfile.yml | justfile | scripts/*.sh | package.json[scripts]"
+    logic: "Extract all task runner commands. Map against CI workflow step commands. Any target invoked in CI but not documented in README = IMPLICIT_BUILD_KNOWLEDGE."
+    lens: L1
+    artifact_type: "Tribal Knowledge Artifact"
+
+  - id: QP19
+    target: "src/**/*.{js,ts}[async/await patterns] <-> .github/workflows[timeout-minutes]"
+    logic: "Identify all async operations with no timeout configured. Cross-reference against CI job timeout settings. Async operations exceeding CI timeout = GHOST_PROCESS_RISK."
+    lens: L3
+    artifact_type: "Thermodynamic Runaway Candidate"
+
+  - id: QP20
+    target: "git log --all --diff-filter=D [deleted files] <-> src/**/*[current imports]"
+    logic: "Check if any currently active import references a file path that was deleted in git history. This detects zombie imports that pass static analysis but fail at runtime."
+    lens: L5
+    artifact_type: "Paraconsistent Import State (Zombie Reference)"
