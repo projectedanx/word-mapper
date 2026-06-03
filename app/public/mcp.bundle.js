@@ -5362,8 +5362,7 @@ var mcp_sdk_global = (() => {
         params: ({ params: { property, depsCount, deps, missingProperty } }) => (0, codegen_1._)`{property: ${property},
     missingProperty: ${missingProperty},
     depsCount: ${depsCount},
-    deps: ${deps}}`
-        // TODO change to reference
+    deps: ${depsCount === 1 ? deps : (0, codegen_1.str)`${deps}`}}`
       };
       var def = {
         keyword: "dependencies",
