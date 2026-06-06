@@ -257,7 +257,7 @@ const feishuEncryptKey = process.env.FEISHU_ENCRYPT_KEY || "default_test_key";
 const feishuCrypto = new FeishuCrypto(feishuEncryptKey);
 
 // Log structural anomalies in SSR
-function logToSSR(anomaly) {
+export function logToSSR(anomaly) {
   try {
 
     const currentDir = path.dirname(fileURLToPath(import.meta.url));

@@ -5,7 +5,8 @@ import test from "node:test";
 import assert from "node:assert";
 import crypto from "node:crypto";
 import jwt from "jsonwebtoken";
-import { fetchDatamuse, BoundedMap, cabpMiddleware } from "./server.js";
+import { fetchDatamuse, BoundedMap, cabpMiddleware, logToSSR } from "./server.js";
+import fs from "node:fs";
 
 /**
  * Helper to parse JSON from MCP text content.
@@ -582,4 +583,55 @@ test("cabpMiddleware reads JWT from HttpOnly cookie", async () => {
   assert.strictEqual(nextCalled, true);
   assert.ok(req.mcpContext);
   assert.strictEqual(req.mcpContext.user_id, "user123");
+});
+
+/**
+ * Test: logToSSR writes to file properly
+ */
+test("logToSSR appends anomaly to existing SSR file", (t) => {
+  let fileContent = JSON.stringify({ scars: [{ timestamp: "old", anomaly: "old error", type: "OMISSION: <rationale>" }] });
+  let writtenData = "";
+
+  t.mock.method(fs, "existsSync", () => true);
+  t.mock.method(fs, "readFileSync", () => fileContent);
+  t.mock.method(fs, "writeFileSync", (path, data) => {
+    writtenData = data;
+  });
+
+  logToSSR({ error: "new test error" });
+
+  const parsed = JSON.parse(writtenData);
+  assert.strictEqual(parsed.scars.length, 2);
+  assert.strictEqual(parsed.scars[1].anomaly.error, "new test error");
+  assert.strictEqual(parsed.scars[1].type, "OMISSION: <rationale>");
+});
+
+test("logToSSR creates new SSR file if not exists", (t) => {
+  let writtenData = "";
+
+  t.mock.method(fs, "existsSync", () => false);
+  t.mock.method(fs, "writeFileSync", (path, data) => {
+    writtenData = data;
+  });
+
+  logToSSR({ error: "test error creation" });
+
+  const parsed = JSON.parse(writtenData);
+  assert.strictEqual(parsed.scars.length, 1);
+  assert.strictEqual(parsed.scars[0].anomaly.error, "test error creation");
+});
+
+test("logToSSR catches errors properly", (t) => {
+  let logCalled = false;
+  const originalError = console.error;
+  t.mock.method(console, "error", () => {
+    logCalled = true;
+  });
+  t.mock.method(fs, "existsSync", () => {
+    throw new Error("mock error");
+  });
+
+  logToSSR({ error: "test error catch" });
+
+  assert.strictEqual(logCalled, true);
 });

@@ -1,0 +1,46 @@
+<<<<<<< SEARCH
+export function validateFeishuCardSchema(cardJson) {
+=======
+export function logToSSR(anomaly) {
+  try {
+
+    const currentDir = path.dirname(fileURLToPath(import.meta.url));
+    const ssrPath = path.join(currentDir, "SymbolicScar.json");
+
+    let ssr = [];
+    if (fs.existsSync(ssrPath)) {
+      const parsed = JSON.parse(fs.readFileSync(ssrPath, "utf8"));
+      if (parsed.scars) ssr = parsed.scars;
+      else if (Array.isArray(parsed)) ssr = parsed;
+    }
+    ssr.push({ timestamp: new Date().toISOString(), anomaly, type: "OMISSION: <rationale>" });
+    fs.writeFileSync(ssrPath, JSON.stringify({ scars: ssr }, null, 2));
+  } catch (err) {
+    console.error("Failed to log to SSR:", err);
+  }
+}
+
+export function validateFeishuCardSchema(cardJson) {
+>>>>>>> REPLACE
+<<<<<<< SEARCH
+// Log structural anomalies in SSR
+function logToSSR(anomaly) {
+  try {
+
+    const currentDir = path.dirname(fileURLToPath(import.meta.url));
+    const ssrPath = path.join(currentDir, "SymbolicScar.json");
+
+    let ssr = [];
+    if (fs.existsSync(ssrPath)) {
+      const parsed = JSON.parse(fs.readFileSync(ssrPath, "utf8"));
+      if (parsed.scars) ssr = parsed.scars;
+      else if (Array.isArray(parsed)) ssr = parsed;
+    }
+    ssr.push({ timestamp: new Date().toISOString(), anomaly, type: "OMISSION: <rationale>" });
+    fs.writeFileSync(ssrPath, JSON.stringify({ scars: ssr }, null, 2));
+  } catch (err) {
+    console.error("Failed to log to SSR:", err);
+  }
+}
+=======
+>>>>>>> REPLACE
