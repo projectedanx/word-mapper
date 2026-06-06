@@ -171,7 +171,6 @@ global.window = {
     dispatchEvent: (ev) => {}
 };
 global.document = mockDoc;
-global.sessionStorage = { getItem: () => "token" };
 
 global.mcp_sdk = {
   StreamableHTTPClientTransport: class {
