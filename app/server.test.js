@@ -550,3 +550,36 @@ test("DCCDSchemaGuard correctly validates Feishu JSON v2.0 structure", () => {
   const invalidCard = { elements: "not_an_array" };
   assert.strictEqual(validateFeishuCardSchema(invalidCard), false);
 });
+
+
+test("cabpMiddleware reads JWT from HttpOnly cookie", async () => {
+  const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
+    modulusLength: 2048,
+    publicKeyEncoding: { type: 'spki', format: 'pem' },
+    privateKeyEncoding: { type: 'pkcs8', format: 'pem' }
+  });
+
+  process.env.JWT_PUBLIC_KEY = publicKey;
+  process.env.JWT_AUDIENCE = "expected-audience";
+  process.env.JWT_ISSUER = "expected-issuer";
+
+  const payload = {
+    user_id: "user123",
+    tenant_id: "tenant456",
+    role: "admin",
+    aud: "expected-audience",
+    iss: "expected-issuer"
+  };
+  const token = jwt.sign(payload, privateKey, { algorithm: "RS256" });
+
+  const req = { headers: {}, cookies: { token } };
+  let nextCalled = false;
+  const res = {};
+  const next = () => { nextCalled = true; };
+
+  await cabpMiddleware(req, res, next);
+
+  assert.strictEqual(nextCalled, true);
+  assert.ok(req.mcpContext);
+  assert.strictEqual(req.mcpContext.user_id, "user123");
+});

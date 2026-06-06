@@ -57,12 +57,7 @@ const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefine
   const productivityJCurveEl = document.getElementById('productivityJCurve');
 
   symbiosisBtn?.addEventListener("click", async (event) => {
-    const token = sessionStorage.getItem('token');
-    if (!token) {
-      symbiosisStatusEl.textContent = "Authentication required. Please log in.";
-      symbiosisResults.classList.add("hidden");
-      return;
-    }
+
 
     const humanLens = humanLensInput.value.trim();
     const aiSpec = aiSpecInput.value.trim();
@@ -76,13 +71,11 @@ const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefine
     symbiosisResults.classList.add("hidden");
 
     try {
-      if (!globalThis.mcpClient || token !== globalThis.currentToken) {
+      if (!globalThis.mcpClient) {
         const serverUrl = new URL("/mcp", window.location.href);
         const transport = new mcp_sdk.StreamableHTTPClientTransport(serverUrl, {
           requestInit: {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+            credentials: "include"
           }
         });
 
@@ -92,8 +85,7 @@ const isBrowser = typeof window !== 'undefined' && typeof document !== 'undefine
         );
 
         await globalThis.mcpClient.connect(transport);
-        globalThis.currentToken = token;
-      }
+              }
 
       const result = await globalThis.mcpClient.callTool({
         name: "synthesize_symbiosis",
@@ -153,12 +145,7 @@ if (isBrowser) {
    * @returns {Promise<void>} A promise that resolves when the mapping and DOM update are complete.
    */
   btn?.addEventListener("click", async (event) => {
-    const token = sessionStorage.getItem('token');
-    if (!token) {
-      statusEl.textContent = "Authentication required. Please log in.";
-      resultsSection.classList.add("hidden");
-      return;
-    }
+
 
     const raw = input.value.trim();
     if (!raw) {
@@ -185,13 +172,11 @@ if (isBrowser) {
     miniBlendEl.classList.add("hidden");
 
     try {
-      if (!globalThis.mcpClient || token !== globalThis.currentToken) {
+      if (!globalThis.mcpClient) {
         const serverUrl = new URL("/mcp", window.location.href);
         const transport = new mcp_sdk.StreamableHTTPClientTransport(serverUrl, {
           requestInit: {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+            credentials: "include"
           }
         });
 
@@ -201,8 +186,7 @@ if (isBrowser) {
         );
 
         await globalThis.mcpClient.connect(transport);
-        globalThis.currentToken = token;
-      }
+              }
 
       const result = await globalThis.mcpClient.callTool({
         name: "map_semantic_relations",
@@ -248,12 +232,7 @@ if (isBrowser) {
   const knowledgeCapsuleEl = document.getElementById('knowledgeCapsule');
 
   mineBtn?.addEventListener("click", async (event) => {
-    const token = sessionStorage.getItem('token');
-    if (!token) {
-      mineStatusEl.textContent = "Authentication required. Please log in.";
-      topologyResults.classList.add("hidden");
-      return;
-    }
+
 
     const raw = domainsInput.value.trim();
     if (!raw) {
@@ -274,13 +253,11 @@ if (isBrowser) {
     knowledgeCapsuleEl.classList.add("hidden");
 
     try {
-      if (!globalThis.mcpClient || token !== globalThis.currentToken) {
+      if (!globalThis.mcpClient) {
         const serverUrl = new URL("/mcp", window.location.href);
         const transport = new mcp_sdk.StreamableHTTPClientTransport(serverUrl, {
           requestInit: {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+            credentials: "include"
           }
         });
 
@@ -290,8 +267,7 @@ if (isBrowser) {
         );
 
         await globalThis.mcpClient.connect(transport);
-        globalThis.currentToken = token;
-      }
+              }
 
       const result = await globalThis.mcpClient.callTool({
         name: "mine_lexical_topology",
@@ -338,12 +314,7 @@ if (isBrowser) {
   const synthesisLogEl = document.getElementById('synthesisLog');
 
   paraconsistentBtn?.addEventListener("click", async (event) => {
-    const token = sessionStorage.getItem('token');
-    if (!token) {
-      paraStatusEl.textContent = "Authentication required. Please log in.";
-      paraResults.classList.add("hidden");
-      return;
-    }
+
 
     const humanInput = paraHumanInput.value.trim();
     const aiInput = paraAiInput.value.trim();
@@ -358,13 +329,11 @@ if (isBrowser) {
     synthesisLogEl.classList.add("hidden");
 
     try {
-      if (!globalThis.mcpClient || token !== globalThis.currentToken) {
+      if (!globalThis.mcpClient) {
         const serverUrl = new URL("/mcp", window.location.href);
         const transport = new mcp_sdk.StreamableHTTPClientTransport(serverUrl, {
           requestInit: {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+            credentials: "include"
           }
         });
 
@@ -379,12 +348,7 @@ if (isBrowser) {
   const paraconsistentContradictionEl = document.getElementById('paraconsistentContradiction');
 
   inversionBtn?.addEventListener("click", async (event) => {
-    const token = sessionStorage.getItem('token');
-    if (!token) {
-      invStatusEl.textContent = "Authentication required. Please log in.";
-      invResults.classList.add("hidden");
-      return;
-    }
+
 
     const humanHypothesis = invHumanInput.value.trim();
     const aiConstraint = invAiInput.value.trim();
@@ -398,17 +362,16 @@ if (isBrowser) {
     invResults.classList.add("hidden");
 
     try {
-      if (!globalThis.mcpClient || token !== globalThis.currentToken) {
+      if (!globalThis.mcpClient) {
         const serverUrl = new URL("/mcp", window.location.href);
         const transport = new mcp_sdk.StreamableHTTPClientTransport(serverUrl, {
-          requestInit: { headers: { Authorization: `Bearer ${token}` } }
+          requestInit: { credentials: "include" }
         });
         globalThis.mcpClient = new mcp_sdk.Client(
           { name: "word-mapper-client", version: "1.0.0" }, { capabilities: {} }
         );
         await globalThis.mcpClient.connect(transport);
-        globalThis.currentToken = token;
-      }
+              }
 
       const result = await globalThis.mcpClient.callTool({
         name: "agentic_inversion_engine",
@@ -448,8 +411,7 @@ if (isBrowser) {
         );
 
         await globalThis.mcpClient.connect(transport);
-        globalThis.currentToken = token;
-      }
+              }
 
       const result = await globalThis.mcpClient.callTool({
         name: "paraconsistent_synthesis",
@@ -539,12 +501,7 @@ if (isBrowser) {
   if(agentSelector) updateOrchestratorUI();
 
   orchestratorBtn?.addEventListener("click", async (event) => {
-    const token = sessionStorage.getItem('token');
-    if (!token) {
-      orchestratorStatusEl.textContent = "Authentication required. Please log in.";
-      orchestratorResults.classList.add("hidden");
-      return;
-    }
+
 
     const agent = agentSelector.value;
     const input1 = orchestratorInput1.value.trim();
@@ -574,17 +531,16 @@ if (isBrowser) {
     }
 
     try {
-      if (!globalThis.mcpClient || token !== globalThis.currentToken) {
+      if (!globalThis.mcpClient) {
         const serverUrl = new URL("/mcp", window.location.href);
         const transport = new mcp_sdk.StreamableHTTPClientTransport(serverUrl, {
-          requestInit: { headers: { Authorization: `Bearer ${token}` } }
+          requestInit: { credentials: "include" }
         });
         globalThis.mcpClient = new mcp_sdk.Client(
           { name: "word-mapper-client", version: "1.0.0" }, { capabilities: {} }
         );
         await globalThis.mcpClient.connect(transport);
-        globalThis.currentToken = token;
-      }
+              }
 
       const result = await globalThis.mcpClient.callTool({
         name: agent,

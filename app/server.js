@@ -2,6 +2,7 @@ import rateLimit from "express-rate-limit";
 import crypto from "node:crypto";
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import fetch from "node-fetch";
 import jwt from "jsonwebtoken";
 import { fileURLToPath } from "node:url";
@@ -19,7 +20,8 @@ const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
   origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : "http://localhost:3000",
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
+  credentials: true
 };
 app.use(cors(corsOptions));
 app.use(express.json({
@@ -27,6 +29,7 @@ app.use(express.json({
     req.rawBody = buf;
   }
 }));
+app.use(cookieParser());
 app.use(express.static("public"));
 
 /**
@@ -194,7 +197,12 @@ const server = new McpServer({
  */
 export async function cabpMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
-  if (!authHeader?.startsWith("Bearer ")) {
+  let token = req.cookies?.token;
+  if (!token && authHeader?.startsWith("Bearer ")) {
+    token = authHeader.slice(7);
+  }
+
+  if (!token) {
     res.status(401).json({
       error_code: "TOOL_FAULT_SERVER_HOST_CONFIGURATION",
       fault_category: "SERVER_HOST_CONFIGURATION",
@@ -206,7 +214,6 @@ export async function cabpMiddleware(req, res, next) {
   }
 
   try {
-    const token = authHeader.slice(7);
     const verifyOptions = {
       algorithms: ["RS256"],
       audience: process.env.JWT_AUDIENCE,

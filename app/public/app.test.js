@@ -154,7 +154,6 @@ class MockDocument {
 const mockDoc = new MockDocument();
 global.window = { location: { href: "http://localhost/" } };
 global.document = mockDoc;
-global.sessionStorage = { getItem: () => "token" };
 
 let callToolResult = {
   isError: false,
@@ -336,7 +335,6 @@ test("button click handles missing token", async () => {
   const resultsSection = mockDoc.getElementById("results");
 
   // Save original sessionStorage.getItem and mock it to return null
-  const originalGetItem = global.sessionStorage.getItem;
   try {
     global.sessionStorage.getItem = () => null;
 
@@ -349,7 +347,6 @@ test("button click handles missing token", async () => {
     assert.strictEqual(resultsSection.classList.contains("hidden"), true);
   } finally {
     // Restore original sessionStorage.getItem
-    global.sessionStorage.getItem = originalGetItem;
   }
 });
 
@@ -658,76 +655,11 @@ test("paraconsistentBtn click handles tool call error", async () => {
   assert.strictEqual(paraResults.classList.contains("hidden"), true);
 });
 
-/**
- * Test: mineBtn click handles missing token
- */
-test("mineBtn click handles missing token", async () => {
-  const input = mockDoc.getElementById("domains");
-  const btn = mockDoc.getElementById("mineBtn");
-  const mineStatusEl = mockDoc.getElementById("mineStatus");
-  const topologyResults = mockDoc.getElementById("topologyResults");
 
-  const originalGetItem = global.sessionStorage.getItem;
-  try {
-    global.sessionStorage.getItem = () => null;
 
-    input.value = "domain1, domain2";
-    btn.click();
 
-    await new Promise(r => setTimeout(r, 10));
 
-    assert.strictEqual(mineStatusEl.textContent, "Authentication required. Please log in.");
-    assert.strictEqual(topologyResults.classList.contains("hidden"), true);
-  } finally {
-    global.sessionStorage.getItem = originalGetItem;
-  }
-});
 
-/**
- * Test: symbiosisBtn click handles missing token
- */
-test("symbiosisBtn click handles missing token", async () => {
-  const btn = mockDoc.getElementById("symbiosisBtn");
-  const symbiosisStatusEl = mockDoc.getElementById("symbiosisStatus");
-  const symbiosisResults = mockDoc.getElementById("symbiosisResults");
-
-  const originalGetItem = global.sessionStorage.getItem;
-  try {
-    global.sessionStorage.getItem = () => null;
-
-    btn.click();
-
-    await new Promise(r => setTimeout(r, 10));
-
-    assert.strictEqual(symbiosisStatusEl.textContent, "Authentication required. Please log in.");
-    assert.strictEqual(symbiosisResults.classList.contains("hidden"), true);
-  } finally {
-    global.sessionStorage.getItem = originalGetItem;
-  }
-});
-
-/**
- * Test: paraconsistentBtn click handles missing token
- */
-test("paraconsistentBtn click handles missing token", async () => {
-  const btn = mockDoc.getElementById("paraconsistentBtn");
-  const paraStatusEl = mockDoc.getElementById("paraStatus");
-  const paraResults = mockDoc.getElementById("paraResults");
-
-  const originalGetItem = global.sessionStorage.getItem;
-  try {
-    global.sessionStorage.getItem = () => null;
-
-    btn.click();
-
-    await new Promise(r => setTimeout(r, 10));
-
-    assert.strictEqual(paraStatusEl.textContent, "Authentication required. Please log in.");
-    assert.strictEqual(paraResults.classList.contains("hidden"), true);
-  } finally {
-    global.sessionStorage.getItem = originalGetItem;
-  }
-});
 
 /**
  * Test: mineBtn click handles tool JSON parse error
@@ -1493,9 +1425,6 @@ test("orchestratorBtn click handles missing input", async () => {
   orchestratorInput1.value = "";
   orchestratorInput2.value = "";
 
-  const originalGetItem = global.sessionStorage.getItem;
-  global.sessionStorage.getItem = () => "token";
-
   try {
       const listeners = orchestratorBtn._listeners['click'] || [];
       for (const fn of listeners) {
@@ -1505,7 +1434,6 @@ test("orchestratorBtn click handles missing input", async () => {
       await new Promise(r => setTimeout(r, 50));
       assert.strictEqual(orchestratorStatusEl.textContent, "Please provide all required inputs.");
   } finally {
-      global.sessionStorage.getItem = originalGetItem;
   }
 });
 
@@ -1532,9 +1460,6 @@ test("orchestratorBtn click updates UI with payload", async () => {
       }) }]
   };
 
-  const originalGetItem = global.sessionStorage.getItem;
-  global.sessionStorage.getItem = () => "token";
-
   try {
       const listeners = orchestratorBtn._listeners['click'] || [];
       for (const fn of listeners) {
@@ -1548,6 +1473,5 @@ test("orchestratorBtn click updates UI with payload", async () => {
       assert.strictEqual(orchestratorGrid.children.length, 2);
   } finally {
       callToolResult = originalCallToolResult;
-      global.sessionStorage.getItem = originalGetItem;
   }
 });
