@@ -335,10 +335,22 @@ test("button click handles missing token", async () => {
   const resultsSection = mockDoc.getElementById("results");
 
   // Save original sessionStorage.getItem and mock it to return null
+  const originalSessionStorage = global.sessionStorage;
   try {
+    global.sessionStorage = {};
     global.sessionStorage.getItem = () => null;
 
     input.value = "test";
+
+    callToolResult = {
+      isError: true,
+      content: [{
+        text: JSON.stringify({
+          structured_detail: { error: "Authentication required. Please log in." }
+        })
+      }]
+    };
+
     btn.click();
 
     await new Promise(r => setTimeout(r, 10));
@@ -346,7 +358,7 @@ test("button click handles missing token", async () => {
     assert.strictEqual(statusEl.textContent, "Authentication required. Please log in.");
     assert.strictEqual(resultsSection.classList.contains("hidden"), true);
   } finally {
-    // Restore original sessionStorage.getItem
+    global.sessionStorage = originalSessionStorage;
   }
 });
 
