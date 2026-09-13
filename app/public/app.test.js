@@ -173,7 +173,7 @@ global.mcp_sdk = {
   }
 };
 
-const { fillList } = await import("./app.js");
+const { fillList, renderCard } = await import("./app.js");
 
 /**
  * Test: fillList populates list element
@@ -233,6 +233,50 @@ test("fillList uses textContent for security", () => {
   const malicious = "<img src=x onerror=alert(1)>";
   fillList(listEl, [malicious]);
   assert.strictEqual(listEl.children[0].textContent, malicious);
+});
+
+
+/**
+ * Test: renderCard creates basic card
+ */
+test("renderCard creates basic card", () => {
+  const card = renderCard("Test Title", "Test Content");
+  assert.strictEqual(card.className, "card");
+  assert.strictEqual(card.style.borderColor, "#374151");
+
+  const titleEl = card.children[0];
+  assert.strictEqual(titleEl.tagName.toLowerCase(), "h3");
+  assert.strictEqual(titleEl.textContent, "Test Title");
+
+  const contentEl = card.children[1];
+  assert.strictEqual(contentEl.tagName.toLowerCase(), "div");
+  assert.strictEqual(contentEl.textContent, "Test Content");
+});
+
+/**
+ * Test: renderCard with custom value color
+ */
+test("renderCard with custom value color", () => {
+  const card = renderCard("Title", "Content", "#ff0000");
+  assert.strictEqual(card.style.borderColor, "#ff0000");
+
+  const contentEl = card.children[1];
+  assert.strictEqual(contentEl.style.fontSize, "1.25rem");
+  assert.strictEqual(contentEl.style.fontWeight, "bold");
+  assert.strictEqual(contentEl.style.color, "#ff0000");
+});
+
+/**
+ * Test: renderCard with object content
+ */
+test("renderCard with object content", () => {
+  const obj = { key: "value" };
+  const card = renderCard("Title", obj);
+
+  const contentEl = card.children[1];
+  const preEl = contentEl.children[0];
+  assert.strictEqual(preEl.tagName.toLowerCase(), "pre");
+  assert.strictEqual(preEl.textContent, JSON.stringify(obj, null, 2));
 });
 
 /**
