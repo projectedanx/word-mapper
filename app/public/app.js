@@ -39,6 +39,39 @@ export function fillList(listEl, items) {
   listEl.appendChild(fragment);
 }
 
+/**
+ * Renders a card element containing a title and content.
+ * @param {string} title - The title of the card.
+ * @param {string|object} content - The content of the card.
+ * @param {string} [valueColor] - Optional border and text color.
+ * @returns {HTMLElement} The card element.
+ */
+export function renderCard (title, content, valueColor) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.style.borderColor = valueColor || '#374151';
+   const titleEl = document.createElement('h3');
+  titleEl.textContent = title;
+   const contentEl = document.createElement('div');
+  contentEl.style.fontSize = valueColor ? '1.25rem' : '0.85rem';
+  if(valueColor) {
+      contentEl.style.fontWeight = 'bold';
+      contentEl.style.color = valueColor;
+  }
+       if(typeof content === 'object') {
+         const pre = document.createElement('pre');
+         pre.style.whiteSpace = 'pre-wrap';
+         pre.style.wordBreak = 'break-word';
+         pre.textContent = JSON.stringify(content, null, 2);
+         contentEl.appendChild(pre);
+      } else {
+         contentEl.textContent = String(content);
+      }
+       card.appendChild(titleEl);
+      card.appendChild(contentEl);
+      return card;
+  }
+
 // In Node.js testing environment via import, we want to allow exporting
 // `fillList` without triggering DOM lookup side effects when imported.
 // The standard convention per repository guidelines is to guard entry-points
@@ -547,36 +580,6 @@ if (isBrowser) {
         arguments: args
       });
       const data = parseMcpResponse(result);
-
-      const renderCard = (title, content, valueColor) => {
-          const card = document.createElement('div');
-          card.className = 'card';
-          card.style.borderColor = valueColor || '#374151';
-
-          const titleEl = document.createElement('h3');
-          titleEl.textContent = title;
-
-          const contentEl = document.createElement('div');
-          contentEl.style.fontSize = valueColor ? '1.25rem' : '0.85rem';
-          if(valueColor) {
-              contentEl.style.fontWeight = 'bold';
-              contentEl.style.color = valueColor;
-          }
-
-          if(typeof content === 'object') {
-             const pre = document.createElement('pre');
-             pre.style.whiteSpace = 'pre-wrap';
-             pre.style.wordBreak = 'break-word';
-             pre.textContent = JSON.stringify(content, null, 2);
-             contentEl.appendChild(pre);
-          } else {
-             contentEl.textContent = String(content);
-          }
-
-          card.appendChild(titleEl);
-          card.appendChild(contentEl);
-          return card;
-      };
 
       if (agent === 'synthesize_symbiosis') {
           orchestratorGrid.appendChild(renderCard('Integrated Framework', data.integrated_framework));
