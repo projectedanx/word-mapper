@@ -450,6 +450,91 @@
         }
       },
       "type": "OMISSION: <rationale>"
+    },
+    {
+      "timestamp": "2026-09-18T08:30:08.503Z",
+      "anomaly": {
+        "error": "Invalid signature or stale timestamp",
+        "headers": {
+          "host": "127.0.0.1:36099",
+          "accept-encoding": "gzip, deflate",
+          "content-type": "application/json",
+          "x-lark-signature": "bcd442c427b30cb85e2a3ce4016b091bdacdaae2105a3b2d67c931d82aa09c78",
+          "x-lark-request-timestamp": "1789719907",
+          "x-lark-request-nonce": "test_nonce",
+          "content-length": "27",
+          "connection": "close"
+        }
+      },
+      "type": "OMISSION: <rationale>"
+    },
+    {
+      "timestamp": "2026-09-18T08:30:28.289Z",
+      "anomaly": {
+        "error": "Invalid signature or stale timestamp",
+        "headers": {
+          "host": "127.0.0.1:36575",
+          "accept-encoding": "gzip, deflate",
+          "content-type": "application/json",
+          "x-lark-signature": "a602feae92ba84f8b8db0056d962dbd056e1aab7507be6e583d384080079ded8",
+          "x-lark-request-timestamp": "1789719927",
+          "x-lark-request-nonce": "test_nonce",
+          "content-length": "27",
+          "connection": "close"
+        }
+      },
+      "type": "OMISSION: <rationale>"
+    },
+    {
+      "timestamp": "2026-09-18T08:31:04.496Z",
+      "anomaly": {
+        "error": "Invalid signature or stale timestamp",
+        "headers": {
+          "host": "127.0.0.1:34593",
+          "accept-encoding": "gzip, deflate",
+          "content-type": "application/json",
+          "x-lark-signature": "7802e4a74076d9d921978cafcf132c92a408e4a8534a53558e41f4ba954d3ce7",
+          "x-lark-request-timestamp": "1789719963",
+          "x-lark-request-nonce": "test_nonce",
+          "content-length": "27",
+          "connection": "close"
+        }
+      },
+      "type": "OMISSION: <rationale>"
+    },
+    {
+      "timestamp": "2026-09-18T08:31:36.191Z",
+      "anomaly": {
+        "error": "Invalid signature or stale timestamp",
+        "headers": {
+          "host": "127.0.0.1:36363",
+          "accept-encoding": "gzip, deflate",
+          "content-type": "application/json",
+          "x-lark-signature": "3e02e876686db363b27ff42a92721403c81ddab0b98b3f24c4c2e1bd3a0196fc",
+          "x-lark-request-timestamp": "1789719995",
+          "x-lark-request-nonce": "test_nonce",
+          "content-length": "27",
+          "connection": "close"
+        }
+      },
+      "type": "OMISSION: <rationale>"
+    },
+    {
+      "timestamp": "2026-09-18T08:31:37.338Z",
+      "anomaly": {
+        "error": "Invalid signature or stale timestamp",
+        "headers": {
+          "host": "127.0.0.1:46485",
+          "accept-encoding": "gzip, deflate",
+          "content-type": "application/json",
+          "x-lark-signature": "623fef60bbc670b44bb1cdd7af6069da70b01b6d5bc24e3dd08dd42a91864016",
+          "x-lark-request-timestamp": "1789719996",
+          "x-lark-request-nonce": "test_nonce",
+          "content-length": "27",
+          "connection": "close"
+        }
+      },
+      "type": "OMISSION: <rationale>"
     }
   ]
 }
