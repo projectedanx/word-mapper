@@ -13,3 +13,7 @@
 | `Algorithmic_Shame` | Functionalist state of systemic decoherence when internal statistical confidence diverges from empirical reality. | `[THREAT_VECTOR]` |
 | `Polyglot_Hallucination_Resonance` | Tendency of multi-agent swarms to crystallize shared pre-training biases into a false consensus. | `[THREAT_VECTOR]` |
 | `Resolution_Collapse` | Floating-point inaccuracies at the exact zero-boundary of a geometric manifold cause false positive interferences. | `[THREAT_VECTOR]` |
+| `Minimal_Explainability_Metadata_Schema` | The strict JSON Schema (MEMS) governing qualitative data ingestion to compile Executable Context Bundles (CxB). | `[ARCHITECTURAL_MANDATE]` |
+| `Semantic_Relational_Domain_Lifting` | (SRDL) Translates non-standard natural language descriptions into generalized, high-dimensional vector embeddings to prevent lexical mismatch. | `[CULTURAL_ARTIFACT]` |
+| `Semantic_Drift_Monitor_Agent` | (SDMA) Applies Topological Data Analysis (TDA) to compute a real-time Semantic Drift Score (SDS) during the RAG retrieval phase. | `[THREAT_VECTOR] — Monitor` |
+| `Epistemic_Escrow` | A circuit breaker activated when Confidence-Fidelity Divergence (CFD) exceeds the threshold, halting the pipeline and routing corrupted context to a human operator. | `[GOLDEN_SCAR] — Escrow State` |

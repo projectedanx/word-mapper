@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Qualitative_Experience_Node_v1.0",
+  "type": "object",
+  "required": [
+    "node_id",
+    "temporal_anchor",
+    "qualitative_payload",
+    "sensory_causal_indicators",
+    "ontological_alignments",
+    "cryptographic_provenance"
+  ],
+  "properties": {
+    "node_id": {
+      "type": "string",
+      "pattern": "^QEN-{8}-[a-f0-9]{4}$"
+    },
+    "temporal_anchor": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "qualitative_payload": {
+      "type": "object",
+      "required": [
+        "experience_type",
+        "raw_observation",
+        "counterfactual_variance"
+      ],
+      "properties": {
+        "experience_type": {
+          "type": "string",
+          "enum": [
+            "Direct_Trial",
+            "Failure_Incident",
+            "Socratic_Review"
+          ]
+        },
+        "raw_observation": {
+          "type": "string",
+          "description": "Unfiltered, jargon-free log of the qualitative phenomenon."
+        },
+        "counterfactual_variance": {
+          "type": "string",
+          "description": "What failed to occur, documenting unchosen trajectories."
+        }
+      }
+    },
+    "sensory_causal_indicators": {
+      "type": "object",
+      "required": [
+        "causal_perturbation_index",
+        "structural_roughness"
+      ],
+      "properties": {
+        "causal_perturbation_index": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "structural_roughness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "ontological_alignments": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Explicit links to baseline semantic genome schemas."
+      }
+    },
+    "cryptographic_provenance": {
+      "type": "object",
+      "required": [
+        "agent_did",
+        "verifiable_signature"
+      ]
+    }
+  }
+}
