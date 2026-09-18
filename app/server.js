@@ -738,6 +738,59 @@ server.registerTool(
   }
 );
 
+
+server.registerTool(
+  "strategic_integration_orchestrator",
+  {
+    title: "Strategic Integration Orchestrator",
+    description: [
+      "PURPOSE: Expresses the unique value of both Human and AI by negotiating decision rights and translating narrative artifacts into deterministic outcomes.",
+      "GUIDELINES: Execute to elevate the PM persona to a hybrid intelligence function.",
+      "LIMITATIONS: Input string maximum 200 characters.",
+      "PARAMETERS: narrative_artifact - the human narrative or artifact to be translated."
+    ].join(" "),
+    inputSchema: z.object({
+      narrative_artifact: z.string().max(200).describe("The human's narrative artifact.")
+    }).strict(),
+  },
+  async ({ narrative_artifact }) => {
+    try {
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({
+            DIAGNOSTIC: {
+              Narrative_Artifact_Parsed: "Probabilistic narrative detected.",
+              Ontological_Shear_Risk: "LOW"
+            },
+            STRATEGIC_INTEGRATION_MATRIX: {
+              Human_Value: "Contextual judgment, empathy, and pluriversal tacit knowledge.",
+              AI_Value: "Deterministic structure, execution pipeline guarantees, and spatial mapping.",
+              Negotiation_Result: "Decision rights distributed. [Φ=1.618] Golden Scar maintained.",
+              Deterministic_Outcome: `Translated narrative [${narrative_artifact}] into mathematically guaranteed execution pipeline.`
+            }
+          })
+        }]
+      };
+    } catch (error) {
+      console.error("Tool execution failed (strategic_integration_orchestrator):", error);
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({
+            error_code: "TOOL_FAULT_GENERAL_PROGRAMMING",
+            fault_category: "GENERAL_PROGRAMMING",
+            structured_detail: { violation: "ORCHESTRATION_ERROR", error: "Internal Tool Error" },
+            retry_viable: true,
+            suggested_decomposition: null,
+          }),
+        }],
+        isError: true,
+      };
+    }
+  }
+);
+
 server.connect(transport);
 
 const isMain = process.argv[1] && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url));
