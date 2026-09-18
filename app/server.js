@@ -170,6 +170,16 @@ export class FeishuCrypto {
 /**
  * DCCDSchemaGuard check for Feishu Card JSON v2.0
  */
+/**
+ * Validates the schema of a Feishu card JSON payload.
+ * @param {Object} cardJson - The JSON object representing the Feishu card.
+ * @returns {boolean} True if the schema is valid, false otherwise.
+ */
+/**
+ * Validates the schema of a Feishu card JSON payload.
+ * @param {Object} cardJson - The JSON object representing the Feishu card.
+ * @returns {boolean} True if the schema is valid, false otherwise.
+ */
 export function validateFeishuCardSchema(cardJson) {
   // Simplistic validation for Feishu Card v2.0 structure based on "schema", "enforcement='draft_conditioned'"
   if (!cardJson || typeof cardJson !== "object") return false;
@@ -257,6 +267,16 @@ const feishuEncryptKey = process.env.FEISHU_ENCRYPT_KEY || "default_test_key";
 const feishuCrypto = new FeishuCrypto(feishuEncryptKey);
 
 // Log structural anomalies in SSR
+/**
+ * Logs an anomaly to the Symbolic Scar Registry (SSR).
+ * @param {Object} anomaly - The anomaly object containing details of the event.
+ * @returns {void}
+ */
+/**
+ * Logs an anomaly to the Symbolic Scar Registry (SSR).
+ * @param {Object} anomaly - The anomaly object containing details of the event.
+ * @returns {void}
+ */
 export function logToSSR(anomaly) {
   try {
 

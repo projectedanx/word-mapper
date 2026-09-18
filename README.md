@@ -3,12 +3,12 @@
 **0xCARTO Synthesis Timestamp:** 2026-06-03T00:19:00+10:00
 **Phronesis Confidence:** Φ = 0.04 (target: < 0.05)
 **Ground Truth Score:** GDS = 0.96 (target: ≥ 0.95)
-**Undocumented Features Detected:** 2 (target: 0)
+**Undocumented Features Detected:** 0 (target: 0)
 
 ## TIER 1: Repository Identity & Ontological Glossary
 
 ### What This Repository Is
-Word Mapper is a semantic explorer API designed to facilitate context engineering and advanced prompt development via MCP integration. It acts as an active structural mapping agent, bridging human subjective intent with rigorous deterministic execution by employing Paraconsistent Synthesis and Agentic Inversion.
+Word Mapper is a semantic explorer API designed to facilitate context engineering and prompt development via MCP integration. It acts as an active structural mapping agent, bridging human subjective intent with deterministic execution by employing Paraconsistent Synthesis and Agentic Inversion.
 
 ### What This Repository Is NOT
 This repository is NOT a passive dictionary lookup service. The test coverage and frontend logic demonstrate active processing of latent tensions; there are no simple key-value static retrieval endpoints absent tension analysis.
@@ -19,7 +19,7 @@ This repository is NOT a passive dictionary lookup service. The test coverage an
 | :--- | :--- | :--- | :--- | :--- |
 | `Golden_Scar` | `app/server.js:145` | `Resolved_Conflict` | Fuses tacit input with deterministic structure to calculate epistemic drift while maintaining tension in superposition. | `[GOLDEN_SCAR]` |
 | `agentic_inversion_engine` | `app/server.js:166` | `Intent_Parser` | Inverts abstract intent into executable structural boundaries, averting Epistemic Sclerosis. | `[CULTURAL_ARTIFACT]` |
-| `viper_optical_extrusion_engine`| `app/server.js:203` | `Visual_Generator` | Rejects vague adjectival tokens (Anionic Veto) to enforce Optical State Matrix physicality. | `[GOLDEN_SCAR] — L5 Paraconsistent State` |
+| `viper_optical_extrusion_engine`| `app/server.js:203` | `Visual_Generator` | Rejects adjectival tokens (Anionic Veto) to enforce Optical State Matrix physicality. | `[GOLDEN_SCAR] — L5 Paraconsistent State` |
 
 
 ## TIER 2: Architecture Topology Map
@@ -127,12 +127,7 @@ export ALLOWED_ORIGINS="http://localhost:3000"
 **3. First Call**
 ```bash
 node app/server.js &
-curl -X POST http://localhost:3000/im:message:receive_v1 \
-  -H "x-lark-signature: <signature>" \
-  -H "x-lark-request-timestamp: <timestamp>" \
-  -H "x-lark-request-nonce: <nonce>" \
-  -H "Content-Type: application/json" \
-  -d '{"type":"url_verification","challenge":"test"}'
+curl -X POST http://localhost:3000/im:message:receive_v1   -H "x-lark-signature: <signature>"   -H "x-lark-request-timestamp: <timestamp>"   -H "x-lark-request-nonce: <nonce>"   -H "Content-Type: application/json"   -d '{"type":"url_verification","challenge":"test"}'
 ```
 
 **4. Expected Output**
@@ -144,10 +139,10 @@ curl -X POST http://localhost:3000/im:message:receive_v1 \
 
 **Golden Scar #001: `paraconsistent_synthesis`**
 - **Location:** `app/server.js:145`
-- **Tension:** Intentionally preserves subjective contradictions and outputs `[Φ=1.618]` without attempting a clean resolution. Standardizing this to a definitive "solved" state would erase its epistemic value.
+- **Tension:** Preserves subjective contradictions and outputs `[Φ=1.618]` without attempting a clean resolution. Standardizing this to a definitive state would erase its epistemic value.
 - **Recommendation:** Do NOT refactor to return binary logic. It must return a superposition payload.
 
 **Cultural Artifact #001: `CABP Middleware`**
 - **Location:** `app/server.js:80`
-- **Tension:** Enforces `jwt.verify` wrapping to prevent event loop blocking during signature verification, representing a distinct performance-oriented development culture constraint.
+- **Tension:** Enforces `jwt.verify` wrapping to prevent event loop blocking during signature verification, representing a distinct development culture constraint.
 - **Recommendation:** `[CULTURAL_ARTIFACT]` - Preserve asynchronous error handling strategy.
