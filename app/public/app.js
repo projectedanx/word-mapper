@@ -1,4 +1,16 @@
 
+/**
+ * Parses the response from an MCP tool call and extracts the text content.
+ * @param {Object} result - The result object returned by the MCP client.
+ * @returns {Object} The parsed JSON payload.
+ * @throws {Error} If the result indicates an error or parsing fails.
+ */
+/**
+ * Parses the response from an MCP tool call and extracts the text content.
+ * @param {Object} result - The result object returned by the MCP client.
+ * @returns {Object} The parsed JSON payload.
+ * @throws {Error} If the result indicates an error or parsing fails.
+ */
 function parseMcpResponse(result) {
   if (result.isError) {
     const errorContent = result.content[0].text;
@@ -8,7 +20,7 @@ function parseMcpResponse(result) {
     } catch (e) {
       throw new Error(errorContent || "Request failed");
     }
-    throw new Error(errorObj.structured_detail?.error || errorObj.error_code || "Request failed");
+    throw new Error(errorObj.error || errorObj.error_code || "Request failed");
   }
   return JSON.parse(result.content[0].text);
 }
@@ -484,6 +496,14 @@ if (isBrowser) {
   const orchestratorGrid = document.getElementById('orchestratorGrid');
   const orchestratorLog = document.getElementById('orchestratorLog');
 
+  /**
+ * Updates the user interface of the orchestrator based on the selected agent.
+ * @returns {void}
+ */
+  /**
+ * Updates the user interface of the orchestrator based on the selected agent.
+ * @returns {void}
+ */
   const updateOrchestratorUI = () => {
     const agent = agentSelector?.value;
     if (!agent) return;
