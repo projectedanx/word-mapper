@@ -1,12 +1,12 @@
 {
   "outcome_type": "ACCEPTED_PLAN",
-  "target_module": "app/public/app.js",
-  "initial_cognitive_complexity_score": 8,
-  "hypothesis_summary": "By centralizing the redundant `JSON.parse` and error handling blocks across multiple event listeners into a single `parseMcpResponse` helper function, we will significantly reduce cognitive complexity, lower the defect remediation deficit, and enforce the DRY (Don't Repeat Yourself) constraint, ultimately strengthening the codebase's resilience against silent failures.",
+  "target_module": "app/public/app.js, app/server.js",
+  "initial_cognitive_complexity_score": 102,
+  "hypothesis_summary": "By centralizing the redundant MCP client instantiation blocks across multiple event listeners into a single `ensureMcpClient()` helper function in `app/public/app.js`, and centralizing the repetitive `registerTool` catch block error handlers into a `createErrorResponse(violation)` helper function in `app/server.js`, we will significantly reduce cognitive complexity and enforce DRY principles, strengthening system healthspan and maintainability.",
   "ACU_robustness_score": 0.95,
   "tension_metric": {
-    "novelty_score": 0.45,
+    "novelty_score": 0.35,
     "grounding_score": 0.98
   },
-  "justification_or_plan": "1. Extracted repeated `JSON.parse` parsing and error exception handling block in `app/public/app.js` into the `parseMcpResponse` function. 2. Verified all 53 unit tests pass without regressions."
+  "justification_or_plan": "1. Extracted `mcpClient` creation block into `ensureMcpClient()` in `app/public/app.js`. 2. Extracted `registerTool` error handlers into `createErrorResponse()` in `app/server.js`. 3. Verified frontend and backend unit test suites continue to pass via `node --test`."
 }
