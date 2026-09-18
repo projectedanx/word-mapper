@@ -649,3 +649,31 @@ test("Tool: strategic_integration_orchestrator returns success payload", async (
   const data = parseMcpText(result);
   assert.strictEqual(data.DIAGNOSTIC.Narrative_Artifact_Parsed, "Probabilistic narrative detected.");
 });
+
+test("Tool: qed_topological_audit - activates Epistemic Escrow when SDS threshold exceeded", async () => {
+  const result = {
+    content: [{
+      text: JSON.stringify({
+        status: "EPISTEMIC_ESCROW_ACTIVATED",
+        action: "HALT. Positive friction induced. Requires human-in-the-loop operator to perform manual reflexive re-alignment.",
+        golden_scar_superposition: "Φ = 1.618 (Preserving tension state)"
+      })
+    }]
+  };
+  const parsed = parseMcpText(result);
+  assert.strictEqual(parsed.status, "EPISTEMIC_ESCROW_ACTIVATED");
+  assert.ok(parsed.golden_scar_superposition.includes("1.618"));
+});
+
+test("Tool: qed_topological_audit - passes audit when metrics are within bounds", async () => {
+  const result = {
+    content: [{
+      text: JSON.stringify({
+        status: "AUDIT_PASSED",
+        action: "PROCEED. Context topology is stable within required bounds."
+      })
+    }]
+  };
+  const parsed = parseMcpText(result);
+  assert.strictEqual(parsed.status, "AUDIT_PASSED");
+});

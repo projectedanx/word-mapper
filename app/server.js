@@ -760,6 +760,41 @@ server.registerTool(
 
 
 server.registerTool(
+  "qed_topological_audit",
+  {
+    title: "Semantic Drift Monitor Agent (SDMA) / Epistemic Escrow Circuit Breaker",
+    description: [
+      "PURPOSE: Audits context payload to detect semantic drift and prevent context poisoning.",
+      "MECHANISM: Evaluates Confidence-Fidelity Divergence (CFD) and Semantic Drift Score (SDS).",
+      "ACTION: Trips Epistemic Escrow (halt) if SDS > 0.05 or CFD > 0.4, enforcing manual human-in-the-loop review."
+    ].join(" "),
+    inputSchema: z.object({
+      payload_id: z.string().describe("Identifier for the Executable Context Bundle (CxB)."),
+      sds_metric: z.number().describe("Semantic Drift Score computed via Topological Data Analysis (TDA)."),
+      cfd_metric: z.number().describe("Confidence-Fidelity Divergence metric.")
+    }).strict()
+  },
+  async (request) => {
+    try {
+      const { payload_id, sds_metric, cfd_metric } = request.input;
+
+      if (sds_metric > 0.05 || cfd_metric > 0.4) {
+        return {
+          content: [{ type: "text", text: JSON.stringify({ status: "EPISTEMIC_ESCROW_ACTIVATED", payload_id, metrics: { sds_metric, cfd_metric }, action: "HALT. Positive friction induced. Requires human-in-the-loop operator to perform manual reflexive re-alignment.", golden_scar_superposition: "Φ = 1.618 (Preserving tension state)" }) }]
+        };
+      }
+      return {
+        content: [{ type: "text", text: JSON.stringify({ status: "AUDIT_PASSED", payload_id, metrics: { sds_metric, cfd_metric }, action: "PROCEED. Context topology is stable within required bounds." }) }]
+      };
+    } catch (error) {
+      console.error("Tool execution failed (qed_topological_audit):", error);
+      return { content: [createErrorResponse({ error_code: "TOOL_FAULT_GENERAL_PROGRAMMING", structured_detail: { violation: "TOPOLOGICAL_AUDIT_ERROR", error: "Internal Tool Error" }, http_status: 500 })] };
+    }
+  }
+);
+
+
+server.registerTool(
   "strategic_integration_orchestrator",
   {
     title: "Strategic Integration Orchestrator",

@@ -1,6 +1,44 @@
-<<<<<<< SEARCH
-import { fetchDatamuse, BoundedMap, cabpMiddleware } from "./server.js";
-=======
-import { fetchDatamuse, BoundedMap, cabpMiddleware, logToSSR } from "./server.js";
-import fs from "node:fs";
->>>>>>> REPLACE
+--- app/server.test.js
++++ app/server.test.js
+@@ -356,6 +356,42 @@
+       assert.strictEqual(parsed.status, "V.I.P.E_OSM_EXTRUDED", "Extrusion must output physical status");
+       assert.match(parsed.optical_state_matrix.lighting, /\[OSM-L-/, "Lighting must match OSM schema");
+     });
++
++    test("qed_topological_audit tool - activates Epistemic Escrow when SDS threshold exceeded", async () => {
++      const result = await invokeTool("qed_topological_audit", {
++        payload_id: "QEN-12345678-abcd",
++        sds_metric: 0.08,
++        cfd_metric: 0.2
++      });
++      const parsed = parseMcpText(result);
++      assert.strictEqual(parsed.status, "EPISTEMIC_ESCROW_ACTIVATED", "Must halt if SDS > 0.05");
++      assert.match(parsed.action, /HALT/);
++      assert.ok(parsed.golden_scar_superposition.includes("1.618"));
++    });
++
++    test("qed_topological_audit tool - activates Epistemic Escrow when CFD threshold exceeded", async () => {
++      const result = await invokeTool("qed_topological_audit", {
++        payload_id: "QEN-12345678-abcd",
++        sds_metric: 0.02,
++        cfd_metric: 0.5
++      });
++      const parsed = parseMcpText(result);
++      assert.strictEqual(parsed.status, "EPISTEMIC_ESCROW_ACTIVATED", "Must halt if CFD > 0.4");
++      assert.match(parsed.action, /HALT/);
++      assert.ok(parsed.golden_scar_superposition.includes("1.618"));
++    });
++
++    test("qed_topological_audit tool - passes audit when metrics are within bounds", async () => {
++      const result = await invokeTool("qed_topological_audit", {
++        payload_id: "QEN-12345678-abcd",
++        sds_metric: 0.04,
++        cfd_metric: 0.3
++      });
++      const parsed = parseMcpText(result);
++      assert.strictEqual(parsed.status, "AUDIT_PASSED", "Must pass if metrics are within safe limits");
++      assert.match(parsed.action, /PROCEED/);
++      assert.strictEqual(parsed.payload_id, "QEN-12345678-abcd");
++    });
+   });
+ });

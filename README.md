@@ -146,3 +146,9 @@ curl -X POST http://localhost:3000/im:message:receive_v1   -H "x-lark-signature:
 - **Location:** `app/server.js:80`
 - **Tension:** Enforces `jwt.verify` wrapping to prevent event loop blocking during signature verification, representing a distinct development culture constraint.
 - **Recommendation:** `[CULTURAL_ARTIFACT]` - Preserve asynchronous error handling strategy.
+
+## TIER 6: Qualitative Experience Database (QED)
+
+Word Mapper has incorporated the **Qualitative Experience Database (QED)** architecture to fortify Retrieval-Augmented Generation (RAG) against retrieval-induced drift and context poisoning.
+- **MEMS (Minimal Explainability Metadata Schema)**: Enforces rigorous structural requirements for qualitative telemetry ingestion.
+- **Epistemic Escrow Circuit Breaker**: Evaluates Semantic Drift Score (SDS) and Confidence-Fidelity Divergence (CFD) in real-time, tripping a mandatory operational halt (`qed_topological_audit` tool) when bounds are exceeded.
