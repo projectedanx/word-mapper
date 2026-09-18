@@ -561,6 +561,8 @@ if (isBrowser) {
       args = { human_hypothesis: input1, ai_constraint: input2 };
     } else if (agent === 'viper_optical_extrusion_engine') {
       args = { user_intent: input1 };
+    } else if (agent === 'strategic_integration_orchestrator') {
+      args = { narrative_artifact: input1 };
     }
 
     try {

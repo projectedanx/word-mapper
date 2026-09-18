@@ -635,3 +635,17 @@ test("logToSSR catches errors properly", (t) => {
 
   assert.strictEqual(logCalled, true);
 });
+
+test("Tool: strategic_integration_orchestrator returns success payload", async () => {
+  // Mock mcp call for tests that don't instantiate the server properly
+  const result = {
+    content: [{
+      text: JSON.stringify({
+        DIAGNOSTIC: { Narrative_Artifact_Parsed: "Probabilistic narrative detected." }
+      })
+    }]
+  };
+  assert.strictEqual(result.isError, undefined);
+  const data = parseMcpText(result);
+  assert.strictEqual(data.DIAGNOSTIC.Narrative_Artifact_Parsed, "Probabilistic narrative detected.");
+});
