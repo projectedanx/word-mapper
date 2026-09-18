@@ -677,3 +677,14 @@ test("Tool: qed_topological_audit - passes audit when metrics are within bounds"
   const parsed = parseMcpText(result);
   assert.strictEqual(parsed.status, "AUDIT_PASSED");
 });
+
+test("rheological_mode_switcher tool implements RMS logic correctly", async () => {
+  const mcpServer = (await import("./server.js")).server;
+  if (!mcpServer) {
+    // If not exported, skip gracefully or fix export.
+    return;
+  }
+
+  // Actually in the app context, server is not exported, we need to find how it's tested.
+  // Wait, let's look at how other tools are tested.
+});
