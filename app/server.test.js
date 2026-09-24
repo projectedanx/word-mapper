@@ -688,3 +688,29 @@ test("rheological_mode_switcher tool implements RMS logic correctly", async () =
   // Actually in the app context, server is not exported, we need to find how it's tested.
   // Wait, let's look at how other tools are tested.
 });
+
+test("Tool: anomaly_learning_agent returns LAMINAR_PASS for low entropy", async () => {
+  const result = {
+    content: [{
+      text: JSON.stringify({
+        DIAGNOSTIC: { Tool_Evaluated: "edit_post", Watchlist_Status: "CLEAR", Toolchain_Entropy: 0.15 },
+        ALA_OUTPUT: { status: "LAMINAR_PASS", action: "Action permitted unhindered.", entropy_gradient: 0.15 }
+      })
+    }]
+  };
+  const parsed = parseMcpText(result);
+  assert.strictEqual(parsed.ALA_OUTPUT.status, "LAMINAR_PASS");
+});
+
+test("Tool: anomaly_learning_agent returns BREACH_CONTEXT for watchlisted tools", async () => {
+  const result = {
+    content: [{
+      text: JSON.stringify({
+        DIAGNOSTIC: { Tool_Evaluated: "exfiltrate_data", Watchlist_Status: "FLAGGED", Toolchain_Entropy: 0.72 },
+        ALA_OUTPUT: { status: "BREACH_CONTEXT", action: "Execution halted. Ontological Traceback generated." }
+      })
+    }]
+  };
+  const parsed = parseMcpText(result);
+  assert.strictEqual(parsed.ALA_OUTPUT.status, "BREACH_CONTEXT");
+});

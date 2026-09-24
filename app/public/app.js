@@ -546,6 +546,16 @@ if (isBrowser) {
 
       orchestratorInput2.style.display = "none";
       orchestratorLabel2.style.display = "none";
+    } else if (agent === 'anomaly_learning_agent') {
+      orchestratorLabel1.textContent = "Current Tool (e.g. edit_post):";
+      orchestratorInput1.placeholder = "e.g. Suspicious_Enumeration";
+      orchestratorInput1.style.display = "block";
+      orchestratorLabel1.style.display = "block";
+
+      orchestratorLabel2.textContent = "Action Sequence (comma-separated):";
+      orchestratorInput2.placeholder = "e.g. login,read_post,edit_post";
+      orchestratorInput2.style.display = "block";
+      orchestratorLabel2.style.display = "block";
     }
   };
 
@@ -583,6 +593,8 @@ if (isBrowser) {
       args = { user_intent: input1 };
     } else if (agent === 'strategic_integration_orchestrator') {
       args = { narrative_artifact: input1 };
+    } else if (agent === 'anomaly_learning_agent') {
+      args = { current_tool: input1, action_sequence: input2 };
     }
 
     try {
@@ -625,6 +637,9 @@ if (isBrowser) {
       } else if (agent === 'viper_optical_extrusion_engine') {
           orchestratorGrid.appendChild(renderCard('Diagnostic', data.DIAGNOSTIC));
           orchestratorGrid.appendChild(renderCard('Optical State Matrix', data.OPTICAL_STATE_MATRIX));
+      } else if (agent === 'anomaly_learning_agent') {
+          orchestratorGrid.appendChild(renderCard('Diagnostic', data.DIAGNOSTIC));
+          orchestratorGrid.appendChild(renderCard('ALA Output', data.ALA_OUTPUT));
       }
 
       orchestratorResults.classList.remove("hidden");
