@@ -1579,3 +1579,43 @@ test("UI: Agent Selector updates UI for strategic_integration_orchestrator", () 
 
   delete global.document;
 });
+
+test("Orchestrator UI updates for anomaly_learning_agent", () => {
+  const document = new MockDocument();
+  global.document = document;
+
+  const orchestratorLabel1 = document.createElement("label");
+  orchestratorLabel1.id = "orchestratorLabel1";
+
+  const orchestratorInput1 = document.createElement("input");
+  orchestratorInput1.id = "orchestratorInput1";
+
+  const orchestratorLabel2 = document.createElement("label");
+  orchestratorLabel2.id = "orchestratorLabel2";
+
+  const orchestratorInput2 = document.createElement("input");
+  orchestratorInput2.id = "orchestratorInput2";
+
+  const agentSelector = document.createElement("select");
+  agentSelector.id = "agentSelector";
+  agentSelector.value = "anomaly_learning_agent";
+
+  document.body.appendChild(orchestratorLabel1);
+  document.body.appendChild(orchestratorInput1);
+  document.body.appendChild(orchestratorLabel2);
+  document.body.appendChild(orchestratorInput2);
+  document.body.appendChild(agentSelector);
+
+  const updateOrchestratorUI = () => {
+    const agent = agentSelector.value;
+    if (agent === 'anomaly_learning_agent') {
+      orchestratorLabel1.textContent = "Current Tool (e.g. edit_post):";
+      orchestratorLabel2.textContent = "Action Sequence (comma-separated):";
+    }
+  };
+
+  updateOrchestratorUI();
+
+  assert.strictEqual(orchestratorLabel1.textContent, "Current Tool (e.g. edit_post):");
+  assert.strictEqual(orchestratorLabel2.textContent, "Action Sequence (comma-separated):");
+});

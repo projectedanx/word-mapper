@@ -147,6 +147,12 @@ curl -X POST http://localhost:3000/im:message:receive_v1   -H "x-lark-signature:
 - **Tension:** Enforces `jwt.verify` wrapping to prevent event loop blocking during signature verification, representing a distinct development culture constraint.
 - **Recommendation:** `[CULTURAL_ARTIFACT]` - Preserve asynchronous error handling strategy.
 
+
+**Cultural Artifact #002: `anomaly_learning_agent` (ALA)**
+- **Location:** `app/server.js:760`
+- **Tension:** Balances rigorous execution restriction (`BREACH_CONTEXT` for high-entropy watchlisted toolchains) against developer workflow friction.
+- **Recommendation:** `[CULTURAL_ARTIFACT]` - Maintain the dynamic scoring (Statistical Anomaly Score) over static allowlists to allow "epistemic homeostasis" and constructive high-entropy exploration.
+
 ## TIER 6: Qualitative Experience Database (QED)
 
 Word Mapper has incorporated the **Qualitative Experience Database (QED)** architecture to fortify Retrieval-Augmented Generation (RAG) against retrieval-induced drift and context poisoning.

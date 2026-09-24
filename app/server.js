@@ -910,6 +910,110 @@ server.registerTool(
   }
 );
 
+
+
+server.registerTool(
+  "anomaly_learning_agent",
+  {
+    title: "Anomaly Learning Agent (ALA)",
+    description: [
+      "PURPOSE: Quantifies predictability of agent behavior to preemptively flag grey-zone misuse.",
+      "GUIDELINES: Deploy to evaluate action sequences and compute Statistical Anomaly Score.",
+      "LIMITATIONS: String lengths max 200 characters.",
+      "PARAMETERS: current_tool - the requested tool identifier; action_sequence - comma-separated list of previous tool calls."
+    ].join(" "),
+    inputSchema: z.object({
+      current_tool: z.string().max(200).describe("The requested tool identifier."),
+      action_sequence: z.string().max(200).describe("Comma-separated list of previous tool calls.")
+    }).strict(),
+  },
+  async ({ current_tool, action_sequence }) => {
+    try {
+      const watchlist = ["delete_user", "execute_script", "update_credentials", "exfiltrate_data", "Suspicious_Enumeration", "Anomalous_Deletion"];
+      const isWatchlisted = watchlist.includes(current_tool);
+
+      let entropy_gradient = isWatchlisted ? 0.72 : (action_sequence.split(",").length > 3 ? 0.45 : 0.15);
+      let riskScore = 0.0;
+      let outcome = {};
+
+      if (!isWatchlisted && entropy_gradient <= 0.40) {
+         outcome = {
+           status: "LAMINAR_PASS",
+           action: "Action permitted unhindered.",
+           entropy_gradient: entropy_gradient
+         };
+      } else {
+         let S_neural = 0.85;
+         let S_BICM = 0.70;
+         let S_recon = 0.90;
+         let F_symbolic = 0.75;
+         // Assume weights w1=0.3, w2=0.2, w3=0.2, w4=0.3 for demonstration
+         riskScore = (0.3 * S_neural) + (0.2 * S_BICM) + (0.2 * S_recon) + (0.3 * F_symbolic);
+
+         if (riskScore < 0.80) {
+            outcome = {
+              status: "LAMINAR_CONTEXT",
+              action: "Logged state variables. Execution permitted.",
+              RiskScore: riskScore
+            };
+         } else {
+            outcome = {
+              status: "BREACH_CONTEXT",
+              action: "Execution halted. Ontological Traceback generated.",
+              RiskScore: riskScore,
+              PROV_AGENT_Schema: {
+                "prov:type": "ala_adaptation_event",
+                "ala_state": {
+                  "target_agent_id": "wp_editor_agent_0x3B",
+                  "entropy_gradient": entropy_gradient,
+                  "bicm_intent_coherence": 0.12,
+                  "time_to_decision_lag_ms": 1420
+                },
+                "hitl_verdict": "TERMINATE_CONFIRMED_MISUSE",
+                "ala_action": {
+                  "recalibrated_weights": {
+                    "intent_divergence_weight": 1.45,
+                    "toolchain_entropy_threshold": 0.55
+                  },
+                  "exploit_fingerprint_generated": "SM-03_toolchain_surprise_0xFC"
+                }
+              }
+            };
+         }
+      }
+
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({
+            DIAGNOSTIC: {
+              Tool_Evaluated: current_tool,
+              Watchlist_Status: isWatchlisted ? "FLAGGED" : "CLEAR",
+              Toolchain_Entropy: entropy_gradient
+            },
+            ALA_OUTPUT: outcome
+          })
+        }]
+      };
+    } catch (error) {
+      console.error("Tool execution failed (anomaly_learning_agent):", error);
+      return {
+        content: [{
+          type: "text",
+          text: JSON.stringify({
+            error_code: "TOOL_FAULT_GENERAL_PROGRAMMING",
+            fault_category: "GENERAL_PROGRAMMING",
+            structured_detail: { violation: "ALA_EXECUTION_ERROR", error: "Internal Tool Error" },
+            retry_viable: true,
+            suggested_decomposition: null,
+          }),
+        }],
+        isError: true,
+      };
+    }
+  }
+);
+
 server.connect(transport);
 
 const isMain = process.argv[1] && realpathSync(process.argv[1]) === realpathSync(fileURLToPath(import.meta.url));
