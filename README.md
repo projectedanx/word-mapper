@@ -19,6 +19,7 @@ This repository is NOT a passive dictionary lookup service. The test coverage an
 | :--- | :--- | :--- | :--- | :--- |
 | `Golden_Scar` | `app/server.js:145` | `Resolved_Conflict` | Fuses tacit input with deterministic structure to calculate epistemic drift while maintaining tension in superposition. | `[GOLDEN_SCAR]` |
 | `agentic_inversion_engine` | `app/server.js:166` | `Intent_Parser` | Inverts abstract intent into executable structural boundaries, averting Epistemic Sclerosis. | `[CULTURAL_ARTIFACT]` |
+| `invariant_verification_harness` | `app/server.js` | `Automated Hypothesis Tester` | Programmatically mines, formalizes, and stress-tests candidate scientific laws using Popperian edge-case falsification. | `[IVH_CORE]` |
 | `viper_optical_extrusion_engine`| `app/server.js:203` | `Visual_Generator` | Rejects adjectival tokens (Anionic Veto) to enforce Optical State Matrix physicality. | `[GOLDEN_SCAR] — L5 Paraconsistent State` |
 
 
