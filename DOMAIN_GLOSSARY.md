@@ -24,3 +24,20 @@
 | `Crystal_Mode` | High Viscosity, Low Entropy operational mode enforced via low temperature (T≈0) and strict output schemas (Grammar constraints). | `[STATE] — T≈0` |
 | `Cloud_Mode` | Low Viscosity, High Entropy operational mode using elevated temperature (T>0.7) and structural redundancy for divergent synthesis. | `[STATE] — T>0.7` |
 | `Epistemic_Escrow_Manager` | Circuit breaker that physically segregates untrusted inputs, monitoring Confidence-Fidelity Divergence Index (CFDI) spikes. | `[GOLDEN_SCAR] — Escrow State` |
+
+## IVH Architecture (Invariant Verification Harness)
+
+### Invariant_Verification_Harness (IVH)
+- **Standard Equivalent:** Automated Hypothesis Tester / Model Validator.
+- **Local Meaning:** A 4-pillar system architecture that ingests empirical data, formalizes isomorphic laws, constructs explanatory DAGs, and applies Popperian falsification to automate scientific discovery.
+- **Preservation Flag:** `[IVH_CORE]`
+
+### Modus_Tollens_Falsification
+- **Standard Equivalent:** Proof by Contradiction / Edge-Case Falsification.
+- **Local Meaning:** Evaluates mathematical models at asymptotic boundaries (e.g., velocity approaching light speed) to trigger controlled "Model Breaking".
+- **Preservation Flag:** `[POPPERIAN_LIMIT]`
+
+### De-Idealization_Loop
+- **Standard Equivalent:** Model Refinement / Parameter Re-injection.
+- **Local Meaning:** An automated routine that detects when an idealized model (e.g., frictionless surface) exceeds a 3-sigma error threshold, locating the faulty assumption and re-injecting omitted physical variables.
+- **Preservation Flag:** `[DE_IDEALIZATION]`

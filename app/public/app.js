@@ -546,6 +546,16 @@ if (isBrowser) {
 
       orchestratorInput2.style.display = "none";
       orchestratorLabel2.style.display = "none";
+    } else if (agent === 'invariant_verification_harness') {
+      orchestratorLabel1.textContent = "Data Stream (e.g. Telemetry):";
+      orchestratorInput1.placeholder = "e.g. Ptolemaic_Telemetry_0x1A";
+      orchestratorInput1.style.display = "block";
+      orchestratorLabel1.style.display = "block";
+
+      orchestratorLabel2.textContent = "Limit / Model Type (e.g. v->c, kinematic):";
+      orchestratorInput2.placeholder = "e.g. v->c, kinematic";
+      orchestratorInput2.style.display = "block";
+      orchestratorLabel2.style.display = "block";
     } else if (agent === 'anomaly_learning_agent') {
       orchestratorLabel1.textContent = "Current Tool (e.g. edit_post):";
       orchestratorInput1.placeholder = "e.g. Suspicious_Enumeration";
@@ -595,6 +605,13 @@ if (isBrowser) {
       args = { narrative_artifact: input1 };
     } else if (agent === 'anomaly_learning_agent') {
       args = { current_tool: input1, action_sequence: input2 };
+    } else if (agent === 'invariant_verification_harness') {
+      const parts = input2.split(',');
+      args = {
+        data_stream: input1,
+        falsification_limit: parts[0]?.trim() || "v->c",
+        model_type: parts[1]?.trim() || "kinematic"
+      };
     }
 
     try {
@@ -640,6 +657,9 @@ if (isBrowser) {
       } else if (agent === 'anomaly_learning_agent') {
           orchestratorGrid.appendChild(renderCard('Diagnostic', data.DIAGNOSTIC));
           orchestratorGrid.appendChild(renderCard('ALA Output', data.ALA_OUTPUT));
+      } else if (agent === 'invariant_verification_harness') {
+          orchestratorGrid.appendChild(renderCard('Diagnostic', data.DIAGNOSTIC));
+          orchestratorGrid.appendChild(renderCard('IVH Metrics', data.IVH_METRICS));
       }
 
       orchestratorResults.classList.remove("hidden");

@@ -1,0 +1,1153 @@
+TAP version 13
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:240:20
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:240:20
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:321:20
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:139:20
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:465:20
+# Error: invalid json error
+#     at parseMcpResponse (file:///app/app/public/app.js:21:13)
+#     at file:///app/app/public/app.js:321:20
+# Error: invalid json error
+#     at parseMcpResponse (file:///app/app/public/app.js:21:13)
+#     at file:///app/app/public/app.js:139:20
+# Error: invalid json error
+#     at parseMcpResponse (file:///app/app/public/app.js:21:13)
+#     at file:///app/app/public/app.js:465:20
+# Error: invalid json error
+#     at parseMcpResponse (file:///app/app/public/app.js:21:13)
+#     at file:///app/app/public/app.js:240:20
+# Error: invalid json error
+#     at parseMcpResponse (file:///app/app/public/app.js:21:13)
+#     at file:///app/app/public/app.js:240:20
+# Error: invalid json error
+#     at parseMcpResponse (file:///app/app/public/app.js:21:13)
+#     at file:///app/app/public/app.js:240:20
+# Error: CUSTOM_ERROR_CODE
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:139:20
+# Error: MINE_ERROR_CODE
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:321:20
+# Error: PARA_ERROR_CODE
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:465:20
+# Error: MAP_ERROR_CODE
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:240:20
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:139:20
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:321:20
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:465:20
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:240:20
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:139:20
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:321:20
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:465:20
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:23:11)
+#     at file:///app/app/public/app.js:240:20
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:21:13)
+#     at file:///app/app/public/app.js:139:20
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:21:13)
+#     at file:///app/app/public/app.js:321:20
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:21:13)
+#     at file:///app/app/public/app.js:465:20
+# Error: Request failed
+#     at parseMcpResponse (file:///app/app/public/app.js:21:13)
+#     at file:///app/app/public/app.js:240:20
+# Subtest: fillList populates list element
+ok 1 - fillList populates list element
+  ---
+  duration_ms: 2.555118
+  type: 'test'
+  ...
+# Subtest: fillList adds em dash when items are empty
+ok 2 - fillList adds em dash when items are empty
+  ---
+  duration_ms: 0.370824
+  type: 'test'
+  ...
+# Subtest: fillList handles null or undefined items
+ok 3 - fillList handles null or undefined items
+  ---
+  duration_ms: 0.294798
+  type: 'test'
+  ...
+# Subtest: fillList clears existing content
+ok 4 - fillList clears existing content
+  ---
+  duration_ms: 0.1908
+  type: 'test'
+  ...
+# Subtest: fillList uses textContent for security
+ok 5 - fillList uses textContent for security
+  ---
+  duration_ms: 0.180461
+  type: 'test'
+  ...
+# Subtest: renderCard creates basic card
+ok 6 - renderCard creates basic card
+  ---
+  duration_ms: 0.557551
+  type: 'test'
+  ...
+# Subtest: renderCard with custom value color
+ok 7 - renderCard with custom value color
+  ---
+  duration_ms: 0.257342
+  type: 'test'
+  ...
+# Subtest: renderCard with object content
+ok 8 - renderCard with object content
+  ---
+  duration_ms: 0.21962
+  type: 'test'
+  ...
+# Subtest: button click maps words and updates UI
+not ok 9 - button click maps words and updates UI
+  ---
+  duration_ms: 2.708468
+  type: 'test'
+  location: '/app/app/public/app.test.js:285:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Crunching the numbers.'
+    - ''
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ''
+  actual: 'Crunching the numbers.'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:320:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: button click handles empty input
+ok 10 - button click handles empty input
+  ---
+  duration_ms: 0.277661
+  type: 'test'
+  ...
+# Subtest: button click handles tool call error
+not ok 11 - button click handles tool call error
+  ---
+  duration_ms: 1.859204
+  type: 'test'
+  location: '/app/app/public/app.test.js:347:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Crunching the numbers.'
+    - 'Something went wrong'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Something went wrong'
+  actual: 'Crunching the numbers.'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:368:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: button click handles missing token
+not ok 12 - button click handles missing token
+  ---
+  duration_ms: 0.662096
+  type: 'test'
+  location: '/app/app/public/app.test.js:375:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Crunching the numbers.'
+    - 'Authentication required. Please log in.'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Authentication required. Please log in.'
+  actual: 'Crunching the numbers.'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:402:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: mineBtn click updates topological UI
+not ok 13 - mineBtn click updates topological UI
+  ---
+  duration_ms: 0.793247
+  type: 'test'
+  location: '/app/app/public/app.test.js:412:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Computing topological intersections...'
+    - ''
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ''
+  actual: 'Computing topological intersections...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:443:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: symbiosisBtn click updates symbiosis UI
+not ok 14 - symbiosisBtn click updates symbiosis UI
+  ---
+  duration_ms: 0.57342
+  type: 'test'
+  location: '/app/app/public/app.test.js:451:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Synthesizing symbiosis...'
+    - ''
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ''
+  actual: 'Synthesizing symbiosis...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:477:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: symbiosisBtn click handles missing input
+ok 15 - symbiosisBtn click handles missing input
+  ---
+  duration_ms: 0.207095
+  type: 'test'
+  ...
+# Subtest: paraconsistentBtn click updates synthesis UI with Golden Scar and tension metrics
+not ok 16 - paraconsistentBtn click updates synthesis UI with Golden Scar and tension metrics
+  ---
+  duration_ms: 0.904989
+  type: 'test'
+  location: '/app/app/public/app.test.js:506:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Computing paraconsistent tension...'
+    - ''
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ''
+  actual: 'Computing paraconsistent tension...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:532:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: paraconsistentBtn click handles missing input
+ok 17 - paraconsistentBtn click handles missing input
+  ---
+  duration_ms: 1.266371
+  type: 'test'
+  ...
+# Subtest: mineBtn click handles missing input
+ok 18 - mineBtn click handles missing input
+  ---
+  duration_ms: 0.301246
+  type: 'test'
+  ...
+# Subtest: mineBtn click handles invalid number of domains
+ok 19 - mineBtn click handles invalid number of domains
+  ---
+  duration_ms: 0.219369
+  type: 'test'
+  ...
+# Subtest: Easter Egg: Konami Code triggers Brand Moment
+not ok 20 - Easter Egg: Konami Code triggers Brand Moment
+  ---
+  duration_ms: 1.124882
+  type: 'test'
+  location: '/app/app/public/app.test.js:597:1'
+  failureType: 'testCodeFailure'
+  error: "Cannot read properties of undefined (reading 'children')"
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:623:35)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: mineBtn click handles tool call error
+not ok 21 - mineBtn click handles tool call error
+  ---
+  duration_ms: 0.639968
+  type: 'test'
+  location: '/app/app/public/app.test.js:634:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Computing topological intersections...'
+    - 'Mine error occurred'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Mine error occurred'
+  actual: 'Computing topological intersections...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:654:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: symbiosisBtn click handles tool call error
+not ok 22 - symbiosisBtn click handles tool call error
+  ---
+  duration_ms: 0.480241
+  type: 'test'
+  location: '/app/app/public/app.test.js:661:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Synthesizing symbiosis...'
+    - 'Symbiosis error occurred'
+         ^
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Symbiosis error occurred'
+  actual: 'Synthesizing symbiosis...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:683:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: paraconsistentBtn click handles tool call error
+not ok 23 - paraconsistentBtn click handles tool call error
+  ---
+  duration_ms: 0.560882
+  type: 'test'
+  location: '/app/app/public/app.test.js:690:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Computing paraconsistent tension...'
+    - 'Paraconsistent error occurred'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Paraconsistent error occurred'
+  actual: 'Computing paraconsistent tension...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:712:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: mineBtn click handles tool JSON parse error
+not ok 24 - mineBtn click handles tool JSON parse error
+  ---
+  duration_ms: 0.45191
+  type: 'test'
+  location: '/app/app/public/app.test.js:725:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Computing topological intersections...'
+    - 'invalid json error'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'invalid json error'
+  actual: 'Computing topological intersections...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:742:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: symbiosisBtn click handles tool JSON parse error
+not ok 25 - symbiosisBtn click handles tool JSON parse error
+  ---
+  duration_ms: 0.43715
+  type: 'test'
+  location: '/app/app/public/app.test.js:748:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Synthesizing symbiosis...'
+    - 'invalid json error'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'invalid json error'
+  actual: 'Synthesizing symbiosis...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:767:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: paraconsistentBtn click handles tool JSON parse error
+not ok 26 - paraconsistentBtn click handles tool JSON parse error
+  ---
+  duration_ms: 0.438139
+  type: 'test'
+  location: '/app/app/public/app.test.js:773:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Computing paraconsistent tension...'
+    - 'invalid json error'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'invalid json error'
+  actual: 'Computing paraconsistent tension...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:792:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: mapBtn click handles tool JSON parse error
+not ok 27 - mapBtn click handles tool JSON parse error
+  ---
+  duration_ms: 0.493659
+  type: 'test'
+  location: '/app/app/public/app.test.js:798:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Crunching the numbers.'
+    - 'invalid json error'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'invalid json error'
+  actual: 'Crunching the numbers.'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:815:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: mapBtn click triggers Affective Copy Payload loading messages
+not ok 28 - mapBtn click triggers Affective Copy Payload loading messages
+  ---
+  duration_ms: 0.623408
+  type: 'test'
+  location: '/app/app/public/app.test.js:821:1'
+  failureType: 'testCodeFailure'
+  error: 'resolver is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:844:7)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: mapBtn click triggers Affective Copy Payload loading messages long duration
+not ok 29 - mapBtn click triggers Affective Copy Payload loading messages long duration
+  ---
+  duration_ms: 0.653028
+  type: 'test'
+  location: '/app/app/public/app.test.js:857:1'
+  failureType: 'testCodeFailure'
+  error: 'resolver is not a function'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:893:7)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: paraconsistentBtn click synthesis_log missing handling
+not ok 30 - paraconsistentBtn click synthesis_log missing handling
+  ---
+  duration_ms: 0.397144
+  type: 'test'
+  location: '/app/app/public/app.test.js:907:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Computing paraconsistent tension...'
+    - ''
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: ''
+  actual: 'Computing paraconsistent tension...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:932:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: Easter Egg: Konami Code max activations
+ok 31 - Easter Egg: Konami Code max activations
+  ---
+  duration_ms: 0.531693
+  type: 'test'
+  ...
+# Subtest: Easter Egg: Konami Code partial buffer and reset
+ok 32 - Easter Egg: Konami Code partial buffer and reset
+  ---
+  duration_ms: 0.268111
+  type: 'test'
+  ...
+# Subtest: symbiosisBtn click handles tool call JSON error object with error_code fallback
+not ok 33 - symbiosisBtn click handles tool call JSON error object with error_code fallback
+  ---
+  duration_ms: 0.457971
+  type: 'test'
+  location: '/app/app/public/app.test.js:1000:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Synthesizing symbiosis...'
+    - 'CUSTOM_ERROR_CODE'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'CUSTOM_ERROR_CODE'
+  actual: 'Synthesizing symbiosis...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1021:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: mineBtn click handles tool call JSON error object with error_code fallback
+not ok 34 - mineBtn click handles tool call JSON error object with error_code fallback
+  ---
+  duration_ms: 0.533553
+  type: 'test'
+  location: '/app/app/public/app.test.js:1027:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Computing topological intersections...'
+    - 'MINE_ERROR_CODE'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MINE_ERROR_CODE'
+  actual: 'Computing topological intersections...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1046:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: paraconsistentBtn click handles tool call JSON error object with error_code fallback
+not ok 35 - paraconsistentBtn click handles tool call JSON error object with error_code fallback
+  ---
+  duration_ms: 0.53041
+  type: 'test'
+  location: '/app/app/public/app.test.js:1052:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Computing paraconsistent tension...'
+    - 'PARA_ERROR_CODE'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'PARA_ERROR_CODE'
+  actual: 'Computing paraconsistent tension...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1073:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: mapBtn click handles tool call JSON error object with error_code fallback
+not ok 36 - mapBtn click handles tool call JSON error object with error_code fallback
+  ---
+  duration_ms: 0.495623
+  type: 'test'
+  location: '/app/app/public/app.test.js:1079:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Crunching the numbers.'
+    - 'MAP_ERROR_CODE'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'MAP_ERROR_CODE'
+  actual: 'Crunching the numbers.'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1098:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: symbiosisBtn click handles generic fallback error
+not ok 37 - symbiosisBtn click handles generic fallback error
+  ---
+  duration_ms: 0.533566
+  type: 'test'
+  location: '/app/app/public/app.test.js:1104:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Synthesizing symbiosis...'
+    - 'Request failed'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Request failed'
+  actual: 'Synthesizing symbiosis...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1123:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: mineBtn click handles generic fallback error
+not ok 38 - mineBtn click handles generic fallback error
+  ---
+  duration_ms: 0.440872
+  type: 'test'
+  location: '/app/app/public/app.test.js:1129:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Computing topological intersections...'
+    - 'Request failed'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Request failed'
+  actual: 'Computing topological intersections...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1146:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: paraconsistentBtn click handles generic fallback error
+not ok 39 - paraconsistentBtn click handles generic fallback error
+  ---
+  duration_ms: 0.497742
+  type: 'test'
+  location: '/app/app/public/app.test.js:1152:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Computing paraconsistent tension...'
+    - 'Request failed'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Request failed'
+  actual: 'Computing paraconsistent tension...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1171:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: mapBtn click handles generic fallback error
+not ok 40 - mapBtn click handles generic fallback error
+  ---
+  duration_ms: 0.471776
+  type: 'test'
+  location: '/app/app/public/app.test.js:1177:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Crunching the numbers.'
+    - 'Request failed'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Request failed'
+  actual: 'Crunching the numbers.'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1194:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: symbiosisBtn click handles null error message
+not ok 41 - symbiosisBtn click handles null error message
+  ---
+  duration_ms: 0.542716
+  type: 'test'
+  location: '/app/app/public/app.test.js:1200:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Synthesizing symbiosis...'
+    - 'An error occurred during synthesis.'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'An error occurred during synthesis.'
+  actual: 'Synthesizing symbiosis...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1221:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: mineBtn click handles null error message
+not ok 42 - mineBtn click handles null error message
+  ---
+  duration_ms: 0.474104
+  type: 'test'
+  location: '/app/app/public/app.test.js:1230:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Computing topological intersections...'
+    - 'An error occurred during mining.'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'An error occurred during mining.'
+  actual: 'Computing topological intersections...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1249:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: paraconsistentBtn click handles null error message
+not ok 43 - paraconsistentBtn click handles null error message
+  ---
+  duration_ms: 0.568111
+  type: 'test'
+  location: '/app/app/public/app.test.js:1258:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Computing paraconsistent tension...'
+    - 'An error occurred during synthesis computation.'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'An error occurred during synthesis computation.'
+  actual: 'Computing paraconsistent tension...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1279:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: mapBtn click handles null error message
+not ok 44 - mapBtn click handles null error message
+  ---
+  duration_ms: 0.605572
+  type: 'test'
+  location: '/app/app/public/app.test.js:1288:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Crunching the numbers.'
+    - 'An error occurred.'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'An error occurred.'
+  actual: 'Crunching the numbers.'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1307:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: symbiosisBtn click handles tool JSON parse error empty fallback
+not ok 45 - symbiosisBtn click handles tool JSON parse error empty fallback
+  ---
+  duration_ms: 0.499666
+  type: 'test'
+  location: '/app/app/public/app.test.js:1316:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Synthesizing symbiosis...'
+    - 'Request failed'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Request failed'
+  actual: 'Synthesizing symbiosis...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1335:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: mineBtn click handles tool JSON parse error empty fallback
+not ok 46 - mineBtn click handles tool JSON parse error empty fallback
+  ---
+  duration_ms: 0.526274
+  type: 'test'
+  location: '/app/app/public/app.test.js:1341:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Computing topological intersections...'
+    - 'Request failed'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Request failed'
+  actual: 'Computing topological intersections...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1358:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: paraconsistentBtn click handles tool JSON parse error empty fallback
+not ok 47 - paraconsistentBtn click handles tool JSON parse error empty fallback
+  ---
+  duration_ms: 0.539088
+  type: 'test'
+  location: '/app/app/public/app.test.js:1364:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Computing paraconsistent tension...'
+    - 'Request failed'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Request failed'
+  actual: 'Computing paraconsistent tension...'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1383:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: mapBtn click handles tool JSON parse error empty fallback
+not ok 48 - mapBtn click handles tool JSON parse error empty fallback
+  ---
+  duration_ms: 0.509097
+  type: 'test'
+  location: '/app/app/public/app.test.js:1389:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + 'Crunching the numbers.'
+    - 'Request failed'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'Request failed'
+  actual: 'Crunching the numbers.'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1406:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: inversionBtn click handles missing input
+ok 49 - inversionBtn click handles missing input
+  ---
+  duration_ms: 0.556699
+  type: 'test'
+  ...
+# Subtest: inversionBtn click updates UI with payload
+not ok 50 - inversionBtn click updates UI with payload
+  ---
+  duration_ms: 0.518456
+  type: 'test'
+  location: '/app/app/public/app.test.js:1431:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    '' !== '0.08'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '0.08'
+  actual: ''
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///app/app/public/app.test.js:1455:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: agentSelector change updates input labels
+ok 51 - agentSelector change updates input labels
+  ---
+  duration_ms: 0.368292
+  type: 'test'
+  ...
+# Subtest: orchestratorBtn click handles missing input
+ok 52 - orchestratorBtn click handles missing input
+  ---
+  duration_ms: 0.58609
+  type: 'test'
+  ...
+# Subtest: orchestratorBtn click updates UI with payload
+ok 53 - orchestratorBtn click updates UI with payload
+  ---
+  duration_ms: 0.473219
+  type: 'test'
+  ...
+# Subtest: UI: Agent Selector updates UI for strategic_integration_orchestrator
+ok 54 - UI: Agent Selector updates UI for strategic_integration_orchestrator
+  ---
+  duration_ms: 0.329887
+  type: 'test'
+  ...
+# Subtest: Orchestrator UI updates for invariant_verification_harness
+ok 55 - Orchestrator UI updates for invariant_verification_harness
+  ---
+  duration_ms: 0.344865
+  type: 'test'
+  ...
+# Subtest: Orchestrator UI updates for anomaly_learning_agent
+ok 56 - Orchestrator UI updates for anomaly_learning_agent
+  ---
+  duration_ms: 0.287648
+  type: 'test'
+  ...
+1..56
+# tests 56
+# suites 0
+# pass 22
+# fail 34
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 224.634558
+----------|---------|----------|---------|---------|------------------------------------------------
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+----------|---------|----------|---------|---------|------------------------------------------------
+All files |    85.8 |    81.37 |     100 |    85.8 |
+ app.js   |    85.8 |    81.37 |     100 |    85.8 | ...636-638,640-645,655-663,668-675,716-718,753
+----------|---------|----------|---------|---------|------------------------------------------------
